@@ -6,7 +6,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom';
 
 import './App.css';
@@ -19,9 +20,10 @@ function App() {
           <Route exact path="/">
             <Home playerCount={0} />
           </Route>
-          <Route exact path='/which'>
-            <WhichPlayer />
-          </Route>
+          <Route path='/which:playerCount' render={(matchProps)=>
+            <WhichPlayer {...matchProps}/>
+            }/>
+        
         </Switch>
       </div>
     </Router>
@@ -30,7 +32,7 @@ function App() {
 
 function Home(props: { playerCount: number }) {
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(2);
  
   const handleNumberChange = (e: any) => {
     e.preventDefault();
@@ -50,16 +52,18 @@ function Home(props: { playerCount: number }) {
           defaultValue: 2, min:2, max:6
           }
         }} />
-      <Link to='/which' >
+      <Link to={`/which:${count}`}>
         <Button >OK</Button>
       </Link>
     </Card>
   )
 }
 
-function WhichPlayer() {
+function WhichPlayer(props:any) {
+  const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
 
-  const [count, setCount] = useState(0);
+  const [mainPlayerPosition, setCount] = useState(0);
+  
   const handleNumberChange = (e: any) => {
     e.preventDefault();
     setCount(e.target.value) 
@@ -74,7 +78,7 @@ function WhichPlayer() {
         onChange={handleNumberChange}
         InputProps={{
           inputProps:{
-          defaultValue: 1, min:1, max:6
+          defaultValue: 1, min:1, max:playerCount
           }
         }} />
       <Button>OK</Button>
