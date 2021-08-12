@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 
 import './App.css';
+import PickHand from './PickHand';
 
 function App() {
   return (
@@ -22,7 +23,9 @@ function App() {
           <Route path='/which:playerCount' render={(matchProps)=>
             <WhichPlayer {...matchProps}/>
             }/>
-        
+          <Route path='/hand:playerId' render={(matchProps)=>
+            <PickHand {...matchProps}/>
+            }/>
         </Switch>
       </div>
     </Router>
