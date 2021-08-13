@@ -24,7 +24,7 @@ function App() {
             <WhichPlayer {...matchProps}/>
             }/>
           <Route path='/hand:playerId' render={(matchProps)=>
-            <PickHand {...matchProps}/>
+            <PickHand matchProps = {matchProps} cards = {cardDatas}/>
             }/>
         </Switch>
       </div>
@@ -83,9 +83,45 @@ function WhichPlayer(props:any) {
           defaultValue: 1, min:1, max:playerCount
           }
         }} />
+        <Link to={`/hand:${mainPlayerPosition}`}>
       <Button>OK</Button>
+      </Link>
     </Card>
   )
 }
+
+const cardData = {
+  "suspects": [
+    "homer",
+    "bart",
+    "lisa",
+    "marge",
+    "krusty",
+    "smithers"
+  ],
+  "weapons": [
+    "glove",
+    "sax",
+    "necklace",
+    "donut",
+    "plutonium",
+    "slingshot"
+  ],
+  "rooms": [
+    "studio",
+    "arcade",
+    "house",
+    "manor",
+    "kwiki",
+    "retirement",
+    "dutchman",
+    "nuke-plant"
+  ]
+}
+
+let cardDatas:any[] = [];
+cardDatas.push(...cardData.suspects);
+cardDatas.push(...cardData.weapons);
+cardDatas.push(...cardData.rooms);
 
 export default App;
