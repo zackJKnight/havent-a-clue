@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import PickCards from "./PickCards";
 
-function PickHand(props:any) {
+export default function PickHand(props:any) {
 
     return(
     <>
@@ -11,5 +11,3 @@ function PickHand(props:any) {
     </>
     );
 }
-
-export default PickHand;

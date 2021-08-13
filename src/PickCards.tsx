@@ -1,16 +1,20 @@
-import { Card } from "@material-ui/core";
+import { Checkbox, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 let cardElements;
-function PickCards (props:any) {
+export default function PickCards (props:any) {
     const cards = props.cards;
     cardElements = cards.map((card:any) => 
-            <Card>{card}</Card>
+            <ListItem>
+                <ListItemIcon>
+                    <Checkbox></Checkbox>
+                </ListItemIcon>
+                <ListItemText primary={card}>
+                </ListItemText>
+            </ListItem>
         );
 
     return (
         <div>
-<ul>{cardElements}</ul>
+<List>{cardElements}</List>
 </div>
     );
 }
-
-export default PickCards
