@@ -8,8 +8,10 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import { Category } from './Model/Category';
 
 import './App.css';
+import { ClueCard } from './Model/ClueCard';
 import PickHand from './PickHand';
 
 function App() {
@@ -24,7 +26,7 @@ function App() {
             <WhichPlayer {...matchProps}/>
             }/>
           <Route path='/hand:playerId' render={(matchProps)=>
-            <PickHand matchProps = {matchProps} cards = {cardDatas}/>
+            <PickHand matchProps = {matchProps} cards = {cards}/>
             }/>
         </Switch>
       </div>
@@ -107,7 +109,7 @@ const cardData = {
     "plutonium",
     "slingshot"
   ],
-  "rooms": [
+  "scenes": [
     "studio",
     "arcade",
     "house",
@@ -119,9 +121,18 @@ const cardData = {
   ]
 }
 
-let cardDatas:any[] = [];
-cardDatas.push(...cardData.suspects);
-cardDatas.push(...cardData.weapons);
-cardDatas.push(...cardData.rooms);
+let cards:ClueCard[] = [];
+for(let suspect of [...cardData.suspects]) {
+  let card: ClueCard = new ClueCard( suspect, 'suspect');
+  cards.push( card);
+}
+for(let weapon of [...cardData.weapons]) {
+  let card: ClueCard = new ClueCard( weapon, 'weapon');
+  cards.push( card);
+}
+for(let scene of [...cardData.scenes]) {
+  let card: ClueCard = new ClueCard( scene, 'scene');
+  cards.push( card);
+}
 
 export default App;
