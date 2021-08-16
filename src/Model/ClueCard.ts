@@ -12,8 +12,8 @@ export class ClueCard {
     constructor(name: string, category: Category) {
         this.Category = category;
         this.Name = name;
-        this.HeldBy = 0;
+        this.HeldBy = NaN;
         this.NotHeldBy = [];
-        this.PossShownBy = { playerId: 0, inRound: -1 };
+        this.PossShownBy = { playerId: NaN, inRound: NaN };
     }
 }

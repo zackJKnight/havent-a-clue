@@ -1,15 +1,11 @@
-import { Button, Card, Paper, TextField } from '@material-ui/core';
-import React from 'react';
+import { Button, Card, TextField } from '@material-ui/core';
 import { useState } from 'react';
-
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from 'react-router-dom';
-import { Category } from './Model/Category';
-
 import './App.css';
 import { ClueCard } from './Model/ClueCard';
 import PickHand from './PickHand';
@@ -20,7 +16,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={0} />
+            <Home playerCount={2} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps)=>
             <WhichPlayer {...matchProps}/>
@@ -36,7 +32,7 @@ function App() {
 
 function Home(props: { playerCount: number }) {
 
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(props.playerCount);
  
   const handleNumberChange = (e: any) => {
     e.preventDefault();
@@ -66,11 +62,11 @@ function Home(props: { playerCount: number }) {
 function WhichPlayer(props:any) {
   const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
 
-  const [mainPlayerPosition, setCount] = useState(0);
+  const [mainPlayerId, setPlayerId] = useState(0);
   
   const handleNumberChange = (e: any) => {
     e.preventDefault();
-    setCount(e.target.value) 
+    setPlayerId(e.target.value - 1) 
   }
 
   return (
@@ -85,7 +81,7 @@ function WhichPlayer(props:any) {
           defaultValue: 1, min:1, max:playerCount
           }
         }} />
-        <Link to={`/hand:${mainPlayerPosition}`}>
+        <Link to={`/hand:${mainPlayerId}`}>
       <Button>OK</Button>
       </Link>
     </Card>

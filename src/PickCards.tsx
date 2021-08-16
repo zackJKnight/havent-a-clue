@@ -3,21 +3,22 @@ import { ClueCard } from "./Model/ClueCard";
 
 let cardElements;
 
-export default function PickCards (props:any) {
-    const cards = props.cards;
-    cardElements = cards.map((card:ClueCard) => 
-            <ListItem>
-                <ListItemIcon>
-                    <Checkbox></Checkbox>
-                </ListItemIcon>
-                <ListItemText primary={card.Name}>
-                </ListItemText>
-            </ListItem>
-        );
+
+export default function PickCards(props: any) {
+
+    cardElements = props.cards?.map((card: ClueCard) =>
+        <ListItem>
+            <ListItemIcon>
+                <Checkbox onChange={(e) => props.onChange(e, card)}></Checkbox>
+            </ListItemIcon>
+            <ListItemText primary={card.Name}>
+            </ListItemText>
+        </ListItem>
+    );
 
     return (
         <div>
-<List>{cardElements}</List>
-</div>
+            <List>{cardElements}</List>
+        </div>
     );
 }
