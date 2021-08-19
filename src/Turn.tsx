@@ -1,36 +1,38 @@
 import { Button } from "@material-ui/core";
-import { Link } from 'react-router-dom';
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
+import { Game } from "./Model/Game";
 import PickCards from "./PickCards";
 
-
-export default function PickHand(props:any) {
+export default function Turn(props: any) {
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
-
-    // Set the HeldBy or ShownBy property of the card with the checked checkbox
+    const [game, setGame] = useState<Game>(props.game);
+    
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
+        
+        // limit choices to one per category
+        let suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
         if(!event.target.checked){
-         heldBy = NaN;
+          suggestedBy = NaN;
         }
         let updatedCards = [...cards].filter((item: ClueCard) => {
             if (item.Name !== card.Name) {
                 return item;
             }
         });
-        card.HeldBy = heldBy;
+        if(!isNaN(suggestedBy)){
+        card.SuggestedBy.push({playerId: suggestedBy, inRound: game.round});
+        }
         updatedCards.push(card);
         setCards(updatedCards);
     }
-    
-    return(
+
+return(
     <>
-    <h1>Pick the cards in your hand.</h1>
+    <h1>`Mark Player's Suggestion`</h1>
     <PickCards {...props} onChange = {toggleCardSelection}/>
-    <Link to='/turn'>
-    <Button>OK</Button>
-    </Link>
+    <Button>Suggest</Button>
+    <Button>Accuse</Button>
     </>
-    );
+)
 }

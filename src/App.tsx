@@ -8,7 +8,10 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import { ClueCard } from './Model/ClueCard';
+import { Game } from './Model/Game';
+import { Player } from './Model/Player';
 import PickHand from './PickHand';
+import Turn from './Turn';
 
 function App() {
   return (
@@ -16,26 +19,34 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} />
+            <Home playerCount={2} game = {game} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps)=>
             <WhichPlayer {...matchProps}/>
             }/>
           <Route path='/hand:playerId' render={(matchProps)=>
-            <PickHand matchProps = {matchProps} cards = {cards}/>
+            <PickHand matchProps = {matchProps} cards = {cards} game = {game}/>
             }/>
+            <Route path='/turn'>
+              <Turn cards = {cards} game = {game}></Turn>
+            </Route>
         </Switch>
       </div>
     </Router>
   );
 }
 
-function Home(props: { playerCount: number }) {
+function Home(props: { playerCount: number, game: Game }) {
 
   const [count, setCount] = useState(props.playerCount);
- 
+ const [game, setGame] = useState(props.game);
   const handleNumberChange = (e: any) => {
     e.preventDefault();
+    let tempGame:Game = new Game();
+    for(let i = 0; i < e.target.value; i++) {
+      tempGame.players.push(new Player(i));
+    }
+    setGame(tempGame);
     setCount(e.target.value) 
   }
 
@@ -49,7 +60,8 @@ function Home(props: { playerCount: number }) {
         
         InputProps={{
           inputProps:{
-          defaultValue: 2, min:2, max:6
+          defaultValue: 2, min:2, max:{count},
+          game: {game}
           }
         }} />
       <Link to={`/which:${count}`}>
@@ -130,5 +142,7 @@ for(let scene of [...cardData.scenes]) {
   let card: ClueCard = new ClueCard( scene, 'scene');
   cards.push( card);
 }
+
+let game: Game = new Game();
 
 export default App;
