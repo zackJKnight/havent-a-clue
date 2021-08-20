@@ -7,10 +7,9 @@ import PickCards from "./PickCards";
 
 export default function PickHand(props:any) {
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
+    let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
-    // Set the HeldBy or ShownBy property of the card with the checked checkbox
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
         if(!event.target.checked){
          heldBy = NaN;
         }
@@ -28,7 +27,7 @@ export default function PickHand(props:any) {
     <>
     <h1>Pick the cards in your hand.</h1>
     <PickCards {...props} onChange = {toggleCardSelection}/>
-    <Link to='/turn'>
+    <Link to={`/turn:${0}`}>
     <Button>OK</Button>
     </Link>
     </>

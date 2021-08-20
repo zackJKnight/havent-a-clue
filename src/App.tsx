@@ -11,25 +11,31 @@ import { ClueCard } from './Model/ClueCard';
 import { Game } from './Model/Game';
 import { Player } from './Model/Player';
 import PickHand from './PickHand';
+import ScrollToTop from './ScrollToTop';
+import { Show } from './Show';
 import Turn from './Turn';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop/>
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} game = {game} />
+            <Home playerCount={2} game={game} />
           </Route>
-          <Route path='/which:playerCount' render={(matchProps)=>
-            <WhichPlayer {...matchProps}/>
-            }/>
-          <Route path='/hand:playerId' render={(matchProps)=>
-            <PickHand matchProps = {matchProps} cards = {cards} game = {game}/>
-            }/>
-            <Route path='/turn'>
-              <Turn cards = {cards} game = {game}></Turn>
-            </Route>
+          <Route path='/which:playerCount' render={(matchProps) =>
+            <WhichPlayer {...matchProps} />
+          } />
+          <Route path='/hand:playerId' render={(matchProps) =>
+            <PickHand matchProps={matchProps} cards={cards} game={game} />
+          } />
+          <Route path='/turn:playerId' render={(matchProps) =>
+            <Turn matchProps={matchProps} cards={cards} game={game} />
+          } />
+          <Route path='/show:playerId' render={(matchProps) =>
+            <Show matchProps={matchProps} cards={cards} game={game}></Show>
+          } />
         </Switch>
       </div>
     </Router>
@@ -39,15 +45,15 @@ function App() {
 function Home(props: { playerCount: number, game: Game }) {
 
   const [count, setCount] = useState(props.playerCount);
- const [game, setGame] = useState(props.game);
+  const [game, setGame] = useState(props.game);
   const handleNumberChange = (e: any) => {
     e.preventDefault();
-    let tempGame:Game = new Game();
-    for(let i = 0; i < e.target.value; i++) {
+    let tempGame: Game = new Game();
+    for (let i = 0; i < e.target.value; i++) {
       tempGame.players.push(new Player(i));
     }
     setGame(tempGame);
-    setCount(e.target.value) 
+    setCount(e.target.value)
   }
 
   return (
@@ -57,11 +63,11 @@ function Home(props: { playerCount: number, game: Game }) {
       <TextField
         type="number"
         onChange={handleNumberChange}
-        
+
         InputProps={{
-          inputProps:{
-          defaultValue: 2, min:2, max:{count},
-          game: {game}
+          inputProps: {
+            defaultValue: 2, min: 2, max: { count },
+            game: { game }
           }
         }} />
       <Link to={`/which:${count}`}>
@@ -71,14 +77,14 @@ function Home(props: { playerCount: number, game: Game }) {
   )
 }
 
-function WhichPlayer(props:any) {
+function WhichPlayer(props: any) {
   const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
 
   const [mainPlayerId, setPlayerId] = useState(0);
-  
+
   const handleNumberChange = (e: any) => {
     e.preventDefault();
-    setPlayerId(e.target.value - 1) 
+    setPlayerId(e.target.value - 1)
   }
 
   return (
@@ -89,12 +95,12 @@ function WhichPlayer(props:any) {
         type="number"
         onChange={handleNumberChange}
         InputProps={{
-          inputProps:{
-          defaultValue: 1, min:1, max:playerCount
+          inputProps: {
+            defaultValue: 1, min: 1, max: playerCount
           }
         }} />
-        <Link to={`/hand:${mainPlayerId}`}>
-      <Button>OK</Button>
+      <Link to={`/hand:${mainPlayerId}`}>
+        <Button>OK</Button>
       </Link>
     </Card>
   )
@@ -129,18 +135,18 @@ const cardData = {
   ]
 }
 
-let cards:ClueCard[] = [];
-for(let suspect of [...cardData.suspects]) {
-  let card: ClueCard = new ClueCard( suspect, 'suspect');
-  cards.push( card);
+let cards: ClueCard[] = [];
+for (let suspect of [...cardData.suspects]) {
+  let card: ClueCard = new ClueCard(suspect, 'suspect');
+  cards.push(card);
 }
-for(let weapon of [...cardData.weapons]) {
-  let card: ClueCard = new ClueCard( weapon, 'weapon');
-  cards.push( card);
+for (let weapon of [...cardData.weapons]) {
+  let card: ClueCard = new ClueCard(weapon, 'weapon');
+  cards.push(card);
 }
-for(let scene of [...cardData.scenes]) {
-  let card: ClueCard = new ClueCard( scene, 'scene');
-  cards.push( card);
+for (let scene of [...cardData.scenes]) {
+  let card: ClueCard = new ClueCard(scene, 'scene');
+  cards.push(card);
 }
 
 let game: Game = new Game();
