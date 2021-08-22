@@ -1,5 +1,5 @@
 import { Button, Card, TextField } from '@material-ui/core';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,17 +12,18 @@ import { Game } from './Model/Game';
 import { Player } from './Model/Player';
 import PickHand from './PickHand';
 import ScrollToTop from './ScrollToTop';
-import { Show } from './Show';
+import Show from './Show';
 import Turn from './Turn';
 
 function App() {
+  const [game, setGame] = useState<Game>(new Game());
   return (
     <Router>
       <ScrollToTop/>
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} game={game} />
+            <Home playerCount={2} setGame = {setGame} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
             <WhichPlayer {...matchProps} />
@@ -42,18 +43,22 @@ function App() {
   );
 }
 
-function Home(props: { playerCount: number, game: Game }) {
+function Home(props: { playerCount: number, setGame: any }) {
 
   const [count, setCount] = useState(props.playerCount);
-  const [game, setGame] = useState(props.game);
-  const handleNumberChange = (e: any) => {
+
+  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const playerCount = parseInt(e.target.value);
     let tempGame: Game = new Game();
-    for (let i = 0; i < e.target.value; i++) {
+    for (let i = 0; i < playerCount; i++) {
       tempGame.players.push(new Player(i));
     }
-    setGame(tempGame);
-    setCount(e.target.value)
+
+    props.setGame(() =>{
+      return {...tempGame};
+    });
+    setCount(playerCount)
   }
 
   return (
@@ -66,8 +71,7 @@ function Home(props: { playerCount: number, game: Game }) {
 
         InputProps={{
           inputProps: {
-            defaultValue: 2, min: 2, max: { count },
-            game: { game }
+            defaultValue: 2, min: 2, max: 6
           }
         }} />
       <Link to={`/which:${count}`}>
@@ -82,9 +86,9 @@ function WhichPlayer(props: any) {
 
   const [mainPlayerId, setPlayerId] = useState(0);
 
-  const handleNumberChange = (e: any) => {
+  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setPlayerId(e.target.value - 1)
+    setPlayerId(parseInt(e.target.value) - 1)
   }
 
   return (

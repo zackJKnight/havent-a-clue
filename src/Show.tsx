@@ -3,19 +3,24 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Game } from "./Model/Game";
 
-export function Show(props: any) {
+export default function Show(props: any) {
 
-    const [game, setGame] = useState<Game>(props.game);
     const playerId = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
     const [nextPlayerId, setNextPlayer] = useState(playerId + 1);
 
     function onYes() {
-        // if this is the highest player number, increment the round
-        if (game.players.length === playerId + 1) {
-            let tempGame = game;
-            tempGame.round++
-            setGame(tempGame);
-        }
+        //this next bit- I'm not convinced is important yet.
+        // do we really  need to track rounds if the cards are a heatmap of suggestions? 
+        // Consider later: 
+        // a. if this is the last player in the round, round++
+        // b. in OnNo() if all players had a chance to show but didn't, increment the round
+        // if (game.players.length === playerId + 1) {
+        //     let tempGame = game;
+        //     tempGame.round++
+        //     setGame(tempGame);
+        // }
+
+
 
     }
 
@@ -23,7 +28,7 @@ export function Show(props: any) {
         // reset checkboxes
 
         // move to next player if not last player
-        if (nextPlayerId > game.players.length - 1) {
+        if (nextPlayerId > props.game.players.length - 1) {
             setNextPlayer(0);
         } else {
             if (nextPlayerId + 1 !== playerId) {
