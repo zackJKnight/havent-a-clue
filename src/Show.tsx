@@ -14,23 +14,13 @@ export default function Show(props: any) {
     const [answeredNoLink] = useState(`/show:${playerId}`);
 
     function onYes() {
-        //this next bit- I'm not convinced is important yet.
-        // do we really  need to track rounds if the cards are a heatmap of suggestions? 
-        // Consider later: 
-        // a. if this is the last player in the round, round++
-        // b. in OnNo() if all players had a chance to show but didn't, increment the round
-        // if (game.players.length === playerId + 1) {
-        //     let tempGame = game;
-        //     tempGame.round++
-        //     setGame(tempGame);
-        // }
 
-
-
+        // if no cards in the suggestion are known, mark them all as possibly shown by
+        // and move to next turn
+        
     }
 
     function onNo() {
-        // reset checkboxes
 
         let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === nextPlayerId)[0]);
         if (i + 1 > props.game.players.length - 1) {

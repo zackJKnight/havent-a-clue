@@ -13,11 +13,7 @@ export default function PickHand(props:any) {
         if(!event.target.checked){
          heldBy = NaN;
         }
-        let updatedCards = [...cards].filter((item: ClueCard) => {
-            if (item.Name !== card.Name) {
-                return item;
-            }
-        });
+        let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
         card.HeldBy = heldBy;
         updatedCards.push(card);
         setCards(updatedCards);

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 
-//@ts-ignore
+// @ts-ignore
 function ScrollToTop({ history }) {
   useEffect(() => {
     const unlisten = history.listen(() => {
@@ -10,7 +10,7 @@ function ScrollToTop({ history }) {
     return () => {
       unlisten();
     }
-  }, []);
+  }, [history]);
 
   return (null);
 }

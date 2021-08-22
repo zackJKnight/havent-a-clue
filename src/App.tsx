@@ -153,6 +153,4 @@ for (let scene of [...cardData.scenes]) {
   cards.push(card);
 }
 
-let game: Game = new Game();
-
 export default App;
