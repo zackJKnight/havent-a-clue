@@ -1,12 +1,17 @@
 import { Button } from "@material-ui/core";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Game } from "./Model/Game";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Show(props: any) {
 
+    const history = useHistory();
     const playerId = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
-    const [nextPlayerId, setNextPlayer] = useState(playerId + 1);
+    const playersAfter = props.game.players.slice(playerId);
+    const playersBefore = props.game.players.slice(0, playerId);
+    const playerTurnOrder = [...playersAfter, ...playersBefore];
+
+    const [nextPlayerId, setNextPlayer] = useState({ ...playerTurnOrder[1] }.id);
+    const [answeredNoLink] = useState(`/show:${playerId}`);
 
     function onYes() {
         //this next bit- I'm not convinced is important yet.
@@ -27,16 +32,12 @@ export default function Show(props: any) {
     function onNo() {
         // reset checkboxes
 
-        // move to next player if not last player
-        if (nextPlayerId > props.game.players.length - 1) {
-            setNextPlayer(0);
+        let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === nextPlayerId)[0]);
+        if (i + 1 > props.game.players.length - 1) {
+            history.push(`/turn:${{ ...playerTurnOrder[1] }.id}`);
         } else {
-            if (nextPlayerId + 1 !== playerId) {
-                setNextPlayer(nextPlayerId + 1);
-            } else {
-                // else link to turn.... how?
-            }
-
+            setNextPlayer(playerTurnOrder[i + 1].id);
+            history.push(answeredNoLink);
         }
 
     }
@@ -48,9 +49,7 @@ export default function Show(props: any) {
             <Link to={`/turn:${playerId + 1}`} onClick={onYes}>
                 <Button >Yes</Button>
             </Link>
-            <Link to={`/show:${playerId}`}>
                 <Button onClick={onNo} >No</Button>
-            </Link>
         </>
     )
 }
