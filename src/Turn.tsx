@@ -27,16 +27,12 @@ export default function Turn(props: any) {
         setCards(updatedCards);
     }
 
-    function onSuggest() {
-        // nav to Show
-    }
-
     return (
         <div>
             <h1>{`Mark Player ${suggestedBy + 1}'s Suggestion`}</h1>
             <PickCards {...props} onChange={toggleCardSelection} />
             <Link to={`/show:${suggestedBy}`}>
-                <Button onClick={onSuggest}>Suggest</Button>
+                <Button >Suggest</Button>
             </Link>
             <Button>Accuse</Button>
         </div>
