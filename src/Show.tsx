@@ -34,17 +34,17 @@ export default function Show(props: any) {
                     }
                 })
             }
-            if (suggestions.length === 1) {
-                // if only one card is not known as held, that card is held by the showing player
-                tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = nextPlayerId;
+        }
+        if (suggestions.length === 1) {
+            // if only one card is not known as held, that card is held by the showing player
+            tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = nextPlayerId;
 
-            } else {
-                if (suggestions.length > 1) {
-                    tempCards.filter(card => card.Name === suggestions[0].Name).forEach(tempCard => {
-                        tempCard.PossShownBy = nextPlayerId;
-                        tempCard.isSuggestion = false;
-                    });
-                }
+        } else {
+            if (suggestions.length > 1) {
+                tempCards.filter(card => card.Name === suggestions[0].Name).forEach(tempCard => {
+                    tempCard.PossShownBy = nextPlayerId;
+                    tempCard.isSuggestion = false;
+                });
             }
         }
         updateCards([...tempCards]);
