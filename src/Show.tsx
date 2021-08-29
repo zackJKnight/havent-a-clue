@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { ClueCard } from "./Model/ClueCard";
 
 export default function Show(props: any) {
 
@@ -12,13 +13,44 @@ export default function Show(props: any) {
 
     const [nextPlayerId, setNextPlayer] = useState({ ...playerTurnOrder[1] }.id);
     const [answeredNoLink] = useState(`/show:${playerId}`);
+    const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
 
     function onYes() {
 
         // if no cards in the suggestion are known, mark them all as possibly shown by
         // and move to next turn
-        
+
+        // all state is on the list of cards for the app. maybe. let's see if setting state....
+        // you porbably want to act on a temp list inside a function and set state when all decisions are made.
+        const tempCards = [...cards];
+        const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
+        for (let card of suggestions) {
+            if (!isNaN(card.HeldBy)) {
+                const cardIndex = suggestions.indexOf(card);
+                const knownCard = suggestions.splice(cardIndex, 1);
+                tempCards.forEach((card: ClueCard) => {
+                    if (card.Name === knownCard[0].Name) {
+                        card.isSuggestion = false;
+                    }
+                })
+            }
+            if (suggestions.length === 1) {
+                // if only one card is not known as held, that card is held by the showing player
+                tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = nextPlayerId;
+
+            } else {
+                if (suggestions.length > 1) {
+                    tempCards.filter(card => card.Name === suggestions[0].Name).forEach(tempCard => {
+                        tempCard.PossShownBy = nextPlayerId;
+                        tempCard.isSuggestion = false;
+                    });
+                }
+            }
+        }
+        updateCards([...tempCards]);
     }
+
+
 
     function onNo() {
 
@@ -39,7 +71,7 @@ export default function Show(props: any) {
             <Link to={`/turn:${playerId + 1}`} onClick={onYes}>
                 <Button >Yes</Button>
             </Link>
-                <Button onClick={onNo} >No</Button>
+            <Button onClick={onNo} >No</Button>
         </>
     )
 }

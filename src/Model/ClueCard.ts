@@ -5,20 +5,16 @@ export class ClueCard {
     Name: string;
     HeldBy: number;
     NotHeldBy: number[];
-    SuggestedBy: [{
-        playerId: number,
-        inRound: number
-    }];
-    PossShownBy: [{
-        playerId: number,
-        inRound: number
-    }];
+    isSuggestion: boolean;
+    SuggestedBy: [];
+    PossShownBy: [];
     constructor(name: string, category: Category) {
         this.Category = category;
         this.Name = name;
         this.HeldBy = NaN;
         this.NotHeldBy = [];
-        this.SuggestedBy = [{ playerId: NaN, inRound: NaN }];
-        this.PossShownBy = [{ playerId: NaN, inRound: NaN }];
+        this.isSuggestion = false;
+        this.SuggestedBy = [];
+        this.PossShownBy = [];
     }
 }

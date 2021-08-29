@@ -21,7 +21,7 @@ export default function Turn(props: any) {
         let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
 
         if (!isNaN(tempSuggestor)) {
-            card.SuggestedBy.push({ playerId: tempSuggestor, inRound: game.round });
+            card.isSuggestion = true;
         }
         updatedCards.push(card);
         setCards(updatedCards);
