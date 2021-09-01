@@ -16,7 +16,10 @@ import Show from './Show';
 import Turn from './Turn';
 
 function App() {
-  const [game, setGame] = useState<Game>(new Game());
+  let defaultGame = new Game();
+  defaultGame.players.push(new Player(0));
+  defaultGame.players.push(new Player(1));
+  const [game, setGame] = useState<Game>(defaultGame);
   return (
     <Router>
       <ScrollToTop/>

@@ -7,7 +7,7 @@ export class ClueCard {
     NotHeldBy: number[];
     isSuggestion: boolean;
     SuggestedBy: [];
-    PossShownBy: [];
+    PossShownBy: number[];
     constructor(name: string, category: Category) {
         this.Category = category;
         this.Name = name;

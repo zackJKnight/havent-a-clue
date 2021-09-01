@@ -30,7 +30,11 @@ export default function Turn(props: any) {
     return (
         <div>
             <h1>{`Mark Player ${suggestedBy + 1}'s Suggestion`}</h1>
-            <PickCards {...props} onChange={toggleCardSelection} />
+
+            <div>
+                <PickCards {...props} onChange={toggleCardSelection} />
+            </div>
+            
             <Link to={`/show:${suggestedBy}`}>
                 <Button >Suggest</Button>
             </Link>

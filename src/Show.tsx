@@ -16,6 +16,8 @@ export default function Show(props: any) {
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
 
     function onYes() {
+// if you are the suggesting player, render the pick component 
+// and change question to `Pick the card player ${nextPlayerId + 1} showed.`
 
         // if no cards in the suggestion are known, mark them all as possibly shown by
         // and move to next turn
@@ -41,16 +43,16 @@ export default function Show(props: any) {
 
         } else {
             if (suggestions.length > 1) {
-                tempCards.filter(card => card.Name === suggestions[0].Name).forEach(tempCard => {
-                    tempCard.PossShownBy = nextPlayerId;
+                tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
+                    tempCard.PossShownBy.push(parseInt(nextPlayerId));
                     tempCard.isSuggestion = false;
                 });
             }
         }
         updateCards([...tempCards]);
+
+        history.push(`/turn:${nextPlayerId}`);
     }
-
-
 
     function onNo() {
 
@@ -67,10 +69,9 @@ export default function Show(props: any) {
     return (
         <>
             <h1>{`Did Player ${nextPlayerId + 1} show a card to player ${playerId + 1} ??`}</h1>
+            
+            <Button onClick={onYes}>Yes</Button>
 
-            <Link to={`/turn:${playerId + 1}`} onClick={onYes}>
-                <Button >Yes</Button>
-            </Link>
             <Button onClick={onNo} >No</Button>
         </>
     )
