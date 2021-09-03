@@ -30,6 +30,15 @@ export default function PickCards(props: any) {
     function isDisabled(card:ClueCard): boolean{
         return !isNaN(card.HeldBy)
     }
+
+    function onSelectionWhenMarkingShownCard(){
+// do something to allow only one selection when marking the card shown to the main player.
+    }
+
+    function oneSelectionPerCategory(){
+// do something to prevent selection of more than one card per category
+    }
+
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
@@ -44,7 +53,7 @@ export default function PickCards(props: any) {
 
             <Grid item key={card.Name} >
                 <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
-                    <Checkbox onChange={(e) => props.onChange(e, card)}></Checkbox>
+                    <Checkbox onChange={(e) => props.onChange(e, card)} disabled={isDisabled(card)}></Checkbox>
                     {card.Name}
                 </Paper>
             </Grid>
@@ -53,7 +62,7 @@ export default function PickCards(props: any) {
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
                 <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
-                    <Checkbox onChange={(e) => props.onChange(e, card)}></Checkbox>
+                    <Checkbox onChange={(e) => props.onChange(e, card)} disabled={isDisabled(card)}></Checkbox>
                     {card.Name}
                 </Paper>
             </Grid>
@@ -78,7 +87,9 @@ export default function PickCards(props: any) {
 }
 
 function getClueCardBackgroundColor(card: ClueCard) {
-    //TODO this is a hot mess. Is suggestion is still setting a color... so it isn't getting unset.
+    // TODO color heldby per player
+    // TODO when NotHeldBy array contains all players, color it as a known accusation
+
     if (!isNaN(card.HeldBy)) {
         return 'gray';
     }

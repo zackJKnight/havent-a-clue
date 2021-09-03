@@ -5,27 +5,38 @@ import { ClueCard } from "./Model/ClueCard";
 import PickCards from "./PickCards";
 
 
-export default function PickHand(props:any) {
+export default function PickHand(props: any) {
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        if(!event.target.checked){
-         heldBy = NaN;
+        if (!event.target.checked) {
+            heldBy = NaN;
         }
         let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
         card.HeldBy = heldBy;
         updatedCards.push(card);
-        setCards(updatedCards);
+        setCards([...updatedCards]);
     }
-    
-    return(
-    <>
-    <h1>Pick the cards in your hand.</h1>
-    <PickCards {...props} onChange = {toggleCardSelection}/>
-    <Link to={`/turn:${0}`}>
-    <Button>OK</Button>
-    </Link>
-    </>
+
+    function onOK() {
+        // add the player to the NotHeldby array of all unselected cards.
+        const tempCards = [...cards];
+        tempCards.forEach(card => {
+            if (card.HeldBy !== heldBy) {
+                card.NotHeldBy.push(heldBy);
+            }
+        });
+        setCards([...tempCards]);
+    }
+
+    return (
+        <>
+            <h1>Pick the cards in your hand.</h1>
+            <PickCards {...props} onChange={toggleCardSelection} />
+            <Link to={`/turn:${0}`}>
+                <Button onClick={onOK}>OK</Button>
+            </Link>
+        </>
     );
 }

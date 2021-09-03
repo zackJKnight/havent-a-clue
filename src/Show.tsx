@@ -60,7 +60,14 @@ export default function Show(props: any) {
     }
 
     function onNo() {
-
+        // add the nextPlayer to the NotHeldby array of the isSuggestion cards.
+        const tempCards = [...cards];
+        tempCards.forEach(card => {
+            if (card.isSuggestion) {
+                card.NotHeldBy.push(nextPlayerId);
+            }
+        });
+        updateCards([...tempCards]);
         let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === nextPlayerId)[0]);
         if (i + 1 > props.game.players.length - 1) {
             history.push(`/turn:${{ ...playerTurnOrder[1] }.id}`);
