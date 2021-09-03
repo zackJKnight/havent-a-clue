@@ -7,6 +7,7 @@ import {
   Link
 } from 'react-router-dom';
 import './App.css';
+import MarkShown from './MarkShown';
 import { ClueCard } from './Model/ClueCard';
 import { Game } from './Model/Game';
 import { Player } from './Model/Player';
@@ -19,6 +20,7 @@ function App() {
   let defaultGame = new Game();
   defaultGame.players.push(new Player(0));
   defaultGame.players.push(new Player(1));
+  
   const [game, setGame] = useState<Game>(defaultGame);
   return (
     <Router>
@@ -29,7 +31,7 @@ function App() {
             <Home playerCount={2} setGame = {setGame} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
-            <WhichPlayer {...matchProps} />
+            <WhichPlayer {...matchProps} game={game} />
           } />
           <Route path='/hand:playerId' render={(matchProps) =>
             <PickHand matchProps={matchProps} cards={cards} game={game} />
@@ -39,6 +41,9 @@ function App() {
           } />
           <Route path='/show:playerId' render={(matchProps) =>
             <Show matchProps={matchProps} cards={cards} game={game}></Show>
+          } />
+          <Route path='/mark:showingPlayerId' render={(matchProps) =>
+            <MarkShown matchProps={matchProps} cards={cards} game={game}></MarkShown>
           } />
         </Switch>
       </div>
@@ -86,12 +91,15 @@ function Home(props: { playerCount: number, setGame: any }) {
 
 function WhichPlayer(props: any) {
   const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
-
   const [mainPlayerId, setPlayerId] = useState(0);
+  const [game, setGame] = useState<Game>(props.game);
 
   const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setPlayerId(parseInt(e.target.value) - 1)
+    let tempGame = game;
+    tempGame.mainPlayerId = parseInt(e.target.value) - 1;
+    setGame({...game, ...tempGame});    
   }
 
   return (

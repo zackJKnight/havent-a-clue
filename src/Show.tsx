@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
+import { Game } from "./Model/Game";
 
 export default function Show(props: any) {
 
@@ -14,11 +15,15 @@ export default function Show(props: any) {
     const [nextPlayerId, setNextPlayer] = useState({ ...playerTurnOrder[1] }.id);
     const [answeredNoLink] = useState(`/show:${playerId}`);
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
+    const [game, setGame] = useState<Game>(props.game);
 
     function onYes() {
-// if you are the suggesting player, render the pick component 
-// and change question to `Pick the card player ${nextPlayerId + 1} showed.`
-
+        // if it's your turn, render the pick component 
+        // and change question to `Pick the card player ${nextPlayerId + 1} showed.`
+        if (playerId === game.mainPlayerId) {
+            history.push(`/mark:${nextPlayerId}`);
+            return;
+        }
         // if no cards in the suggestion are known, mark them all as possibly shown by
         // and move to next turn
 
@@ -69,7 +74,7 @@ export default function Show(props: any) {
     return (
         <>
             <h1>{`Did Player ${nextPlayerId + 1} show a card to player ${playerId + 1} ??`}</h1>
-            
+
             <Button onClick={onYes}>Yes</Button>
 
             <Button onClick={onNo} >No</Button>
