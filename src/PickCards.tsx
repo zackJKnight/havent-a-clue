@@ -1,6 +1,7 @@
 import { Card, Checkbox, Grid, Paper } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { makeStyles } from '@material-ui/core/styles';
+import { useState } from "react";
 
 let suspectElements;
 let weaponElements;
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PickCards(props: any) {
     const classes = useStyles();
-    
+
     function isDisabled(card:ClueCard): boolean{
         return !isNaN(card.HeldBy)
     }

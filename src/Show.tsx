@@ -27,8 +27,6 @@ export default function Show(props: any) {
         // if no cards in the suggestion are known, mark them all as possibly shown by
         // and move to next turn
 
-        // all state is on the list of cards for the app. maybe. let's see if setting state....
-        // you porbably want to act on a temp list inside a function and set state when all decisions are made.
         const tempCards = [...cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
         for (let card of suggestions) {
@@ -50,12 +48,13 @@ export default function Show(props: any) {
             if (suggestions.length > 1) {
                 tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
                     tempCard.PossShownBy.push(parseInt(nextPlayerId));
-                    tempCard.isSuggestion = false;
                 });
             }
         }
         updateCards([...tempCards]);
 
+        clearSuggestions();
+        
         history.push(`/turn:${nextPlayerId}`);
     }
 
@@ -68,6 +67,9 @@ export default function Show(props: any) {
             }
         });
         updateCards([...tempCards]);
+
+        clearSuggestions();
+
         let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === nextPlayerId)[0]);
         if (i + 1 > props.game.players.length - 1) {
             history.push(`/turn:${{ ...playerTurnOrder[1] }.id}`);
@@ -76,6 +78,12 @@ export default function Show(props: any) {
             history.push(answeredNoLink);
         }
 
+    }
+
+    function clearSuggestions() {
+        let updatedCards = [...cards];
+        updatedCards.forEach((item: ClueCard) => item.isSuggestion = false);
+        updateCards(updatedCards);
     }
 
     return (
