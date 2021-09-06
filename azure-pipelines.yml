@@ -63,7 +63,7 @@ stages:
                 azureSubscription: 'zack-personal (172b0dbc-5050-471d-b86d-de89eae92804)'
                 appType: 'webAppLinux'
                 WebAppName: 'havent-a-clue'
-                packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+                packageForLinux: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
                 RuntimeStack: 'NODE|14-lts'
                 StartupCommand: 'npm install'
                 ScriptType: 'Inline Script'
