@@ -10,6 +10,10 @@ export default function PickHand(props: any) {
     let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
+        
+        if(card === undefined){
+            return;
+        }
         if (!event.target.checked) {
             heldBy = NaN;
         }

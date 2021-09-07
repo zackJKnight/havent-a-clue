@@ -21,6 +21,7 @@ Mwu ha ha ha! Mwu ha ha ha!
 - pass props in the URL with react router via the render prop and match props.
 - OR pass the prop from parent to child
 - to 'override a method' on a shared component that updates state on the parent, one option is to create the function in the parent component and pass it to the child.
+  - to learn: when the onChange of an element effects the style of that element, how to we let the parent set the style? first guess is to look at syled components.
 - state... in react state is or should be immutable. Do not modify the value of a variable directly. Use the useState Hook instead.
 - when using useState, trust in the object spread.. making a temp object and passing it in did not modify the object in the parent. I may revisit the 'why' but not until it stops me.
 - a list item in a jsx/tsx needs a key (see the PickCards component). I've learned this a few times at work, but I see how breadth of responsibility leaves me with gaps in retention.

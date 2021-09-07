@@ -15,7 +15,7 @@ export default function Show(props: any) {
     const [nextPlayerId, setNextPlayer] = useState({ ...playerTurnOrder[1] }.id);
     const [answeredNoLink] = useState(`/show:${playerId}`);
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
-    const [game, setGame] = useState<Game>(props.game);
+    const [game] = useState<Game>(props.game);
 
     function onYes() {
         // if it's your turn, render the pick component 

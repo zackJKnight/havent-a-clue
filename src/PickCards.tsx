@@ -2,6 +2,7 @@ import { Card, Checkbox, Grid, Paper } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
+import ClueCardView from "./Model/ClueCardView";
 
 let suspectElements;
 let weaponElements;
@@ -28,23 +29,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PickCards(props: any) {
     const classes = useStyles();
 
-    function isDisabled(card:ClueCard): boolean{
-        return !isNaN(card.HeldBy)
-    }
-
-    function onSelectionWhenMarkingShownCard(){
-// do something to allow only one selection when marking the card shown to the main player.
-    }
-
-    function oneSelectionPerCategory(){
-// do something to prevent selection of more than one card per category
+    function oneSelectionPerCategory() {
+        // do something to prevent selection of more than one card per category
     }
 
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
                 <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
-                    <Checkbox onChange={(e) => props.onChange(e, card)} disabled={isDisabled(card)} ></Checkbox>
+                    <Checkbox onChange={(e) => props.onChange(e, card)} ></Checkbox>
                     {card.Name}
                 </Paper>
             </Grid>
@@ -54,7 +47,7 @@ export default function PickCards(props: any) {
 
             <Grid item key={card.Name} >
                 <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
-                    <Checkbox onChange={(e) => props.onChange(e, card)} disabled={isDisabled(card)}></Checkbox>
+                    <Checkbox onChange={(e) => props.onChange(e, card)}></Checkbox>
                     {card.Name}
                 </Paper>
             </Grid>
@@ -62,10 +55,7 @@ export default function PickCards(props: any) {
     sceneElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
-                <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
-                    <Checkbox onChange={(e) => props.onChange(e, card)} disabled={isDisabled(card)}></Checkbox>
-                    {card.Name}
-                </Paper>
+                <ClueCardView onChange={props.onChange} class={classes.paper} bgcolor={() => getClueCardBackgroundColor} card={card} />
             </Grid>
         );
 
@@ -87,10 +77,12 @@ export default function PickCards(props: any) {
     );
 }
 
-function getClueCardBackgroundColor(card: ClueCard) {
+const getClueCardBackgroundColor = (card: ClueCard) => {
     // TODO color heldby per player
     // TODO when NotHeldBy array contains all players, color it as a known accusation
-
+    if (card === undefined) {
+        return;
+    }
     if (!isNaN(card.HeldBy)) {
         return 'gray';
     }
