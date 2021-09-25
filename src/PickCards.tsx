@@ -2,7 +2,7 @@ import { Card, Checkbox, Grid, Paper } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { makeStyles } from '@material-ui/core/styles';
 import { useState } from "react";
-import ClueCardView from "./Model/ClueCardView";
+import ClueCardView from "./ClueCardView";
 
 let suspectElements;
 let weaponElements;
@@ -36,7 +36,7 @@ export default function PickCards(props: any) {
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
-                <Paper className={classes.paper} style={{ background: `${getClueCardBackgroundColor(card)}` }}>
+                <Paper className={classes.paper} style={{ background: `${''}` }}>
                     <Checkbox onChange={(e) => props.onChange(e, card)} ></Checkbox>
                     {card.Name}
                 </Paper>
@@ -55,7 +55,7 @@ export default function PickCards(props: any) {
     sceneElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
-                <ClueCardView onChange={props.onChange} class={classes.paper} bgcolor={() => getClueCardBackgroundColor} card={card} />
+                <ClueCardView onChange={props.onChange} class={classes.paper} card={card} />
             </Grid>
         );
 
@@ -83,8 +83,9 @@ const getClueCardBackgroundColor = (card: ClueCard) => {
     if (card === undefined) {
         return;
     }
+
     if (!isNaN(card.HeldBy)) {
-        return 'gray';
+        card.BackgroundColor = 'gray';
     }
 
     if (card.PossShownBy?.length === 0) {
@@ -92,6 +93,6 @@ const getClueCardBackgroundColor = (card: ClueCard) => {
     }
     let gradientPercent = ((card.PossShownBy?.length || 0) / .1);
 
-    return `linear-gradient(45deg, #f78da7 ${100 - gradientPercent}%, #b80000 ${gradientPercent}%)`;
+    card.BackgroundColor = `linear-gradient(45deg, #f78da7 ${100 - gradientPercent}%, #b80000 ${gradientPercent}%)`;
 }
 

@@ -1,4 +1,4 @@
-import { Button, Card, FormControlLabel, Paper, Radio, RadioGroup } from "@material-ui/core";
+import { Button, Card, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
