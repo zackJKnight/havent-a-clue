@@ -1,4 +1,4 @@
-import { Button, Card, TextField } from '@material-ui/core';
+import { Button, Card, makeStyles, TextField } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -20,15 +20,16 @@ function App() {
   let defaultGame = new Game();
   defaultGame.players.push(new Player(0));
   defaultGame.players.push(new Player(1));
-  
+
   const [game, setGame] = useState<Game>(defaultGame);
+
   return (
     <Router>
-      <ScrollToTop/>
+      <ScrollToTop />
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} setGame = {setGame} />
+            <Home playerCount={2} setGame={setGame} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
             <WhichPlayer {...matchProps} game={game} />
@@ -63,8 +64,8 @@ function Home(props: { playerCount: number, setGame: any }) {
       tempGame.players.push(new Player(i));
     }
 
-    props.setGame(() =>{
-      return {...tempGame};
+    props.setGame(() => {
+      return { ...tempGame };
     });
     setCount(playerCount)
   }
@@ -83,7 +84,7 @@ function Home(props: { playerCount: number, setGame: any }) {
           }
         }} />
       <Link to={`/which:${count}`}>
-        <Button >OK</Button>
+        <Button variant='contained' >OK</Button>
       </Link>
     </Card>
   )
@@ -99,7 +100,7 @@ function WhichPlayer(props: any) {
     setPlayerId(parseInt(e.target.value) - 1)
     let tempGame = game;
     tempGame.mainPlayerId = parseInt(e.target.value) - 1;
-    setGame({...game, ...tempGame});    
+    setGame({ ...game, ...tempGame });
   }
 
   return (
@@ -115,7 +116,7 @@ function WhichPlayer(props: any) {
           }
         }} />
       <Link to={`/hand:${mainPlayerId}`}>
-        <Button>OK</Button>
+        <Button variant='contained'>OK</Button>
       </Link>
     </Card>
   )

@@ -24,7 +24,7 @@ export default function Show(props: any) {
             history.push(`/mark:${nextPlayerId}`);
             return;
         }
-        // if no cards in the suggestion are known, mark them all as possibly shown by
+        // if no cards in the suggestion are known, mark them all as 'possibly shown by'
         // and move to next turn
 
         const tempCards = [...cards];
@@ -90,9 +90,9 @@ export default function Show(props: any) {
         <>
             <h1>{`Did Player ${nextPlayerId + 1} show a card to player ${playerId + 1} ??`}</h1>
 
-            <Button onClick={onYes}>Yes</Button>
+            <Button variant='contained' onClick={onYes}>Yes</Button>
 
-            <Button onClick={onNo} >No</Button>
+            <Button variant='contained' onClick={onNo} >No</Button>
         </>
     )
 }

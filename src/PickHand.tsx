@@ -36,10 +36,10 @@ export default function PickHand(props: any) {
 
     return (
         <>
-            <h1>Pick the cards in your hand.</h1>
+            <h1>Pick cards in your hand</h1>
             <PickCards {...props} onChange={toggleCardSelection} />
             <Link to={`/turn:${0}`}>
-                <Button onClick={onOK}>OK</Button>
+                <Button variant='contained' onClick={onOK}>OK</Button>
             </Link>
         </>
     );

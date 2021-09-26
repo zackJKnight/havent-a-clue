@@ -1,7 +1,6 @@
 import { Card, Checkbox, Grid, Paper } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from "react";
 import ClueCardView from "./ClueCardView";
 
 let suspectElements;
@@ -10,18 +9,22 @@ let sceneElements;
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        maxWidth: "lg"
+        maxWidth: "md"
     },
     section: {
-        maxWidth: '66%',
+        maxWidth: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
+        textAlign: 'left'
+    },
+    cardGrid: {
+        spacing: .5
     },
     root: {
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(0.3),
         color: theme.palette.text.secondary
     }
 }));
@@ -62,16 +65,16 @@ export default function PickCards(props: any) {
     return (
         <div className={classes.root}>
             <Card className={classes.section}>
-                <h3>Suspects</h3>
-                <Grid container spacing={4}>{suspectElements}</Grid>
+            Suspects
+            <Grid className={classes.cardGrid} container >{suspectElements}</Grid>
             </Card>
             <Card className={classes.section}>
-                <h3>Weapons</h3>
-                <Grid container spacing={4}>{weaponElements}</Grid>
+            Weapons
+                <Grid className={classes.cardGrid} container >{weaponElements}</Grid>
             </Card>
             <Card className={classes.section}>
-                <h3>Locations</h3>
-                <Grid container spacing={4}>{sceneElements}</Grid>
+            Locations
+                <Grid className={classes.cardGrid} container >{sceneElements}</Grid>
             </Card>
         </div>
     );

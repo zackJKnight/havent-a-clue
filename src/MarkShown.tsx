@@ -29,7 +29,7 @@ export default function MarkShown(props: any) {
         setCards(updatedCards);
     }
     return (
-        <><h1>Mark the Card You've Been Shown</h1>
+        <><h1>Mark the Shown Card</h1>
             <RadioGroup value={value} onChange={toggleCardSelection} >
                 <Card>
                     {props.cards?.filter((card: ClueCard) => card.isSuggestion).map((card: ClueCard) =>
@@ -37,7 +37,7 @@ export default function MarkShown(props: any) {
                     )}
                 </Card>
             </RadioGroup>
-            <Button onClick={onOK}>OK</Button>
+            <Button variant='contained' onClick={onOK}>OK</Button>
         </>
     );
 }

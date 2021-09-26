@@ -36,9 +36,9 @@ export default function Turn(props: any) {
             </div>
             
             <Link to={`/show:${suggestedBy}`}>
-                <Button >Suggest</Button>
+                <Button variant='contained'>Suggest</Button>
             </Link>
-            <Button>Accuse</Button>
+            <Button variant='contained'>Accuse</Button>
         </div>
     )
 }
