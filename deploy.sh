@@ -6,11 +6,13 @@ yarn build
 
 cd build
 
-rm -rf .git
+rm -rf ./.git
+
+echo 'haventaclue.co' > CNAME
 
 git init
-git add -A
+git add .
 git commit -m "React deploy"
 
-git push -f git@github.com:zackjknight/haventaclue.git main
+git push -f https://github.com/zackJKnight/haventaclue.git main
 cd -
