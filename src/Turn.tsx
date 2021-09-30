@@ -26,7 +26,8 @@ export default function Turn(props: any) {
         updatedCards.push(card);
         setCards(updatedCards);
     }
-
+// TODO make player have a color (like clue characters) style instead of heading
+// <playerWColor> suggests:
     return (
         <div>
             <h1>{`Mark Player ${suggestedBy + 1}'s Suggestion`}</h1>

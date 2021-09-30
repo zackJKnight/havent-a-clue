@@ -1,4 +1,4 @@
-import { Card, Checkbox, Grid, Paper } from "@material-ui/core";
+import { Card, Checkbox, Grid, GridList, Paper } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { makeStyles } from '@material-ui/core/styles';
 import ClueCardView from "./ClueCardView";
@@ -9,22 +9,26 @@ let sceneElements;
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        maxWidth: "md"
+        display: "flex",
+        flexDirection: 'row',
+        flexWrap: "nowrap",
+        height: '6em'
     },
     section: {
         maxWidth: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        textAlign: 'left'
+        textAlign: 'left',
+        padding: theme.spacing(.2),
     },
     cardGrid: {
-        spacing: .5
+        spacing: "3 px"
     },
     root: {
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(0.3),
+        padding: theme.spacing(.5),
         color: theme.palette.text.secondary
     }
 }));
@@ -38,12 +42,12 @@ export default function PickCards(props: any) {
 
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name}>
-                <Paper className={classes.paper} style={{ background: `${''}` }}>
+        <Grid item key={card.Name} >
+                <Paper className={classes.paper} key={card.Name} style={{ background: `${''}` }}>
                     <Checkbox onChange={(e) => props.onChange(e, card)} ></Checkbox>
                     {card.Name}
                 </Paper>
-            </Grid>
+                </Grid>
         );
     weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
@@ -66,15 +70,15 @@ export default function PickCards(props: any) {
         <div className={classes.root}>
             <Card className={classes.section}>
             Suspects
-            <Grid className={classes.cardGrid} container >{suspectElements}</Grid>
+            <Grid container={true} spacing={1} >{suspectElements}</Grid>
             </Card>
             <Card className={classes.section}>
             Weapons
-                <Grid className={classes.cardGrid} container >{weaponElements}</Grid>
+                <Grid container={true} spacing={1}>{weaponElements}</Grid>
             </Card>
             <Card className={classes.section}>
             Locations
-                <Grid className={classes.cardGrid} container >{sceneElements}</Grid>
+                <Grid container={true} spacing={1} >{sceneElements}</Grid>
             </Card>
         </div>
     );
