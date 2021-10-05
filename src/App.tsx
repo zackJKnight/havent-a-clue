@@ -1,4 +1,4 @@
-import { Button, Card, TextField } from '@material-ui/core';
+import { Button, Card, MenuItem, TextField } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -70,19 +70,52 @@ function Home(props: { playerCount: number, setGame: any }) {
     setCount(playerCount)
   }
 
+  const numbers = [
+    {
+      value: 1,
+      label: 1
+    },
+    {
+      value: 2,
+      label: 2
+    },
+    {
+      value: 3,
+      label: 3
+    },
+    {
+      value: 4,
+      label: 4
+    },
+    {
+      value: 5,
+      label: 5
+    },
+    {
+      value: 6,
+      label: 6
+    }]
   return (
     <Card>
       <h1>How Many Players?
       </h1>
       <TextField
         type="number"
+        select
+        value={count}
         onChange={handleNumberChange}
 
         InputProps={{
           inputProps: {
             defaultValue: 2, min: 2, max: 6
           }
-        }} />
+        }} >
+          {numbers.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
       <Link to={`/which:${count}`}>
         <Button variant='contained' >OK</Button>
       </Link>

@@ -20,10 +20,11 @@ export default function Show(props: any) {
     function onYes() {
         // if it's your turn, render the pick component 
         // and change question to `Pick the card player ${nextPlayerId + 1} showed.`
-        if (playerId === game.mainPlayerId) {
+        if (playerId === game.mainPlayerId || nextPlayerId === game.mainPlayerId) {
             history.push(`/mark:${nextPlayerId}`);
             return;
         }
+
         // if no cards in the suggestion are known, mark them all as 'possibly shown by'
         // and move to next turn
 

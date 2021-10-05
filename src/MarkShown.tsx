@@ -27,7 +27,7 @@ export default function MarkShown(props: any) {
         updatedCards.filter((item: ClueCard) => item.Name === event.target.value)
             .forEach((item: ClueCard) => item.HeldBy = heldBy);
         setCards(updatedCards);
-    }
+    } // BUG: 4 players. you're player 1. you suggest. player 2 does not show. player 3 does. no selection to choose from.
     return (
         <><h1>Mark the Shown Card</h1>
             <RadioGroup value={value} onChange={toggleCardSelection} >
