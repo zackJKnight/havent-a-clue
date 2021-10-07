@@ -7,7 +7,6 @@ import PickCards from "./PickCards";
 
 export default function Turn(props: any) {
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
-    const [game] = useState<Game>(props.game);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
@@ -15,10 +14,13 @@ export default function Turn(props: any) {
         // move this logic to show?
         let tempSuggestor = suggestedBy;
         // limit choices to one per category
+
+        let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
+
         if (!event.target.checked) {
             tempSuggestor = NaN;
+            card.isSuggestion = false;
         }
-        let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
 
         if (!isNaN(tempSuggestor)) {
             card.isSuggestion = true;
