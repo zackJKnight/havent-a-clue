@@ -43,7 +43,7 @@ function App() {
           <Route path='/show:playerId' render={(matchProps) =>
             <Show matchProps={matchProps} cards={cards} game={game}></Show>
           } />
-          <Route path='/mark:showingPlayerId' render={(matchProps) =>
+          <Route path='/mark:showingPlayerId/:nextPlayerId' render={(matchProps) =>
             <MarkShown matchProps={matchProps} cards={cards} game={game}></MarkShown>
           } />
         </Switch>

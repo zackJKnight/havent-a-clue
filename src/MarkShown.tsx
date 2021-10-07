@@ -8,13 +8,14 @@ export default function MarkShown(props: any) {
     const history = useHistory();
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     let heldBy = parseInt(props.matchProps.match.params.showingPlayerId.replace(':', ''));
+    let nextPlayerId = parseInt(props.matchProps.match.params.nextPlayerId.replace(':', ''));
     const [value] = useState<string>();
     
     function onOK() {
         let updatedCards = [...cards];
         updatedCards.forEach((item: ClueCard) => item.isSuggestion = false);
         setCards(updatedCards);
-        history.push(`/turn:${heldBy}`)
+        history.push(`/turn:${nextPlayerId}`)
     }
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>) {

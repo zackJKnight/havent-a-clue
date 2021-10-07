@@ -12,7 +12,9 @@ export default function Show(props: any) {
     const playersBefore = props.game.players.slice(0, playerId);
     const playerTurnOrder = [...playersAfter, ...playersBefore];
 
-    const [nextPlayerId, setNextPlayer] = useState({ ...playerTurnOrder[1] }.id);
+    const [nextPlayerId] = useState({ ...playerTurnOrder[1] }.id);
+    const [showingPlayerId, setShowingPlayer] = useState({ ...playerTurnOrder[1] }.id);
+
     const [answeredNoLink] = useState(`/show:${playerId}`);
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
     const [game] = useState<Game>(props.game);
@@ -20,8 +22,8 @@ export default function Show(props: any) {
     function onYes() {
         // if it's your turn, render the pick component 
         // and change question to `Pick the card player ${nextPlayerId + 1} showed.`
-        if (playerId === game.mainPlayerId || nextPlayerId === game.mainPlayerId) {
-            history.push(`/mark:${nextPlayerId}`);
+        if (playerId === game.mainPlayerId || showingPlayerId === game.mainPlayerId) {
+            history.push(`/mark:${showingPlayerId}/${nextPlayerId}`);
             return;
         }
 
@@ -43,12 +45,12 @@ export default function Show(props: any) {
         }
         if (suggestions.length === 1) {
             // if only one card is not known as held, that card is held by the showing player
-            tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = nextPlayerId;
+            tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = showingPlayerId;
 
         } else {
             if (suggestions.length > 1) {
                 tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
-                    tempCard.PossShownBy.push(parseInt(nextPlayerId));
+                    tempCard.PossShownBy.push(parseInt(showingPlayerId));
                 });
             }
         }
@@ -61,21 +63,23 @@ export default function Show(props: any) {
 
     function onNo() {
         // add the nextPlayer to the NotHeldby array of the isSuggestion cards.
+
         const tempCards = [...cards];
         tempCards.forEach(card => {
             if (card.isSuggestion) {
-                card.NotHeldBy.push(nextPlayerId);
+                card.NotHeldBy.push(showingPlayerId);
             }
         });
         updateCards([...tempCards]);
 
-        clearSuggestions();
+        let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === showingPlayerId)[0]);
+        setShowingPlayer(playerTurnOrder[i + 1].id);
 
-        let i = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === nextPlayerId)[0]);
         if (i + 1 > props.game.players.length - 1) {
-            history.push(`/turn:${{ ...playerTurnOrder[1] }.id}`);
+            clearSuggestions();
+
+            history.push(`/turn:${nextPlayerId}`);
         } else {
-            setNextPlayer(playerTurnOrder[i + 1].id);
             history.push(answeredNoLink);
         }
 
@@ -89,7 +93,7 @@ export default function Show(props: any) {
 
     return (
         <>
-            <h1>{`Did Player ${nextPlayerId + 1} show a card to player ${playerId + 1} ??`}</h1>
+            <h1>{`Did Player ${showingPlayerId + 1} show a card to player ${playerId + 1} ??`}</h1>
 
             <Button variant='contained' onClick={onYes}>Yes</Button>
 
