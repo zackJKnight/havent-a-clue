@@ -6,6 +6,7 @@ import { ClueCard } from "./Model/ClueCard";
 
 export default function MarkShown(props: any) {
     const history = useHistory();
+    // TODO if player is you, show only cards from hand. cant show card if not in hand
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     let heldBy = parseInt(props.matchProps.match.params.showingPlayerId.replace(':', ''));
     let nextPlayerId = parseInt(props.matchProps.match.params.nextPlayerId.replace(':', ''));

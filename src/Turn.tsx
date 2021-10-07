@@ -30,6 +30,8 @@ export default function Turn(props: any) {
     }
 // TODO make player have a color (like clue characters) style instead of heading
 // <playerWColor> suggests:
+
+//TODO disable suggest button until a card of each category is selected.
     return (
         <div>
             <h1>{`Mark Player ${suggestedBy + 1}'s Suggestion`}</h1>
