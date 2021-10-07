@@ -2,7 +2,7 @@
 
 We play board games.
 
-And by we... I mean my family. In my nuclear (new-clee-are) family... I have some stiff competition. My wife is... on the right side of the bell curve. So the kids... they are smarter than me. We play clue. I lose.
+I have some stiff competition. My wife is... on the right side of the bell curve. So the kids... they are smarter than me. We play clue. I lose.
 
 They can track all the cards with their MINDS!
 
@@ -24,5 +24,7 @@ Mwu ha ha ha! Mwu ha ha ha!
   - to learn: when the onChange of an element effects the style of that element, how to we let the parent set the style? first guess is to look at syled components.
 - state... in react state is or should be immutable. Do not modify the value of a variable directly. Use the useState Hook instead.
 - when using useState, trust in the object spread.. making a temp object and passing it in did not modify the object in the parent. I may revisit the 'why' but not until it stops me.
-- a list item in a jsx/tsx needs a key (see the PickCards component). I've learned this a few times at work, but I see how breadth of responsibility leaves me with gaps in retention.
+- a list item in a jsx/tsx needs a key (see the PickCards component). I've learned this a few times at work.
 - When you need a Link to use a value that will change, you can instead create an onClick for the Button and handle nav in the function with useHistory.push.
+- Using back and forward browser buttons doesn't show snapshots of the game state. It shows the current game state. Might disable browser nav or implement game state snapshots.
+  
