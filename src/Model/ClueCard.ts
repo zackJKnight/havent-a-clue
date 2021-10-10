@@ -9,6 +9,7 @@ export class ClueCard {
     SuggestedBy: [];
     PossShownBy: number[];
     BackgroundColor: string;
+    isSolution: boolean;
 
     constructor(name: string, category: Category) {
         this.Category = category;
@@ -19,5 +20,6 @@ export class ClueCard {
         this.SuggestedBy = [];
         this.PossShownBy = [];
         this.BackgroundColor = '';
+        this.isSolution = false;
     }
 }

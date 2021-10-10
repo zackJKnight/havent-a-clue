@@ -15,13 +15,17 @@ export default function ClueCardView(props: any) {
 }
 
 const getClueCardBackgroundColor = (card: ClueCard): string => {
-    // TODO color heldby per player
-    // TODO when NotHeldBy array contains all players, color it as a known accusation
+
     if (card === undefined) {
         return '';
     }
 
+    if(card.isSolution){
+        return 'green';
+    }
+
     if (!isNaN(card.HeldBy)) {
+    // TODO color heldby per player
         return 'gray';
     }
 

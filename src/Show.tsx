@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
 import { Game } from "./Model/Game";
 
@@ -57,7 +57,7 @@ export default function Show(props: any) {
         updateCards([...tempCards]);
 
         clearSuggestions();
-        
+
         history.push(`/turn:${nextPlayerId}`);
     }
 
@@ -73,26 +73,34 @@ export default function Show(props: any) {
         updateCards([...tempCards]);
 
         let showingPlayerIndex = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === showingPlayerId)[0]);
-        
+
         const nextShowingPlayerIndex = showingPlayerIndex + 1;
 
         // increment showing player- current showing player did not show a card
-        setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
-
+        if (playerTurnOrder[nextShowingPlayerIndex]) {
+            setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
+        }
         // if this is the last showing player - noone has shown
         if (nextShowingPlayerIndex > props.game.players.length - 1) {
-// TODO if noone shows the suggestor a card, no other player has any of the suggested cards. 
-// EITHER all suggested cards are the solution OR the suggestor has one or more cards
-// the unheld cards must be marked as NOT_HELD_BY. 
-// if the NOT_HELD_BY list for a card contains all players, it is 
-// and should be marked as a known accusation.
-
+            noteKnownSolutionCards();
             clearSuggestions();
             history.push(`/turn:${nextPlayerId}`);
         } else {
             history.push(answeredNoLink);
         }
 
+    }
+
+    function noteKnownSolutionCards() {
+        // if the NOT_HELD_BY list for a card contains all players,
+        // mark as a known accusation.
+        let updatedCards = [...cards];
+        updatedCards.forEach((item: ClueCard) => {
+            if (props.game.players.length === item.NotHeldBy.length) {
+                item.isSolution = true;
+            }
+        });
+        updateCards(updatedCards);
     }
 
     function clearSuggestions() {
