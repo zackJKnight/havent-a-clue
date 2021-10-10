@@ -1,10 +1,12 @@
 import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 import PickCards from "./PickCards";
 
 export default function Turn(props: any) {
+    const history = useHistory();
+
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
@@ -26,21 +28,25 @@ export default function Turn(props: any) {
         updatedCards.push(card);
         setCards(updatedCards);
     }
-// TODO make player have a color (like clue characters) style instead of heading
-// <playerWColor> suggests:
 
-//TODO disable suggest button until a card of each category is selected.
+    function onSuggest() {
+        
+        // TODO if showing player is you, and suggestion contains one or
+        // more of your held cards go to "mark card you showed"
+
+        history.push(`/show:${suggestedBy}`);
+    }
+    // TODO make player have a color (like clue characters) style instead of heading
+    // <playerWColor> suggests:
+
+    //TODO disable suggest button until a card of each category is selected.
     return (
         <div>
             <h1>{`Mark Player ${suggestedBy + 1}'s Suggestion`}</h1>
-
             <div>
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>
-            
-            <Link to={`/show:${suggestedBy}`}>
-                <Button variant='contained'>Suggest</Button>
-            </Link>
+            <Button variant='contained' onClick={onSuggest}>Suggest</Button>
             <Button variant='contained'>Accuse</Button>
         </div>
     )

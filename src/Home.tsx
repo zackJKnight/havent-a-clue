@@ -1,4 +1,4 @@
-import { Button, Card, MenuItem, Paper, TextField } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Game } from "./Model/Game";
@@ -34,7 +34,7 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
     return (
         <Paper className={classes.container}>
             <h1>How Many Players?</h1>
-            <Card className={classes.inputContainer}>
+            <div className={classes.inputContainer}>
                 <TextField
                     className={classes.numberSelect}
                     type="number"
@@ -53,13 +53,13 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
                         </MenuItem>
                     ))}
                 </TextField>
-            </Card>
-            <Card className={classes.inputContainer}>
+            </div>
+            <div className={classes.inputContainer}>
                 <Button
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick} >OK</Button>
-            </Card>
+            </div>
         </Paper>
     )
 }

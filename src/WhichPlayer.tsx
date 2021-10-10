@@ -1,4 +1,4 @@
-import { Button, Card, MenuItem, Paper, TextField } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { Game } from "./Model/Game";
 import NumberSelectList from "./Utils/NumberSelection";
@@ -27,7 +27,7 @@ export default function WhichPlayer(props: any) {
 
     return (
         <Paper className={classes.container}>
-            <Card className={classes.inputContainer}>
+            <div className={classes.inputContainer}>
                 <h1>Which Player Are You?
                 </h1>
                 <TextField
@@ -48,13 +48,13 @@ export default function WhichPlayer(props: any) {
                         </MenuItem>
                     ))}
                 </TextField>
-            </Card>
-            <Card className={classes.inputContainer}>
+            </div>
+            <div className={classes.inputContainer}>
                 <Button
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick}>OK</Button>
-            </Card>
+            </div>
         </Paper>
     )
 }
