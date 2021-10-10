@@ -1,22 +1,14 @@
-# Simpson Clue Solver
+# Clue Notepad
 
-We play board games.
+Track progress of the Clue board game.
 
-I have some stiff competition. My wife is... on the right side of the bell curve. So the kids... they are smarter than me. We play clue. I lose.
+Modeling the domain with goals:
 
-They can track all the cards with their MINDS!
+1. improve react skills
+2. explore machine learning
+3. beat my children when we play Clue
 
-I could lie and say that this app is a way for me to get better at React- you know, to support the mission-critical apps I'm building at work.
-
-But you understand me. I feel like I can be real with you.
-
-I'm building this to destroy their hopes of ever winning another game of Simpsons Clue!
-
-Mwu ha ha ha! Mwu ha ha ha!
-
-## Things I've Learned or relearned more better
-
-### React Topics
+## React Topics
 
 - pass props in the URL with react router via the render prop and match props.
 - OR pass the prop from parent to child
