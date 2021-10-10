@@ -1,50 +1,45 @@
 import { Button, Card, MenuItem, Paper, TextField } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Game } from "./Model/Game";
-import { Player } from "./Model/Player";
 import NumberSelectList from "./Utils/NumberSelection";
+import { useHistory } from "react-router-dom";
 import { useStyles } from "./Utils/Styles";
 
-export default function Home(props: { playerCount: number, maxPlayers: number, setGame: any }) {
+export default function WhichPlayer(props: any) {
     const history = useHistory();
-    const [count, setCount] = useState(props.playerCount);
     const classes = useStyles();
+    const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
+    const [mainPlayerId, setPlayerId] = useState(0);
+    const [game, setGame] = useState<Game>(props.game);
 
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        const playerCount = parseInt(e.target.value);
-        let tempGame: Game = new Game();
-        for (let i = 0; i < playerCount; i++) {
-            tempGame.players.push(new Player(i));
-        }
-
-        props.setGame(() => {
-            return { ...tempGame };
-        });
-        setCount(playerCount)
+        setPlayerId(parseInt(e.target.value) - 1)
+        let tempGame = game;
+        tempGame.mainPlayerId = parseInt(e.target.value) - 1;
+        setGame({ ...game, ...tempGame });
     }
-
-    const numbers = NumberSelectList(props.maxPlayers);
-
     function onClick() {
-        history.push(`/which:${count}`)
+        history.push(`/hand:${mainPlayerId}`);
     }
+
+    const numbers = NumberSelectList(playerCount);
 
     return (
         <Paper className={classes.container}>
-            <h1>How Many Players?</h1>
             <Card className={classes.inputContainer}>
+                <h1>Which Player Are You?
+                </h1>
                 <TextField
                     className={classes.numberSelect}
                     type="number"
                     select
-                    value={count}
+                    value={mainPlayerId + 1}
                     onChange={handleNumberChange}
 
                     InputProps={{
                         inputProps: {
-                            defaultValue: 2, min: 2, max: 6
+                            defaultValue: 1, min: 1, max: playerCount
                         }
                     }} >
                     {numbers.map((option) => (
@@ -58,7 +53,7 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
                 <Button
                     className={classes.buttonInput}
                     variant='contained'
-                    onClick={onClick} >OK</Button>
+                    onClick={onClick}>OK</Button>
             </Card>
         </Paper>
     )

@@ -1,10 +1,8 @@
-import { Button, Card, MenuItem, Paper, TextField } from '@material-ui/core';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
@@ -17,7 +15,7 @@ import ScrollToTop from './Utils/ScrollToTop';
 import Show from './Show';
 import Turn from './Turn';
 import { CardData } from './Utils/CardData';
-import NumberSelectList from './Utils/NumberSelection';
+import WhichPlayer from './WhichPlayer';
 
 function App() {
   const MAX_PLAYERS = 6;
@@ -54,50 +52,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function WhichPlayer(props: any) {
-  const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
-  const [mainPlayerId, setPlayerId] = useState(0);
-  const [game, setGame] = useState<Game>(props.game);
-
-  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setPlayerId(parseInt(e.target.value) - 1)
-    let tempGame = game;
-    tempGame.mainPlayerId = parseInt(e.target.value) - 1;
-    setGame({ ...game, ...tempGame });
-  }
-  const numbers = NumberSelectList(playerCount);
-
-  return (
-    <Paper>
-      <Card >
-        <h1>Which Player Are You?
-        </h1>
-        <TextField
-          type="number"
-          select
-          value={mainPlayerId + 1}
-          onChange={handleNumberChange}
-
-          InputProps={{
-            inputProps: {
-              defaultValue: 1, min: 1, max: playerCount
-            }
-          }} >
-          {numbers.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Card>
-      <Link to={`/hand:${mainPlayerId}`}>
-        <Button variant='contained'>OK</Button>
-      </Link>
-    </Paper>
-  )
 }
 
 const cardData = CardData;
