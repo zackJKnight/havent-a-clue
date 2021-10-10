@@ -1,4 +1,4 @@
-import { Button, Card, MenuItem, TextField } from '@material-ui/core';
+import { Button, Card, MenuItem, Paper, TextField } from '@material-ui/core';
 import { ChangeEvent, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -7,16 +7,20 @@ import {
   Link
 } from 'react-router-dom';
 import './App.css';
+import Home from './Home';
 import MarkShown from './MarkShown';
 import { ClueCard } from './Model/ClueCard';
 import { Game } from './Model/Game';
 import { Player } from './Model/Player';
 import PickHand from './PickHand';
-import ScrollToTop from './ScrollToTop';
+import ScrollToTop from './Utils/ScrollToTop';
 import Show from './Show';
 import Turn from './Turn';
+import { CardData } from './Utils/CardData';
+import NumberSelectList from './Utils/NumberSelection';
 
 function App() {
+  const MAX_PLAYERS = 6;
   let defaultGame = new Game();
   defaultGame.players.push(new Player(0));
   defaultGame.players.push(new Player(1));
@@ -29,7 +33,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} setGame={setGame} />
+            <Home playerCount={2} maxPlayers={MAX_PLAYERS} setGame={setGame} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
             <WhichPlayer {...matchProps} game={game} />
@@ -52,77 +56,6 @@ function App() {
   );
 }
 
-function Home(props: { playerCount: number, setGame: any }) {
-
-  const [count, setCount] = useState(props.playerCount);
-
-  const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const playerCount = parseInt(e.target.value);
-    let tempGame: Game = new Game();
-    for (let i = 0; i < playerCount; i++) {
-      tempGame.players.push(new Player(i));
-    }
-
-    props.setGame(() => {
-      return { ...tempGame };
-    });
-    setCount(playerCount)
-  }
-
-  const numbers = [
-    {
-      value: 1,
-      label: 1
-    },
-    {
-      value: 2,
-      label: 2
-    },
-    {
-      value: 3,
-      label: 3
-    },
-    {
-      value: 4,
-      label: 4
-    },
-    {
-      value: 5,
-      label: 5
-    },
-    {
-      value: 6,
-      label: 6
-    }]
-  return (
-    <Card>
-      <h1>How Many Players?
-      </h1>
-      <TextField
-        type="number"
-        select
-        value={count}
-        onChange={handleNumberChange}
-
-        InputProps={{
-          inputProps: {
-            defaultValue: 2, min: 2, max: 6
-          }
-        }} >
-          {numbers.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      <Link to={`/which:${count}`}>
-        <Button variant='contained' >OK</Button>
-      </Link>
-    </Card>
-  )
-}
-
 function WhichPlayer(props: any) {
   const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
   const [mainPlayerId, setPlayerId] = useState(0);
@@ -135,54 +68,39 @@ function WhichPlayer(props: any) {
     tempGame.mainPlayerId = parseInt(e.target.value) - 1;
     setGame({ ...game, ...tempGame });
   }
+  const numbers = NumberSelectList(playerCount);
 
   return (
-    <Card >
-      <h1>Which Player Are You?
-      </h1>
-      <TextField
-        type="number"
-        onChange={handleNumberChange}
-        InputProps={{
-          inputProps: {
-            defaultValue: 1, min: 1, max: playerCount
-          }
-        }} />
+    <Paper>
+      <Card >
+        <h1>Which Player Are You?
+        </h1>
+        <TextField
+          type="number"
+          select
+          value={mainPlayerId + 1}
+          onChange={handleNumberChange}
+
+          InputProps={{
+            inputProps: {
+              defaultValue: 1, min: 1, max: playerCount
+            }
+          }} >
+          {numbers.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Card>
       <Link to={`/hand:${mainPlayerId}`}>
         <Button variant='contained'>OK</Button>
       </Link>
-    </Card>
+    </Paper>
   )
 }
 
-const cardData = {
-  "suspects": [
-    "homer",
-    "bart",
-    "lisa",
-    "marge",
-    "krusty",
-    "smithers"
-  ],
-  "weapons": [
-    "glove",
-    "sax",
-    "necklace",
-    "donut",
-    "plutonium",
-    "slingshot"
-  ],
-  "scenes": [
-    "studio",
-    "arcade",
-    "house",
-    "manor",
-    "kwiki",
-    "retirement",
-    "dutchman",
-    "nuke-plant"
-  ]
-}
+const cardData = CardData;
 
 let cards: ClueCard[] = [];
 for (let suspect of [...cardData.suspects]) {

@@ -2,7 +2,6 @@ import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
-import { Game } from "./Model/Game";
 import PickCards from "./PickCards";
 
 export default function Turn(props: any) {
@@ -11,7 +10,6 @@ export default function Turn(props: any) {
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
 
-        // move this logic to show?
         let tempSuggestor = suggestedBy;
         // limit choices to one per category
 
