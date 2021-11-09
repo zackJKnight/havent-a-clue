@@ -38,8 +38,9 @@ export default function PickCards(props: any) {
 
     const classes = useStyles();
 
+    // limit selection of props.cards to one of each card.category 
     function oneSelectionPerCategory() {
-        // do something to prevent selection of more than one card per category
+
     }
 
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')

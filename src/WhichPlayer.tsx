@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, TextField } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { Game } from "./Model/Game";
 import NumberSelectList from "./Utils/NumberSelection";
@@ -15,7 +15,7 @@ export default function WhichPlayer(props: any) {
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setPlayerId(parseInt(e.target.value) - 1)
-        let tempGame = game;
+        let tempGame: Game = game;
         tempGame.mainPlayerId = parseInt(e.target.value) - 1;
         setGame({ ...game, ...tempGame });
     }
@@ -26,10 +26,10 @@ export default function WhichPlayer(props: any) {
     const numbers = NumberSelectList(playerCount);
 
     return (
-        <Paper className={classes.container}>
-            <div className={classes.inputContainer}>
-                <h1>Which Player Are You?
-                </h1>
+        <>
+        <Paper className={classes.root}>
+                <Typography variant='h3'>Which Player Are You?
+                </Typography>
                 <TextField
                     className={classes.numberSelect}
                     type="number"
@@ -48,13 +48,12 @@ export default function WhichPlayer(props: any) {
                         </MenuItem>
                     ))}
                 </TextField>
-            </div>
-            <div className={classes.inputContainer}>
-                <Button
+        
+        </Paper>
+        <Button
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick}>OK</Button>
-            </div>
-        </Paper>
+        </>
     )
 }

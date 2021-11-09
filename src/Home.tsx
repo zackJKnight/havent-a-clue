@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, TextField } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Game } from "./Model/Game";
@@ -8,8 +8,8 @@ import { useStyles } from "./Utils/Styles";
 
 export default function Home(props: { playerCount: number, maxPlayers: number, setGame: any }) {
     const history = useHistory();
-    const [count, setCount] = useState(props.playerCount);
     const classes = useStyles();
+    const [count, setCount] = useState(props.playerCount);
 
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -32,16 +32,15 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
     }
 
     return (
-        <Paper className={classes.container}>
-            <h1>How Many Players?</h1>
-            <div className={classes.inputContainer}>
+        <div className={classes.root}>
+            <Typography variant={'h3'}>How Many Players?</Typography>
+            <Paper className={classes.root}>
                 <TextField
                     className={classes.numberSelect}
                     type="number"
                     select
                     value={count}
                     onChange={handleNumberChange}
-
                     InputProps={{
                         inputProps: {
                             defaultValue: 2, min: 2, max: 6
@@ -53,13 +52,13 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
                         </MenuItem>
                     ))}
                 </TextField>
-            </div>
-            <div className={classes.inputContainer}>
+            </Paper>
+            <div className={classes.bottomButtonContainer}>
                 <Button
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick} >OK</Button>
             </div>
-        </Paper>
+        </div>
     )
 }

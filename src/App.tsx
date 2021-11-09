@@ -4,7 +4,6 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import './App.css';
 import Home from './Home';
 import MarkShown from './MarkShown';
 import { ClueCard } from './Model/ClueCard';
@@ -16,6 +15,8 @@ import Show from './Show';
 import Turn from './Turn';
 import { CardData } from './Utils/CardData';
 import WhichPlayer from './WhichPlayer';
+import { useStyles } from './Utils/Styles';
+import { AppBar } from '@material-ui/core';
 
 function App() {
   const MAX_PLAYERS = 6;
@@ -24,11 +25,12 @@ function App() {
   defaultGame.players.push(new Player(1));
 
   const [game, setGame] = useState<Game>(defaultGame);
-
+  const classes = useStyles();
   return (
+    <div className={classes.root}>
+    <AppBar className={classes.app}>Haven't A Clue - A Boardgame Notebook for the Clueless</AppBar>
     <Router>
       <ScrollToTop />
-      <div className="App">
         <Switch>
           <Route exact path="/">
             <Home playerCount={2} maxPlayers={MAX_PLAYERS} setGame={setGame} />
@@ -49,8 +51,8 @@ function App() {
             <MarkShown matchProps={matchProps} cards={cards} game={game}></MarkShown>
           } />
         </Switch>
-      </div>
     </Router>
+    </div>
   );
 }
 

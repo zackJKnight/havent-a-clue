@@ -1,17 +1,20 @@
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { Link } from 'react-router-dom';
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 import PickCards from "./PickCards";
+import { useStyles } from "./Utils/Styles";
 
 
 export default function PickHand(props: any) {
+    const classes = useStyles();
+
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        
-        if(card === undefined){
+
+        if (card === undefined) {
             return;
         }
         if (!event.target.checked) {
@@ -35,12 +38,14 @@ export default function PickHand(props: any) {
     }
 
     return (
-        <>
-            <h1>Pick cards in your hand</h1>
+        <div className={classes.root}>
+            <Typography variant='h3'>Pick cards in your hand</Typography>
             <PickCards {...props} onChange={toggleCardSelection} />
-            <Link to={`/turn:${0}`}>
-                <Button variant='contained' onClick={onOK}>OK</Button>
-            </Link>
-        </>
+            <div className={classes.bottomButtonContainer}>
+                <Link to={`/turn:${0}`}>
+                    <Button className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
+                </Link>
+            </div>
+        </div>
     );
 }
