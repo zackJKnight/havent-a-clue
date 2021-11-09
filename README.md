@@ -19,4 +19,6 @@ Modeling the domain with goals:
 - a list item in a jsx/tsx needs a key (see the PickCards component). I've learned this a few times at work.
 - When you need a Link to use a value that will change, you can instead create an onClick for the Button and handle nav in the function with useHistory.push.
 - Using back and forward browser buttons doesn't show snapshots of the game state. It shows the current game state. Might disable browser nav or implement game state snapshots.
-  
+- leaning toward putting the game win checks as functions on the Game, but need to learn how best
+- to do that in a React way... is it by making a useEffect hook to set the cards? Or does that 
+- bypass and negate immutable state... is it an anitpattern?
