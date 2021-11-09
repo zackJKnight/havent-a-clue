@@ -1,13 +1,46 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createTheme, ThemeProvider} from "@material-ui/core/styles";
+
+const theme = createTheme({
+  palette: {
+     primary: {
+        light: '#fff',
+        main: '#388e3c',
+        dark: '#000'
+     },
+     secondary: {
+       main: '#fbe92d',
+     },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    h3: {
+      marginTop: '1rem',
+      fontSize: '2.0rem',
+      '@media (min-width:600px)': {
+        fontSize: '2.0rem',
+      }
+    }
+  }
+});
 
 ReactDOM.render(
-  <React.StrictMode>
+    <ThemeProvider theme={theme}>
     <App />
-  </React.StrictMode>,
+    </ThemeProvider>,
   document.getElementById('root')
 );
 
