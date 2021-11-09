@@ -23,6 +23,8 @@ export const CardData = {
       "kwiki",
       "retirement",
       "dutchman",
-      "nuke-plant"
+      "nuke-plant",
+      "dungeon",
+      "barney's"
     ]
   }
