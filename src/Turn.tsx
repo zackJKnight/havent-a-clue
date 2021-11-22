@@ -4,11 +4,12 @@ import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 import PickCards from "./PickCards";
 import { useStyles } from "./Utils/Styles";
+import { Game } from "./Model/Game";
 
 export default function Turn(props: any) {
     const history = useHistory();
     const classes = useStyles();
-
+    const [game] = useState<Game>(props.game);
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
@@ -39,7 +40,7 @@ export default function Turn(props: any) {
     }
 
     const onSkip = () => {
-        history.push(`/turn:${suggestedBy}`);
+        history.push(`/turn:${ (suggestedBy + 1) % game.players.length}`);
     }
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:
