@@ -24,7 +24,7 @@ export default function Show(props: any) {
 
 
     function onNoneShown() {
-// BUG possiblyShown isn't cleared when a player doesnt show a card
+
         // add the Showing Player to the NotHeldby array of the isSuggestion cards.
         const tempCards = [...cards];
         tempCards.forEach(card => {
@@ -54,11 +54,24 @@ export default function Show(props: any) {
     }
 
     function onCardShown() {
+
+        // if one of the suggestions is held, clear and move on
+
+
         // if no cards in the suggestion are known, mark them all as 'possibly shown by'
         // and move to next turn
 
         const tempCards = [...cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
+
+        if(suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
+        radioValue !== 'A Card') {
+            clearSuggestions();
+            history.push(`/turn:${nextPlayerId}`);
+            return;
+        }
+
+
         for (let card of suggestions) {
             if (!isNaN(card.HeldBy)) {
                 const cardIndex = suggestions.indexOf(card);
@@ -114,7 +127,7 @@ export default function Show(props: any) {
                 cards={cards} 
                 showingPlayerId={showingPlayerId}
                 setShowingPlayer={setShowingPlayer} 
-                nextPlayerId={nextPlayerId}
+                playerId={playerId}
                 onNoneShown={onNoneShown}
                 onCardShown={onCardShown}
                 radioValue={radioValue} />

@@ -10,8 +10,8 @@ export default function MarkShown(props: any) {
     // TODO if player is you, show only cards from hand. cant show card if not in hand
     const game: Game = props.game;
     const [cards, updateCards] = useState(props.cards);
-    //let nextPlayerId = props.nextPlayerId; //parseInt(props.matchProps.match.params.nextPlayerId.replace(':', ''));
     const [value, setRadioValue] = useState(props.radioValue);
+    const [playerId] = useState(props.playerId);
 
     function onOK() {
         if (value === 'None') {
@@ -41,12 +41,16 @@ export default function MarkShown(props: any) {
     return (
         <>
             <Paper className={classes.root}>
-                <RadioGroup value={value} onChange={toggleCardSelection} >
+                <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     <Card>
-                        {props.cards?.filter((card: ClueCard) => card.isSuggestion
-                            && card.HeldBy !== game.mainPlayerId).map((card: ClueCard) =>
-                                <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />
-                            )}
+                        {playerId === game.mainPlayerId &&
+                            props.cards?.filter((card: ClueCard) => card.isSuggestion
+                                && card.HeldBy !== game.mainPlayerId).map((card: ClueCard) =>
+                                    <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />
+                                )}
+                        {playerId !== game.mainPlayerId &&
+                            <FormControlLabel key={'aCard'} value={'a Card'} control={<Radio />} label={'A Card'} />
+                        }
                         <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
                     </Card>
                 </RadioGroup>

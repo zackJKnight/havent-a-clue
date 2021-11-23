@@ -33,14 +33,18 @@ export default function Turn(props: any) {
     }
 
     function onSuggest() {
-        
+
         // TODO if showing player is you, set card shown as shown to another player
-    
+
         history.push(`/show:${suggestedBy}`);
     }
 
     const onSkip = () => {
-        history.push(`/turn:${ (suggestedBy + 1) % game.players.length}`);
+        history.push(`/turn:${(suggestedBy + 1) % game.players.length}`);
+    }
+
+    const onAccuse = () => {
+
     }
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:
@@ -52,8 +56,11 @@ export default function Turn(props: any) {
             <div>
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>
-            <Button variant='contained' onClick={onSuggest}>Suggest</Button>
-            <Button variant='contained' onClick={onSkip}>Skip</Button>
+            <div className={classes.bottomButtonContainer}>
+                <Button className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
+                <Button className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
+                <Button className={classes.buttonInput} variant='contained' onClick={onSkip}>Skip</Button>
+            </div>
         </div>
     )
 }

@@ -36,7 +36,8 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     buttonInput: {
         verticalAlign: 'bottom',
         horizontalAlign: 'center',
-        minWidth: '75%',
+        minWidth: '20%',
+        marginRight: '1em',
         color: `{theme.palette.primary}`
     },
     bottomButtonContainer: {
@@ -50,6 +51,13 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         verticalAlign: 'bottom',
         horizontalAlign: 'center',
         minWidth: '50%'
+    },
+    radioGroup: {
+        display: 'flex',
+        flexDirection: 'column',
+        input:{
+            display: 'block'
+        }
     }
 }));
 
