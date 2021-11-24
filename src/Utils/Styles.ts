@@ -53,11 +53,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         minWidth: '50%'
     },
     radioGroup: {
-        display: 'flex',
-        flexDirection: 'column',
-        input:{
-            display: 'block'
-        }
+        display: 'flex'
     }
 }));
 

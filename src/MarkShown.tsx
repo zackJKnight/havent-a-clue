@@ -1,4 +1,4 @@
-import { Button, Card, FormControlLabel, Paper, Radio, RadioGroup } from "@material-ui/core";
+import { Button, Card, FormControl, FormControlLabel, Paper, Radio, RadioGroup } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import { useStyles } from "./Utils/Styles";
 import { Game } from "./Model/Game";
@@ -43,8 +43,9 @@ export default function MarkShown(props: any) {
     }
     return (
         <div className={classes.root}>
+            <FormControl component="fieldset">
             <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
-                <Card>
+
                     {playerId === game.mainPlayerId &&
                         props.cards?.filter((card: ClueCard) => card.isSuggestion
                             && card.HeldBy !== game.mainPlayerId).map((card: ClueCard) =>
@@ -54,8 +55,8 @@ export default function MarkShown(props: any) {
                         <FormControlLabel key={'aCard'} value={'a Card'} control={<Radio />} label={'A Card'} />
                     }
                     <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
-                </Card>
             </RadioGroup>
+            </FormControl>
             <Button variant='contained' className={classes.buttonInput} onClick={onOK}>OK</Button>
         </div>
     );
