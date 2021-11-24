@@ -44,7 +44,7 @@ export default function Turn(props: any) {
     }
 
     const onAccuse = () => {
-
+        history.push(`/accuse:${suggestedBy}`);
     }
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:

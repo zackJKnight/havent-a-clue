@@ -17,6 +17,8 @@ import { CardData } from './Utils/CardData';
 import WhichPlayer from './WhichPlayer';
 import { useStyles } from './Utils/Styles';
 import { AppBar } from '@material-ui/core';
+import Accuse from './Accuse';
+import Win from './Win';
 
 function App() {
   const MAX_PLAYERS = 6;
@@ -28,9 +30,9 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-    <AppBar className={classes.app}>Haven't A Clue - A Boardgame Notebook for the Clueless</AppBar>
-    <Router>
-      <ScrollToTop />
+      <AppBar className={classes.app}>Haven't A Clue - A Boardgame Notebook for the Clueless</AppBar>
+      <Router>
+        <ScrollToTop />
         <Switch>
           <Route exact path="/">
             <Home playerCount={2} maxPlayers={MAX_PLAYERS} setGame={setGame} />
@@ -47,11 +49,15 @@ function App() {
           <Route path='/show:playerId' render={(matchProps) =>
             <Show matchProps={matchProps} cards={cards} game={game}></Show>
           } />
-          <Route path='/mark:showingPlayerId/:nextPlayerId' render={(matchProps) =>
-            <MarkShown matchProps={matchProps} cards={cards} game={game}></MarkShown>
+          <Route path='/accuse:playerId' render={(matchProps) =>
+            <Accuse matchProps={matchProps} cards={cards} game={game}></Accuse>
           } />
+          <Route path='/win:playerId' render={(matchProps) =>
+            <Win matchProps={matchProps} cards={cards} game={game}></Win>
+          } />
+
         </Switch>
-    </Router>
+      </Router>
     </div>
   );
 }
