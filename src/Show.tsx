@@ -53,7 +53,7 @@ export default function Show(props: any) {
 
     }
 
-    function onCardShown() {
+    function onCardShown(radioValue: string) {
 
         // if one of the suggestions is held, clear and move on
 
@@ -64,13 +64,12 @@ export default function Show(props: any) {
         const tempCards = [...cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
 
-        if(suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
-        radioValue !== 'A Card') {
+        if (suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
+            radioValue.toLocaleLowerCase() !== 'a card') {
             clearSuggestions();
             history.push(`/turn:${nextPlayerId}`);
             return;
         }
-
 
         for (let card of suggestions) {
             if (!isNaN(card.HeldBy)) {
@@ -83,17 +82,16 @@ export default function Show(props: any) {
                 })
             }
         }
+
         if (suggestions.length === 1) {
             // if only one card is not known as held, that card is held by the showing player
             tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = showingPlayerId;
-
-        } else {
-            if (suggestions.length > 1) {
-                tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
-                    tempCard.PossShownBy.push(parseInt(showingPlayerId));
-                });
-            }
+        } else if (suggestions.length > 1) {
+            tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
+                tempCard.PossShownBy.push(parseInt(showingPlayerId));
+            });
         }
+
         updateCards([...tempCards]);
 
         clearSuggestions();
@@ -123,10 +121,10 @@ export default function Show(props: any) {
         <>
             <Typography variant='h3'>{`Shown by player ${showingPlayerId + 1} to player ${playerId + 1}`}</Typography>
             <MarkShown
-                game={game} 
-                cards={cards} 
+                game={game}
+                cards={cards}
                 showingPlayerId={showingPlayerId}
-                setShowingPlayer={setShowingPlayer} 
+                setShowingPlayer={setShowingPlayer}
                 playerId={playerId}
                 onNoneShown={onNoneShown}
                 onCardShown={onCardShown}

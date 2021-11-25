@@ -23,7 +23,7 @@ export default function MarkShown(props: any) {
             updatedCards.filter((item: ClueCard) => item.Name === value)
                 .forEach((item: ClueCard) => item.HeldBy = props.showingPlayerId);
             updateCards(updatedCards);
-            props.onCardShown();
+            props.onCardShown(value);
         }
     }
 
