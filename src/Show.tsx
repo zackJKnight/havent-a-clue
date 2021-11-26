@@ -57,7 +57,6 @@ export default function Show(props: any) {
 
         // if one of the suggestions is held, clear and move on
 
-
         // if no cards in the suggestion are known, mark them all as 'possibly shown by'
         // and move to next turn
 
@@ -71,22 +70,29 @@ export default function Show(props: any) {
             return;
         }
 
+        let remainingSuggestions = Array<ClueCard>();
         for (let card of suggestions) {
+            // instead of splicing off of suggestions (which you are iterating on), use slice to add the remainingSuggestions to a separate array.
+            // when splice modifies the suggestions array, the loop exits early
+            const cardIndex = suggestions.indexOf(card);
+            const knownCard = suggestions.slice(cardIndex, cardIndex + 1)[0];
+
             if (!isNaN(card.HeldBy)) {
-                const cardIndex = suggestions.indexOf(card);
-                const knownCard = suggestions.splice(cardIndex, 1);
+
                 tempCards.forEach((card: ClueCard) => {
-                    if (card.Name === knownCard[0].Name) {
+                    if (card.Name === knownCard.Name) {
                         card.isSuggestion = false;
                     }
                 })
+            } else {
+                remainingSuggestions.push(knownCard);
             }
         }
 
-        if (suggestions.length === 1) {
+        if (remainingSuggestions.length === 1) {
             // if only one card is not known as held, that card is held by the showing player
-            tempCards.filter(card => card.Name === suggestions[0].Name)[0].HeldBy = showingPlayerId;
-        } else if (suggestions.length > 1) {
+            tempCards.filter(card => card.Name === remainingSuggestions[0].Name)[0].HeldBy = showingPlayerId;
+        } else if (remainingSuggestions.length > 1) {
             tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
                 tempCard.PossShownBy.push(parseInt(showingPlayerId));
             });
