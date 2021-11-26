@@ -10,16 +10,14 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         minHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'center'
+    },
+    page: {
+
     },
     container: {
-        display: 'flex',
         minHeight: '75%',
         margin: '1 px',
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
         flexGrow: "-moz-initial"
     },
     palette: {

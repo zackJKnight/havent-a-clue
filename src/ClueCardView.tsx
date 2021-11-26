@@ -1,4 +1,4 @@
-import { Checkbox, Paper } from "@material-ui/core";
+import { Checkbox, Paper, Radio, Typography } from "@material-ui/core";
 import { useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 
@@ -6,8 +6,8 @@ export default function ClueCardView(props: any) {
     const [card] = useState<ClueCard>(props.card);
     return (
         <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}` }}>
-            <Checkbox onChange={(e) => props.onChange(e, card)} />
-            {props.card.Name}
+            <Radio onChange={(e) => props.onChange(e, card)} />
+            <Typography>{props.card.Name}</Typography>
         </Paper>
     );
 }
