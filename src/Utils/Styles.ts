@@ -6,7 +6,6 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         alignItems: "center"
     },
     root: {
-        margin: theme.spacing(3),
         minWidth: '98%',
         minHeight: '100%',
         display: 'flex',
@@ -16,8 +15,8 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     container: {
         display: 'flex',
-        minWidth: '100%',
         minHeight: '75%',
+        margin: '1 px',
         alignContent: 'center',
         justifyContent: 'center',
         alignItems: 'center',
@@ -33,6 +32,20 @@ export const useStyles = makeStyles<Theme>((theme) => ({
           main: '#fbe92d',
         },
      },
+    section: {
+        maxWidth: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        textAlign: 'left',
+        padding: theme.spacing(.2),
+    },
+    cardGrid: {
+        spacing: "3 px"
+    },
+    paper: {
+        padding: theme.spacing(.5),
+        color: theme.palette.text.secondary
+    },
     buttonInput: {
         verticalAlign: 'bottom',
         horizontalAlign: 'center',
@@ -45,7 +58,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         justifyContent: 'center',
         minWidth: '100%',
         minHeight: '10%',
-        marginTop: '5%'
+        marginTop: '3%'
     },
     numberSelect: {
         verticalAlign: 'bottom',
