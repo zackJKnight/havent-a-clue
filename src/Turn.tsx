@@ -14,11 +14,13 @@ export default function Turn(props: any) {
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-
+if(card === undefined){
+    return;
+}
         let tempSuggestor = suggestedBy;
         // limit choices to one per category
 
-        let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
+        let updatedCards = [...cards].filter((item: ClueCard) => item?.Name !== card.Name);
 
         if (!event.target.checked) {
             tempSuggestor = NaN;

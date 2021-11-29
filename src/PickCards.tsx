@@ -1,13 +1,13 @@
-import { Card, FormControl, Grid, RadioGroup, Typography } from "@material-ui/core";
+import { Card, FormControl, Grid, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import ClueCardView from "./ClueCardView";
 import { useStyles } from "./Utils/Styles";
 import { ChangeEvent, useState } from "react";
+import { CardData } from "./Utils/CardData";
 
 let suspectElements;
 let weaponElements;
-let sceneElements;
+let locationElements;
 
 export default function PickCards(props: any) {
 
@@ -16,30 +16,53 @@ export default function PickCards(props: any) {
     const [selectedWeapon, setWeapon] = useState('');
     const [selectedLocation, setLocation] = useState('');
 
-    const onSuspectSelected = (event: ChangeEvent<HTMLInputElement>, card: ClueCard) => {
-        if(event?.target?.value === undefined){
+    const onCardSelected = (event: ChangeEvent<HTMLInputElement>) => {
+        if (event?.target?.value === undefined) {
             return;
         }
-        
-        setSuspect(event?.target?.value);
+
+        switch (event?.target?.value) {
+            case CardData.suspects.find(s => s === event?.target?.value):
+                setSuspect(event?.target?.value);
+                break;
+            case CardData.weapons.find(s => s === event?.target?.value):
+                setWeapon(event?.target?.value);
+                break;
+            case CardData.scenes.find(s => s === event?.target?.value):
+                setLocation(event?.target?.value);
+                break;
+        }
         props.onChange(event);
     }
+
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <Grid item key={card.Name} >
-                <ClueCardView onChange={onSuspectSelected} class={classes.paper} card={card} />
+                <ClueCardView 
+                onChange={onCardSelected} 
+                class={classes.paper} 
+                card={card}
+                control={<Radio/>} />
             </Grid>
         );
     weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
             <Grid item key={card.Name} >
-                <ClueCardView onChange={props.onChange} class={classes.paper} card={card} />
+                <ClueCardView 
+                onChange={onCardSelected} 
+                class={classes.paper} 
+                card={card}
+                control={<Radio/>} />
             </Grid>
         );
-    sceneElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
+    locationElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <Grid item key={card.Name}>
-                <ClueCardView onChange={props.onChange} class={classes.paper} card={card} />
+                <ClueCardView 
+                onChange={onCardSelected} 
+                class={classes.paper} 
+                card={card}
+                control={<Radio/>} />
             </Grid>
         );
 
@@ -49,19 +72,31 @@ export default function PickCards(props: any) {
                 <Typography>Suspects</Typography>
                 <Grid container={true} spacing={1} >
                     <FormControl component="fieldset">
-                        <RadioGroup row value={selectedSuspect} >
-                            {suspectElements}
+                        <RadioGroup row value={selectedSuspect} onChange={onCardSelected}>
+                            {suspectElements}   
                         </RadioGroup>
                     </FormControl>
                 </Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Weapons</Typography>
-                <Grid container={true} spacing={1}>{weaponElements}</Grid>
+                <Grid container={true} spacing={1} >
+                    <FormControl component="fieldset">
+                        <RadioGroup row value={selectedWeapon} onChange={onCardSelected}>
+                            {weaponElements}
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Locations</Typography>
-                <Grid container={true} spacing={1} >{sceneElements}</Grid>
+                <Grid container={true} spacing={1} >
+                    <FormControl component="fieldset">
+                        <RadioGroup row value={selectedLocation} onChange={onCardSelected}>
+                            {locationElements}
+                        </RadioGroup>
+                    </FormControl>
+                </Grid>
             </Card>
         </div>
     );
