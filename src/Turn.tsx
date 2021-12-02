@@ -14,9 +14,15 @@ export default function Turn(props: any) {
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-if(card === undefined){
-    return;
-}
+        if (!cards.map(card => card.Name).includes(event?.target?.value)) {
+            return;
+        }
+        if(card === undefined){
+            const selectedCard = cards.find(card => card.Name === event?.target?.value);
+            if(selectedCard !== undefined){
+                card = selectedCard;
+            }
+        }
         let tempSuggestor = suggestedBy;
         // limit choices to one per category
 

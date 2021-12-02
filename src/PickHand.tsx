@@ -17,8 +17,14 @@ export default function PickHand(props: any) {
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
 
-        if (card === undefined) {
+        if (!cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
+        }
+        if(card === undefined || !(card instanceof ClueCard)) {
+            const selectedCard = cards.find(card => card.Name === event?.target?.value);
+            if(selectedCard !== undefined){
+                card = selectedCard;
+            }
         }
         if (!event.target.checked) {
             heldBy = NaN;

@@ -7,7 +7,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     root: {
         minWidth: '98%',
-        minHeight: '100%',
+        minHeight: '90%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'

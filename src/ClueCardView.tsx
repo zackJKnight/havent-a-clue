@@ -1,12 +1,10 @@
-import { FormControlLabel, Paper, Radio, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { FormControlLabel, Paper} from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 
 export default function ClueCardView(props: any) {
-    const [card] = useState<ClueCard>(props.card);
     return (
         <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}` }}>
-            <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={props.card.Name} />
+            <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={props.card.Name} onChange={props.onChange} />
         </Paper>
     );
 }
