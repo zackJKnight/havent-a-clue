@@ -55,6 +55,7 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
             </Paper>
             <div className={classes.bottomButtonContainer}>
                 <Button
+                    color="primary"
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick} >OK</Button>

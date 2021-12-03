@@ -5,7 +5,6 @@ import {
   Route
 } from 'react-router-dom';
 import Home from './Home';
-import MarkShown from './MarkShown';
 import { ClueCard } from './Model/ClueCard';
 import { Game } from './Model/Game';
 import { Player } from './Model/Player';
@@ -16,7 +15,7 @@ import Turn from './Turn';
 import { CardData } from './Utils/CardData';
 import WhichPlayer from './WhichPlayer';
 import { useStyles } from './Utils/Styles';
-import { AppBar } from '@material-ui/core';
+import { AppBar, Typography } from '@material-ui/core';
 import Accuse from './Accuse';
 import Win from './Win';
 
@@ -30,7 +29,11 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar className={classes.app}>Haven't A Clue - A Boardgame Notebook for the Clueless</AppBar>
+      <AppBar className={classes.app}>
+        <Typography>
+          Clue Boardgame Notepad
+        </Typography>
+      </AppBar>
       <Router>
         <ScrollToTop />
         <Switch>

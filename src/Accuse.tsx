@@ -38,8 +38,8 @@ export default function Accuse(props: any): any {
     return (
         <div className={classes.root}>
             <div className={classes.bottomButtonContainer}>
-                <Button variant='contained' className={classes.buttonInput} onClick={onCorrect}>Correct</Button>
-                <Button variant='contained' className={classes.buttonInput} onClick={onWrong}>Wrong!</Button>
+                <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onCorrect}>Correct</Button>
+                <Button color='secondary' variant='contained' className={classes.buttonInput} onClick={onWrong}>Wrong!</Button>
             </div>
         </div >
     )

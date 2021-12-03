@@ -65,8 +65,8 @@ export default function Turn(props: any) {
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>
             <div className={classes.bottomButtonContainer}>
-                <Button className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
-                <Button className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
+                <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
+                <Button color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
                 <Button className={classes.buttonInput} variant='contained' onClick={onSkip}>Skip</Button>
             </div>
         </div>

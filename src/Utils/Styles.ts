@@ -32,17 +32,10 @@ export const useStyles = makeStyles<Theme>((theme) => ({
      },
     section: {
         maxWidth: '90%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        marginLeft: '2%',
+        marginRight: '2%',
         textAlign: 'left',
-        padding: theme.spacing(.2),
-    },
-    cardGrid: {
-        spacing: "3 px"
-    },
-    paper: {
-        padding: theme.spacing(.5),
-        color: theme.palette.text.secondary
+        padding: theme.spacing(1.5),
     },
     buttonInput: {
         verticalAlign: 'bottom',
@@ -55,8 +48,19 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         minWidth: '100%',
-        minHeight: '10%',
-        marginTop: '3%'
+        marginTop: '3%',
+        position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
+    },
+    cardGrid: {
+        padding: theme.spacing(1)
+    },
+    cardItem: {
+        padding: theme.spacing(.5),
+        marginRight: theme.spacing(.5),
+        marginBottom: theme.spacing(.5),
+        color: theme.palette.text.secondary
     },
     numberSelect: {
         verticalAlign: 'bottom',

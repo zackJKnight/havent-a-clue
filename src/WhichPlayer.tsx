@@ -26,34 +26,34 @@ export default function WhichPlayer(props: any) {
     const numbers = NumberSelectList(playerCount);
 
     return (
-        <>
-        <Paper className={classes.root}>
-                <Typography variant='h3'>Which Player Are You?
-                </Typography>
-                <TextField
-                    className={classes.numberSelect}
-                    type="number"
-                    select
-                    value={mainPlayerId + 1}
-                    onChange={handleNumberChange}
+        <div className={classes.root}>
+            <Typography variant='h3'>Which Player Are You?
+            </Typography>
+            <TextField
+                className={classes.numberSelect}
+                type="number"
+                select
+                value={mainPlayerId + 1}
+                onChange={handleNumberChange}
 
-                    InputProps={{
-                        inputProps: {
-                            defaultValue: 1, min: 1, max: playerCount
-                        }
-                    }} >
-                    {numbers.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-        
-        </Paper>
-        <Button
+                InputProps={{
+                    inputProps: {
+                        defaultValue: 1, min: 1, max: playerCount
+                    }
+                }} >
+                {numbers.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+            <div className={classes.bottomButtonContainer}>
+                <Button
+                    color="primary"
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick}>OK</Button>
-        </>
+            </div>
+        </div>
     )
 }

@@ -1,5 +1,5 @@
 import { Button, Card, Checkbox, Grid, Typography } from "@material-ui/core";
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 import { useStyles } from "./Utils/Styles";
@@ -11,6 +11,7 @@ let locationElements;
 
 export default function PickHand(props: any) {
     const classes = useStyles();
+    const history = useHistory();
 
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
     let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
@@ -44,13 +45,14 @@ export default function PickHand(props: any) {
             }
         });
         setCards([...tempCards]);
+        history.push(`/turn:${0}`);
     }
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <Grid item key={card.Name} >
                 <ClueCardView 
                 onChange={toggleCardSelection} 
-                class={classes.paper} 
+                class={classes.cardItem} 
                 card={card}
                 control={<Checkbox/>} />
             </Grid>
@@ -60,7 +62,7 @@ export default function PickHand(props: any) {
             <Grid item key={card.Name} >
                 <ClueCardView 
                 onChange={toggleCardSelection} 
-                class={classes.paper} 
+                class={classes.cardItem} 
                 card={card}
                 control={<Checkbox/>} />
             </Grid>
@@ -70,7 +72,7 @@ export default function PickHand(props: any) {
             <Grid item key={card.Name}>
                 <ClueCardView 
                 onChange={toggleCardSelection} 
-                class={classes.paper} 
+                class={classes.cardItem} 
                 card={card}
                 control={<Checkbox/>} />
             </Grid>
@@ -94,9 +96,7 @@ export default function PickHand(props: any) {
                 <Grid container={true} spacing={1} >{locationElements}</Grid>
             </Card>
             <div className={classes.bottomButtonContainer}>
-                <Link to={`/turn:${0}`}>
-                    <Button className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
-                </Link>
+                    <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
             </div>
         </div>
     );

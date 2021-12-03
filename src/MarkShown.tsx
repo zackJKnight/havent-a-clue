@@ -44,7 +44,7 @@ export default function MarkShown(props: any) {
     return (
         <div className={classes.root}>
             <FormControl component="fieldset">
-            <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
+                <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     {playerId === game.mainPlayerId &&
                         props.cards?.filter((card: ClueCard) => card.isSuggestion
                             && card.HeldBy !== game.mainPlayerId).map((card: ClueCard) =>
@@ -54,9 +54,11 @@ export default function MarkShown(props: any) {
                         <FormControlLabel key={'aCard'} value={'a Card'} control={<Radio />} label={'A Card'} />
                     }
                     <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
-            </RadioGroup>
+                </RadioGroup>
             </FormControl>
-            <Button variant='contained' className={classes.buttonInput} onClick={onOK}>OK</Button>
+            <div className={classes.bottomButtonContainer}>
+                <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onOK}>OK</Button>
+            </div>
         </div>
     );
 }
