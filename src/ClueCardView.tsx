@@ -1,10 +1,20 @@
-import { FormControlLabel, Paper} from "@material-ui/core";
+import { FormControlLabel, Paper } from "@material-ui/core";
+import { ReactElement } from "react";
 import { ClueCard } from "./Model/ClueCard";
 
-export default function ClueCardView(props: any) {
-    return (
-        <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}` }}>
-            <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={props.card.Name} onChange={props.onChange} />
+type Props = {
+    class: string,
+    card: ClueCard,
+    control: ReactElement,
+    onChange: any
+
+}
+export default function ClueCardView(props: Props) {
+   
+        return (
+        <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}`, opacity: 0.8 }}>
+            <img style={{borderRadius: `50%`, width: `35%`, height: `35%`}} src={require(`./Images/${props.card.Name}.png`).default} alt={props.card.Name}></img>
+            <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={''} onChange={props.onChange} />
         </Paper>
     );
 }

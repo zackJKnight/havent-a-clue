@@ -50,8 +50,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         minWidth: '100%',
         marginTop: '3%',
         position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(3)
+    bottom: theme.spacing(2)
     },
     cardGrid: {
         padding: theme.spacing(1)

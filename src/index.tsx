@@ -28,7 +28,7 @@ const theme = createTheme({
       '"Segoe UI Symbol"',
     ].join(','),
     h3: {
-      marginTop: '1rem',
+      marginTop: '5rem',
       fontSize: '2.0rem',
       '@media (min-width:600px)': {
         fontSize: '2.0rem',

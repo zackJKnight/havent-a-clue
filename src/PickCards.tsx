@@ -1,4 +1,4 @@
-import { Card, FormControl, Grid, Radio, RadioGroup, Typography } from "@material-ui/core";
+import { Card, Grid, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { ClueCard } from "./Model/ClueCard";
 import ClueCardView from "./ClueCardView";
 import { useStyles } from "./Utils/Styles";

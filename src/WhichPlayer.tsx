@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
+import { Button, MenuItem, TextField, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { Game } from "./Model/Game";
 import NumberSelectList from "./Utils/NumberSelection";

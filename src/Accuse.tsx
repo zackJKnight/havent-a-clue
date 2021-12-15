@@ -1,7 +1,6 @@
 import { Button } from "@material-ui/core";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import { Game } from "./Model/Game";
 import { useStyles } from "./Utils/Styles";
 
 // was accusation correct?
@@ -12,7 +11,6 @@ export default function Accuse(props: any): any {
 
     const classes = useStyles();
     const history = useHistory();
-    const [game, setGame] = useState<Game>(props.game);
     const playerId = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     const playersAfter = props.game.players.slice(playerId);

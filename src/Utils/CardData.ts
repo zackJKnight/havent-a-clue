@@ -17,7 +17,6 @@ export const CardData = {
     ],
     "scenes": [
       "studio",
-      "arcade",
       "house",
       "manor",
       "kwiki",
@@ -25,6 +24,6 @@ export const CardData = {
       "dutchman",
       "nuke-plant",
       "dungeon",
-      "barney's"
+      "bowl-a-rama"
     ]
   }
