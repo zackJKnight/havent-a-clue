@@ -39,7 +39,7 @@ const getClueCardBackgroundColor = (card: ClueCard): string => {
     }
 
     let gradientPercent = ((card.PossShownBy?.length || 0) / .1);
-    const startGradientColor = '#f0f0f0';
-    const endGradientColor = '#0c0c0c';
+    const startGradientColor = '#fcf0c0';
+    const endGradientColor = '#ffd321';
     return `linear-gradient(45deg, ${startGradientColor} ${100 - gradientPercent}%, ${endGradientColor} ${gradientPercent}%)`;
 }
