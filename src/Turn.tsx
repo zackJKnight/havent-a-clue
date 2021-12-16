@@ -17,9 +17,9 @@ export default function Turn(props: any) {
         if (!cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
         }
-        if(card === undefined){
+        if (card === undefined) {
             const selectedCard = cards.find(card => card.Name === event?.target?.value);
-            if(selectedCard !== undefined){
+            if (selectedCard !== undefined) {
                 card = selectedCard;
             }
         }
@@ -27,10 +27,12 @@ export default function Turn(props: any) {
         // limit choices to one per category
 
         let updatedCards = [...cards].filter((item: ClueCard) => item?.Name !== card.Name);
-
+        updatedCards.filter(otherCard => otherCard.Category === card.Category
+            && otherCard.Name !== card.Name).forEach(card => card.isSuggestion = false);
         if (!event.target.checked) {
             tempSuggestor = NaN;
             card.isSuggestion = false;
+
         }
 
         if (!isNaN(tempSuggestor)) {
