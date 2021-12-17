@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, Paper, Typography } from "@material-ui/core";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { useStyles } from "./Utils/Styles";
@@ -35,6 +35,9 @@ export default function Accuse(props: any): any {
 
     return (
         <div className={classes.root}>
+            <Paper className={classes.root}>
+                <Typography variant='h3'>Did they get it right?</Typography>
+            </Paper>
             <div className={classes.bottomButtonContainer}>
                 <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onCorrect}>Correct</Button>
                 <Button color='secondary' variant='contained' className={classes.buttonInput} onClick={onWrong}>Wrong!</Button>

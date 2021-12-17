@@ -22,3 +22,8 @@ Modeling the domain with goals:
 - leaning toward putting the game win checks as functions on the Game, but need to learn how best
 - to do that in a React way... is it by making a useEffect hook to set the cards? Or does that 
 - bypass and negate immutable state... is it an anitpattern?
+
+## Bugs
+
+- be player 1. for first turn suggestion, suggest a suspect not held by you, a weapon held by you, and a location not held by you. indicate that player two showed you the suspect. BUG: the suspect AND the location are marked gray as 'known to be held by'
+

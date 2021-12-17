@@ -7,11 +7,10 @@ import { ChangeEvent, useState } from "react";
 export default function MarkShown(props: any) {
     const classes = useStyles();
 
-    // TODO if player is you, show only cards from hand. cant show card if not in hand
-    const game: Game = props.game;
-    const [cards, updateCards] = useState(props.cards);
+    const [game] = useState<Game>(props.game);
+    const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
     const [value, setRadioValue] = useState(props.radioValue);
-    const [playerId] = useState(props.playerId);
+    const [playerId] = useState<number>(props.playerId);
 
     function onOK() {
         if (value === 'None') {

@@ -37,33 +37,30 @@ export default function PickCards(props: any) {
 
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name} >
-                <ClueCardView
-                    onChange={onCardSelected}
-                    class={classes.cardItem}
-                    card={card}
-                    control={<Radio />} />
-            </Grid>
+            <ClueCardView
+                key={card.Name}
+                onChange={onCardSelected}
+                class={classes.cardItem}
+                card={card}
+                control={<Radio />} />
         );
     weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name} >
-                <ClueCardView
-                    onChange={onCardSelected}
-                    class={classes.cardItem}
-                    card={card}
-                    control={<Radio />} />
-            </Grid>
+            <ClueCardView
+                key={card.Name}
+                onChange={onCardSelected}
+                class={classes.cardItem}
+                card={card}
+                control={<Radio />} />
         );
     locationElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name}>
-                <ClueCardView
-                    onChange={onCardSelected}
-                    class={classes.cardItem}
-                    card={card}
-                    control={<Radio />} />
-            </Grid>
+            <ClueCardView
+                key={card.Name}
+                onChange={onCardSelected}
+                class={classes.cardItem}
+                card={card}
+                control={<Radio />} />
         );
 
     return (

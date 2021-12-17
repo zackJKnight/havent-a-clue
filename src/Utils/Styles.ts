@@ -1,35 +1,28 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
 export const useStyles = makeStyles<Theme>((theme) => ({
-    app:{
+    app: {
         display: "flex",
         alignItems: "center"
     },
     root: {
-        minWidth: '98%',
-        minHeight: '90%',
+        minWidth: '100%',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
-    },
-    page: {
-
-    },
-    container: {
-        minHeight: '75%',
-        margin: '1 px',
-        flexGrow: "-moz-initial"
+        alignItems: 'center',
+        // backgroundColor: '#ffd321'
     },
     palette: {
         primary: {
-           light: '#fff',
-           main: '#388e3c',
-           dark: '#000'
+            light: '#fff',
+            main: '#388e3c',
+            dark: '#000'
         },
         secondary: {
-          main: '#fbe92d',
+            main: '#fbe92d',
         },
-     },
+    },
     section: {
         maxWidth: '90%',
         marginLeft: '2%',
@@ -49,16 +42,19 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         justifyContent: 'center',
         minWidth: '100%',
         marginTop: '3%',
-        position: "fixed",
-    bottom: theme.spacing(2)
+        position: "sticky",
+        bottom: theme.spacing(2)
     },
     cardGrid: {
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        minHeight: '100%'
     },
     cardItem: {
+        display: 'flex',
         padding: theme.spacing(.5),
         marginRight: theme.spacing(.5),
         marginBottom: theme.spacing(.5),
+        maxWidth: '25%',
         color: theme.palette.text.secondary
     },
     numberSelect: {

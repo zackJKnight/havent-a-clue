@@ -13,7 +13,7 @@ export default function ClueCardView(props: Props) {
    
         return (
         <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}`, opacity: 0.8 }}>
-            <img style={{borderRadius: `50%`, width: `35%`, height: `35%`}} src={require(`./Images/${props.card.Name}.png`).default} alt={props.card.Name}></img>
+            <img style={{borderRadius: `50%`, width: `75%`, height: `75%`}} src={require(`./Images/${props.card.Name}.png`).default} alt={props.card.Name}></img>
             <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={''} onChange={props.onChange} />
         </Paper>
     );

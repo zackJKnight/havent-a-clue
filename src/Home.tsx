@@ -33,7 +33,11 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
 
     return (
         <div className={classes.root}>
-            <Typography variant={'h3'}>How Many Players?</Typography>
+            <Typography variant={'h3'}>Mr. Burns Found Dead!</Typography>
+            <img src={require('./Images/220px-WhoShotMrBurnsclue.png').default}
+                alt={'mr burns found dead'}
+                style={{borderRadius: `20%`}}></img>
+            <Typography variant={'h3'}>How Many Clue Players?</Typography>
             <Paper className={classes.root}>
                 <TextField
                     className={classes.numberSelect}

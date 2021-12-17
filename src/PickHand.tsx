@@ -21,9 +21,9 @@ export default function PickHand(props: any) {
         if (!cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
         }
-        if(card === undefined || !(card instanceof ClueCard)) {
+        if (card === undefined || !(card instanceof ClueCard)) {
             const selectedCard = cards.find(card => card.Name === event?.target?.value);
-            if(selectedCard !== undefined){
+            if (selectedCard !== undefined) {
                 card = selectedCard;
             }
         }
@@ -49,33 +49,30 @@ export default function PickHand(props: any) {
     }
     suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name} >
-                <ClueCardView 
-                onChange={toggleCardSelection} 
-                class={classes.cardItem} 
+            <ClueCardView
+                key={card.Name}
+                class={classes.cardItem}
+                onChange={toggleCardSelection}
                 card={card}
-                control={<Checkbox/>} />
-            </Grid>
+                control={<Checkbox />} />
         );
     weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name} >
-                <ClueCardView 
-                onChange={toggleCardSelection} 
-                class={classes.cardItem} 
+            <ClueCardView
+                key={card.Name}
+                onChange={toggleCardSelection}
+                class={classes.cardItem}
                 card={card}
-                control={<Checkbox/>} />
-            </Grid>
+                control={<Checkbox />} />
         );
     locationElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
-            <Grid item key={card.Name}>
-                <ClueCardView 
-                onChange={toggleCardSelection} 
-                class={classes.cardItem} 
+            <ClueCardView
+                key={card.Name}
+                onChange={toggleCardSelection}
+                class={classes.cardItem}
                 card={card}
-                control={<Checkbox/>} />
-            </Grid>
+                control={<Checkbox />} />
         );
 
     return (
@@ -96,7 +93,7 @@ export default function PickHand(props: any) {
                 <Grid container={true} spacing={1} >{locationElements}</Grid>
             </Card>
             <div className={classes.bottomButtonContainer}>
-                    <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
+                <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
             </div>
         </div>
     );

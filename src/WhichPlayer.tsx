@@ -1,4 +1,4 @@
-import { Button, MenuItem, TextField, Typography } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
 import { ChangeEvent, useState } from "react";
 import { Game } from "./Model/Game";
 import NumberSelectList from "./Utils/NumberSelection";
@@ -29,6 +29,7 @@ export default function WhichPlayer(props: any) {
         <div className={classes.root}>
             <Typography variant='h3'>Which Player Are You?
             </Typography>
+            <Paper className={classes.root}>
             <TextField
                 className={classes.numberSelect}
                 type="number"
@@ -47,6 +48,7 @@ export default function WhichPlayer(props: any) {
                     </MenuItem>
                 ))}
             </TextField>
+            </Paper>
             <div className={classes.bottomButtonContainer}>
                 <Button
                     color="primary"
