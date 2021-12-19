@@ -23,22 +23,14 @@ export default function Turn(props: any) {
                 card = selectedCard;
             }
         }
-        let tempSuggestor = suggestedBy;
+
         // limit choices to one per category
 
-        let updatedCards = [...cards].filter((item: ClueCard) => item?.Name !== card.Name);
+        let updatedCards = [...cards];
         updatedCards.filter(otherCard => otherCard.Category === card.Category
-            && otherCard.Name !== card.Name).forEach(card => card.isSuggestion = false);
-        if (!event.target.checked) {
-            tempSuggestor = NaN;
-            card.isSuggestion = false;
-
-        }
-
-        if (!isNaN(tempSuggestor)) {
-            card.isSuggestion = true;
-        }
-        updatedCards.push(card);
+            && otherCard.Name !== card.Name)
+            .forEach(card => card.isSuggestion = event.target.checked);
+        
         setCards(updatedCards);
     }
 
@@ -56,6 +48,10 @@ export default function Turn(props: any) {
     const onAccuse = () => {
         history.push(`/accuse:${suggestedBy}`);
     }
+
+    const disabled = (): boolean => {
+       return cards.filter(card => card.isSuggestion).length !== 3;
+    }
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:
 
@@ -67,8 +63,8 @@ export default function Turn(props: any) {
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>
             <div className={classes.bottomButtonContainer}>
-                <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
-                <Button color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
+                <Button disabled={disabled()} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
+                <Button disabled={disabled()} color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
                 <Button className={classes.buttonInput} variant='contained' onClick={onSkip}>Skip</Button>
             </div>
         </div>
