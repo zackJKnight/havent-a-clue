@@ -1,6 +1,11 @@
 import { ClueCard } from "../Model/ClueCard";
 
 export default class GameRules {
+    // when showing player isn't you
+    // if two suggestions are known you to, you now know the remaining suggestion
+    // if one suggestion is known to you, the other two are possibly shown.
+
+    // when showing player is you
 
     checkCategoriesForSolution = (updatedCards: Array<ClueCard>): Array<ClueCard> => {
         // if all other cards in the category are held, the remaining card is 
