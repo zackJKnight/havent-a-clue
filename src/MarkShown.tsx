@@ -11,6 +11,7 @@ export default function MarkShown(props: any) {
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
     const [value, setRadioValue] = useState(props.radioValue);
     const [playerId] = useState<number>(props.playerId);
+    const [showingPlayerId] = useState<number>(props.showingPlayerId);    
 
     function onOK() {
         if (value === 'None') {
@@ -52,12 +53,13 @@ export default function MarkShown(props: any) {
         <div className={classes.root}>
             <FormControl component="fieldset">
                 <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
-                    {playerId === game.mainPlayerId &&
+                    {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&
                         props.cards?.filter((card: ClueCard) => card.isSuggestion
-                            && card.HeldBy !== game.mainPlayerId).map((card: ClueCard) =>
+                            && (showingPlayerId === game.mainPlayerId ? (card.HeldBy === game.mainPlayerId) :(card.HeldBy !== game.mainPlayerId)))
+                            .map((card: ClueCard) =>
                                 <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />
                             )}
-                    {playerId !== game.mainPlayerId &&
+                    {(showingPlayerId !== game.mainPlayerId && playerId !== game.mainPlayerId) &&
                         <FormControlLabel key={'aCard'} value={'a Card'} control={<Radio />} label={'A Card'} />
                     }
                     <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
