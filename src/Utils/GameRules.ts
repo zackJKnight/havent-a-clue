@@ -5,7 +5,8 @@ export default class GameRules {
     // if two suggestions are known you to, you now know the remaining suggestion
     // if one suggestion is known to you, the other two are possibly shown.
 
-    // when showing player is you
+
+    // if a card is notHeldby all players, it is a solution
 
     checkCategoriesForSolution = (updatedCards: Array<ClueCard>): Array<ClueCard> => {
         // if all other cards in the category are held, the remaining card is 

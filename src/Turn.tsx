@@ -11,12 +11,14 @@ export default function Turn(props: any) {
     const classes = useStyles();
     const [game] = useState<Game>(props.game);
     const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
+    const [disabled, setDisabled] = useState<boolean>(cards.filter(card => card.isSuggestion).length !== 3);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
         if (!cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
         }
+        
         if (card === undefined) {
             const selectedCard = cards.find(card => card.Name === event?.target?.value);
             if (selectedCard !== undefined) {
@@ -27,11 +29,11 @@ export default function Turn(props: any) {
         // limit choices to one per category
 
         let updatedCards = [...cards];
-        updatedCards.filter(otherCard => otherCard.Category === card.Category
-            && otherCard.Name !== card.Name)
-            .forEach(card => card.isSuggestion = event.target.checked);
+        updatedCards.filter(otherCard => otherCard.Category === card.Category)
+            .forEach(item => item.isSuggestion = card.Name === item.Name);
         
         setCards(updatedCards);
+        setDisabled(updatedCards.filter(card => card.isSuggestion).length !== 3)
     }
 
     function onSuggest() {
@@ -49,13 +51,9 @@ export default function Turn(props: any) {
         history.push(`/accuse:${suggestedBy}`);
     }
 
-    const disabled = (): boolean => {
-       return cards.filter(card => card.isSuggestion).length !== 3;
-    }
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:
 
-    //TODO disable suggest button until a card of each category is selected.
     return (
         <div className={classes.root}>
             <Typography variant='h3'>{`Player ${suggestedBy + 1}'s Suggestion`}</Typography>
@@ -63,8 +61,8 @@ export default function Turn(props: any) {
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>
             <div className={classes.bottomButtonContainer}>
-                <Button disabled={disabled()} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
-                <Button disabled={disabled()} color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
+                <Button disabled={disabled} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
+                <Button disabled={disabled} color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
                 <Button className={classes.buttonInput} variant='contained' onClick={onSkip}>Skip</Button>
             </div>
         </div>

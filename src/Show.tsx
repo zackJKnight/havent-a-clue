@@ -62,7 +62,7 @@ export default function Show(props: any) {
 
         const tempCards = [...cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
-
+// bug - radioValue will be a card name when showing player is you
         if (suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
             radioValue.toLocaleLowerCase() !== 'a card') {
             clearSuggestions();
@@ -72,24 +72,23 @@ export default function Show(props: any) {
 
         let remainingSuggestions = Array<ClueCard>();
         for (let card of suggestions) {
-            // instead of splicing off of suggestions (which you are iterating on), use slice to add the remainingSuggestions to a separate array.
-            // when splice modifies the suggestions array, the loop exits early
+            //  add the remainingSuggestions to a separate array.
+            // use to deduce known cards
             const cardIndex = suggestions.indexOf(card);
             const knownCard = suggestions.slice(cardIndex, cardIndex + 1)[0];
 
-            if (!isNaN(card.HeldBy)) {
-
-                tempCards.forEach((card: ClueCard) => {
-                    if (card.Name === knownCard.Name) {
-                        card.isSuggestion = false;
-                    }
-                })
-            } else {
+            if (isNaN(card.HeldBy)) {
                 remainingSuggestions.push(knownCard);
             }
+            tempCards.forEach((card: ClueCard) => {
+                if (card.Name === knownCard.Name) {
+                    card.isSuggestion = false;
+                }
+            })
         }
 
-        if (remainingSuggestions.length === 1) {
+        if (remainingSuggestions.length === 1 &&
+            radioValue.toLocaleLowerCase() === 'a card') {
             // if only one card is not known as held, that card is held by the showing player
             tempCards.filter(card => card.Name === remainingSuggestions[0].Name)[0].HeldBy = showingPlayerId;
         } else if (remainingSuggestions.length > 1) {
@@ -99,7 +98,6 @@ export default function Show(props: any) {
         }
 
         updateCards([...tempCards]);
-
         clearSuggestions();
 
         history.push(`/turn:${nextPlayerId}`);

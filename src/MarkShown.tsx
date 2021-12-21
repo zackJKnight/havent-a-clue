@@ -18,10 +18,12 @@ export default function MarkShown(props: any) {
         } else {
             // if card is suggestion and not event value and held by is props.showingPlayerId
             // set HeldBy to NaN? in some cases, this could be a false
+            if(value.toLocaleLowerCase() !== 'a card') {
             let updatedCards = [...cards]
             updatedCards.filter((item: ClueCard) => item.Name === value)
                 .forEach((item: ClueCard) => item.HeldBy = props.showingPlayerId);
             updateCards(updatedCards);
+            }
             props.onCardShown(value);
         }
     }
@@ -30,6 +32,12 @@ export default function MarkShown(props: any) {
         if (event === undefined) {
             return;
         }
+        const card = cards.find(card => card.Name === event?.target?.value);
+
+        let updatedCards = [...cards];
+        updatedCards.filter(otherCard => otherCard.Category === card?.Category)
+            .forEach(item => item.isSuggestion = card?.Name === item.Name);
+
         setRadioValue(event?.target?.value);
         // now that markshown has moved into show, the onNo logic goes here when 
         // the 'none' radio is selected.

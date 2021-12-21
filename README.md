@@ -25,6 +25,8 @@ Modeling the domain with goals:
 
 ## Bugs
 
-- be player 1. for first turn suggestion, suggest a suspect not held by you, a weapon held by you, and a location not held by you. indicate that player two showed you the suspect. BUG: the suspect AND the location are marked gray as 'known to be held by'
-
 - be player 1 with 3 players. for player 3 suggestion: suggest a suspect you hold. a location and a weapon you dont hold. it asks if player 1 showed player 3 (BUG 1) 'a Card' or 'None.' (Should be the suggested cards you hold) and when you select 'A Card', the two you don't hold are color indicated as 'possibly shown'
+
+## Tests
+
+- Be player 1. for first turn suggestion, suggest a suspect not held by you, a weapon held by you, and a location not held by you. indicate that player two showed you the suspect. Expect: the suspect is marked as 'known to be held by' (curently by setting background to gray)
