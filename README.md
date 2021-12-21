@@ -25,10 +25,11 @@ Modeling the domain with goals:
 
 ## Bugs
 
-- Be player 1 with 3 players. On player 3's turn, suggest cards that player one does not hold. When asked which card Player 1 showed to player 3, the only radio is None. Click OK to select None. BUG: None is the only option for player 2. The suggestions have been cleared.
+- play until you know someone holds all but one of a category. The remaining card's background color does not change to indicate the card is a solution.
 
 ## Tests
 
 - Be player 1. for first turn suggestion, suggest a suspect not held by you, a weapon held by you, and a location not held by you. indicate that player two showed you the suspect. Expect: the suspect is marked as 'known to be held by' (curently by setting background to gray)
 - Be player 1 with 3 players. for player 3 suggestion: suggest a suspect you hold. a location and a weapon you dont hold. it asks if player 1 showed player 3 the suggested cards you hold. Should not say 'A Card'
+- Be player 1 with 3 players. On player 3's turn, suggest cards that player one does not hold. When asked which card Player 1 showed to player 3, the only radio is None. Click OK to select None. Expected: player 2 can show 'A Card' or 'None' to player 3.
   

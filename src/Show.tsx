@@ -1,14 +1,16 @@
 import { Typography } from "@material-ui/core";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import MarkShown from "./MarkShown";
+import { useHistory} from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
 import { Game } from "./Model/Game";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { useStyles } from "./Utils/Styles";
+import { ChangeEvent } from "react";
 
 export default function Show(props: any) {
     const history = useHistory();
-
-    const playerId = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
+    //const playerId = parseInt(useParams());
+    const [playerId] = useState(parseInt(props.matchProps.match.params.playerId.replace(':', '')));
     const playersAfter = props.game.players.slice(playerId);
     const playersBefore = props.game.players.slice(0, playerId);
     const playerTurnOrder = [...playersAfter, ...playersBefore];
@@ -20,8 +22,28 @@ export default function Show(props: any) {
     const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
     const [game] = useState<Game>(props.game);
 
+    const showingPlayerIndex = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === showingPlayerId)[0]);
+    const classes = useStyles();
+
+    const [value, setRadioValue] = useState(radioValue);
+    const nextShowingPlayerIndex = showingPlayerIndex + 1;
     const [answeredNoLink] = useState(`/show:${playerId}`);
 
+    function onOK() {
+        if (value === 'None') {
+            onNoneShown();
+        } else {
+            // if card is suggestion and not event value and held by is props.showingPlayerId
+            // set HeldBy to NaN? in some cases, this could be a false
+            if(value?.toLocaleLowerCase() !== 'a card') {
+            let updatedCards = [...cards]
+            updatedCards.filter((item: ClueCard) => item.Name === value)
+                .forEach((item: ClueCard) => item.HeldBy = showingPlayerId);
+            updateCards(updatedCards);
+            }
+            onCardShown(value);
+        }
+    }
 
     function onNoneShown() {
 
@@ -34,16 +56,12 @@ export default function Show(props: any) {
         });
         updateCards([...tempCards]);
 
-        let showingPlayerIndex = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === showingPlayerId)[0]);
-
-        const nextShowingPlayerIndex = showingPlayerIndex + 1;
-
         // increment showing player- current showing player did not show a card
         if (playerTurnOrder[nextShowingPlayerIndex]) {
-            setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
+             setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
         }
         // if this is the last showing player - noone has shown
-        if (nextShowingPlayerIndex > props.game.players.length - 1) {
+        if (nextShowingPlayerIndex > game.players.length - 1) {
             noteKnownSolutionCards();
             clearSuggestions();
             history.push(`/turn:${nextPlayerId}`);
@@ -51,6 +69,26 @@ export default function Show(props: any) {
             history.push(answeredNoLink);
         }
 
+    }
+
+    function toggleCardSelection(event: ChangeEvent<HTMLInputElement>) {
+        if (event === undefined) {
+            return;
+        }
+        const card = cards.find(card => card.Name === event?.target?.value);
+
+        let updatedCards = [...cards];
+        updatedCards.filter(otherCard => otherCard.Category === card?.Category)
+            .forEach(item => item.isSuggestion = card?.Name === item.Name);
+
+        setRadioValue(event?.target?.value);
+        // now that markshown has moved into show, the onNo logic goes here when 
+        // the 'none' radio is selected.
+
+        // does this still apply? this was added when it was a checkbox
+        if (!event.target.checked) {
+            setShowingPlayer(NaN);
+        }
     }
 
     function onCardShown(radioValue: string) {
@@ -108,7 +146,7 @@ export default function Show(props: any) {
         // mark as a known accusation.
         let updatedCards = [...cards];
         updatedCards.forEach((item: ClueCard) => {
-            if (props.game.players.length === item.NotHeldBy.length) {
+            if (game.players.length === item.NotHeldBy.length) {
                 item.isSolution = true;
             }
         });
@@ -124,15 +162,24 @@ export default function Show(props: any) {
     return (
         <>
             <Typography variant='h3'>{`Shown by player ${showingPlayerId + 1} to player ${playerId + 1}`}</Typography>
-            <MarkShown
-                game={game}
-                cards={cards}
-                showingPlayerId={showingPlayerId}
-                setShowingPlayer={setShowingPlayer}
-                playerId={playerId}
-                onNoneShown={onNoneShown}
-                onCardShown={onCardShown}
-                radioValue={radioValue} />
+            <FormControl component="fieldset">
+                <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
+                    {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&
+                        cards?.filter((card: ClueCard) => card.isSuggestion
+                            && (showingPlayerId === game.mainPlayerId ? (card.HeldBy === game.mainPlayerId) :(card.HeldBy !== game.mainPlayerId)))
+                            .map((card: ClueCard) =>
+                                <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />
+                            )
+                    }
+                    {(showingPlayerId !== game.mainPlayerId && playerId !== game.mainPlayerId) &&
+                        <FormControlLabel key={'aCard'} value={'a Card'} control={<Radio />} label={'A Card'} />
+                    }
+                    <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
+                </RadioGroup>
+            </FormControl>
+            <div className={classes.bottomButtonContainer}>
+                <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onOK}>OK</Button>
+            </div>
         </>
     )
 }
