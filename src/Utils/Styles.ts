@@ -15,7 +15,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     palette: {
         primary: {
-            light: '#fff',
+            light   : '#fff',
             main: '#388e3c',
             dark: '#000'
         },

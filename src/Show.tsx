@@ -1,11 +1,12 @@
 import { Typography } from "@material-ui/core";
 import { useState } from "react";
-import { useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
 import { Game } from "./Model/Game";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { useStyles } from "./Utils/Styles";
 import { ChangeEvent } from "react";
+import { Category } from "./Model/Category";
 
 export default function Show(props: any) {
     const history = useHistory();
@@ -35,11 +36,11 @@ export default function Show(props: any) {
         } else {
             // if card is suggestion and not event value and held by is props.showingPlayerId
             // set HeldBy to NaN? in some cases, this could be a false
-            if(value?.toLocaleLowerCase() !== 'a card') {
-            let updatedCards = [...cards]
-            updatedCards.filter((item: ClueCard) => item.Name === value)
-                .forEach((item: ClueCard) => item.HeldBy = showingPlayerId);
-            updateCards(updatedCards);
+            if (value?.toLocaleLowerCase() !== 'a card') {
+                let updatedCards = [...cards]
+                updatedCards.filter((item: ClueCard) => item.Name === value)
+                    .forEach((item: ClueCard) => item.HeldBy = showingPlayerId);
+                updateCards(updatedCards);
             }
             onCardShown(value);
         }
@@ -58,7 +59,7 @@ export default function Show(props: any) {
 
         // increment showing player- current showing player did not show a card
         if (playerTurnOrder[nextShowingPlayerIndex]) {
-             setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
+            setShowingPlayer(playerTurnOrder[nextShowingPlayerIndex].id);
         }
         // if this is the last showing player - noone has shown
         if (nextShowingPlayerIndex > game.players.length - 1) {
@@ -100,9 +101,10 @@ export default function Show(props: any) {
 
         const tempCards = [...cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
-// bug - radioValue will be a card name when showing player is you
+        // bug - radioValue will be a card name when showing player is you
         if (suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
             radioValue.toLocaleLowerCase() !== 'a card') {
+            noteKnownSolutionCards();
             clearSuggestions();
             history.push(`/turn:${nextPlayerId}`);
             return;
@@ -136,6 +138,7 @@ export default function Show(props: any) {
         }
 
         updateCards([...tempCards]);
+        noteKnownSolutionCards();
         clearSuggestions();
 
         history.push(`/turn:${nextPlayerId}`);
@@ -150,6 +153,22 @@ export default function Show(props: any) {
                 item.isSolution = true;
             }
         });
+
+        // if all but one cards of a category are known, mark remaining card as a known solution
+
+        let categoryArrays = [];
+        let categories = [...new Set(updatedCards.map(card => card.Category))];
+        for (let i = 0; i < categories.length; i++) {
+            categoryArrays.push(updatedCards.filter(card => card.Category === categories[i]));
+        }
+
+        categoryArrays.map((categoryArray: Array<ClueCard>) => {
+            if (categoryArray.filter(item => isNaN(item.HeldBy)).length === 1) {
+                const solutionCardName = categoryArray.filter(item => isNaN(item.HeldBy))[0].Name;
+                updatedCards.filter(card => card.Name === solutionCardName)[0].isSolution = true;
+            }
+        }
+        );
         updateCards(updatedCards);
     }
 
@@ -166,7 +185,7 @@ export default function Show(props: any) {
                 <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&
                         cards?.filter((card: ClueCard) => card.isSuggestion
-                            && (showingPlayerId === game.mainPlayerId ? (card.HeldBy === game.mainPlayerId) :(card.HeldBy !== game.mainPlayerId)))
+                            && (showingPlayerId === game.mainPlayerId ? (card.HeldBy === game.mainPlayerId) : (card.HeldBy !== game.mainPlayerId)))
                             .map((card: ClueCard) =>
                                 <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />
                             )
