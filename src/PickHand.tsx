@@ -80,17 +80,17 @@ export default function PickHand(props: any) {
             <Typography variant='h3'>Pick cards in your hand</Typography>
             <Card className={classes.section}>
                 <Typography>Suspects</Typography>
-                <Grid container={true} spacing={1} >
+                <Grid container={true} spacing={1} className={classes.gridContainer} >
                     {suspectElements}
                 </Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Weapons</Typography>
-                <Grid container={true} spacing={1}>{weaponElements}</Grid>
+                <Grid container={true} spacing={1} className={classes.gridContainer}>{weaponElements}</Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Locations</Typography>
-                <Grid container={true} spacing={1} >{locationElements}</Grid>
+                <Grid container={true} spacing={1} className={classes.gridContainer}>{locationElements}</Grid>
             </Card>
             <div className={classes.bottomButtonContainer}>
                 <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>

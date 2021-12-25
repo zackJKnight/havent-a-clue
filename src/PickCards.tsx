@@ -67,21 +67,27 @@ export default function PickCards(props: any) {
         <div className={classes.root}>
             <Card className={classes.section}>
                 <Typography>Suspects</Typography>
+                <Grid container={true} spacing={1} className={classes.gridContainer} >
                 <RadioGroup className={classes.radioGroup} row value={selectedSuspect} onChange={onCardSelected}>
                     {suspectElements}
                 </RadioGroup>
+                </Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Weapons</Typography>
+                <Grid container={true} spacing={1} className={classes.gridContainer} >
                 <RadioGroup className={classes.radioGroup} row value={selectedWeapon} onChange={onCardSelected}>
                     {weaponElements}
                 </RadioGroup>
+                </Grid>
             </Card>
             <Card className={classes.section}>
                 <Typography>Locations</Typography>
+                <Grid container={true} spacing={1} className={classes.gridContainer} >
                 <RadioGroup className={classes.radioGroup} row value={selectedLocation} onChange={onCardSelected}>
                     {locationElements}
                 </RadioGroup>
+                </Grid>
             </Card>
         </div>
     );

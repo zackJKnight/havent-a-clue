@@ -10,8 +10,8 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        // backgroundColor: '#ffd321'
+        alignItems: 'center'
+        //backgroundColor: '#ffd321'
     },
     palette: {
         primary: {
@@ -29,6 +29,10 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         marginRight: '2%',
         textAlign: 'left',
         padding: theme.spacing(1.5),
+        justifyContent: 'center'
+    },
+    gridContainer: {
+        justifyContent: 'center'
     },
     buttonInput: {
         verticalAlign: 'bottom',
@@ -63,7 +67,8 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         minWidth: '50%'
     },
     radioGroup: {
-        display: 'flex'
+        display: 'flex',
+        justifyContent: 'center'
     }
 }));
 
