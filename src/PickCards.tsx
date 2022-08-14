@@ -15,7 +15,7 @@ export default function PickCards(props: any) {
     const [selectedSuspect, setSuspect] = useState('');
     const [selectedWeapon, setWeapon] = useState('');
     const [selectedLocation, setLocation] = useState('');
-
+    const [game] = useState(props.game);
     const onCardSelected = (event: ChangeEvent<HTMLInputElement>) => {
         if (event?.target?.value === undefined) {
             return;
@@ -35,7 +35,7 @@ export default function PickCards(props: any) {
         props.onChange(event);
     }
 
-    suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
+    suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}
@@ -44,7 +44,7 @@ export default function PickCards(props: any) {
                 card={card}
                 control={<Radio />} />
         );
-    weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
+    weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}
@@ -53,7 +53,7 @@ export default function PickCards(props: any) {
                 card={card}
                 control={<Radio />} />
         );
-    locationElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
+    locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}

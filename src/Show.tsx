@@ -6,7 +6,6 @@ import { Game } from "./Model/Game";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
 import { useStyles } from "./Utils/Styles";
 import { ChangeEvent } from "react";
-import { Category } from "./Model/Category";
 
 export default function Show(props: any) {
     const history = useHistory();
@@ -15,14 +14,10 @@ export default function Show(props: any) {
     const playersAfter = props.game.players.slice(playerId);
     const playersBefore = props.game.players.slice(0, playerId);
     const playerTurnOrder = [...playersAfter, ...playersBefore];
-
     const [nextPlayerId] = useState({ ...playerTurnOrder[1] }.id);
     const [showingPlayerId, setShowingPlayer] = useState({ ...playerTurnOrder[1] }.id);
     const [radioValue] = useState('None');
-
-    const [cards, updateCards] = useState<Array<ClueCard>>(props.cards);
-    const [game] = useState<Game>(props.game);
-
+    const [game, setGame] = useState<Game>(props.game);
     const showingPlayerIndex = playerTurnOrder.indexOf(playerTurnOrder.filter(player => player.id === showingPlayerId)[0]);
     const classes = useStyles();
 
@@ -37,10 +32,10 @@ export default function Show(props: any) {
             // if card is suggestion and not event value and held by is props.showingPlayerId
             // set HeldBy to NaN? in some cases, this could be a false
             if (value?.toLocaleLowerCase() !== 'a card') {
-                let updatedCards = [...cards]
+                let updatedCards = [...game.cards]
                 updatedCards.filter((item: ClueCard) => item.Name === value)
                     .forEach((item: ClueCard) => item.HeldBy = showingPlayerId);
-                updateCards(updatedCards);
+                setGame({ ...game, cards: [...updatedCards] });
             }
             onCardShown(value);
         }
@@ -49,13 +44,13 @@ export default function Show(props: any) {
     function onNoneShown() {
 
         // add the Showing Player to the NotHeldby array of the isSuggestion cards.
-        const tempCards = [...cards];
-        tempCards.forEach(card => {
+        const updatedCards = [...game.cards];
+        updatedCards.forEach(card => {
             if (card.isSuggestion) {
                 card.NotHeldBy.push(showingPlayerId);
             }
         });
-        updateCards([...tempCards]);
+        setGame({ ...game, cards: [...updatedCards] });
 
         // increment showing player- current showing player did not show a card
         if (playerTurnOrder[nextShowingPlayerIndex]) {
@@ -76,9 +71,9 @@ export default function Show(props: any) {
         if (event === undefined) {
             return;
         }
-        const card = cards.find(card => card.Name === event?.target?.value);
+        const card = game.cards.find(card => card.Name === event?.target?.value);
 
-        let updatedCards = [...cards];
+        let updatedCards = [...game.cards];
         updatedCards.filter(otherCard => otherCard.Category === card?.Category)
             .forEach(item => item.isSuggestion = card?.Name === item.Name);
 
@@ -99,7 +94,7 @@ export default function Show(props: any) {
         // if no cards in the suggestion are known, mark them all as 'possibly shown by'
         // and move to next turn
 
-        const tempCards = [...cards];
+        const tempCards = [...game.cards];
         const suggestions: Array<ClueCard> = tempCards.filter(card => card.isSuggestion);
         // bug - radioValue will be a card name when showing player is you
         if (suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
@@ -137,7 +132,7 @@ export default function Show(props: any) {
             });
         }
 
-        updateCards([...tempCards]);
+        setGame({ ...game, cards: [...tempCards] });
         noteKnownSolutionCards();
         clearSuggestions();
 
@@ -147,7 +142,7 @@ export default function Show(props: any) {
     function noteKnownSolutionCards() {
         // if the NOT_HELD_BY list for a card contains all players,
         // mark as a known accusation.
-        let updatedCards = [...cards];
+        let updatedCards = [...game.cards];
         updatedCards.forEach((item: ClueCard) => {
             if (game.players.length === item.NotHeldBy.length) {
                 item.isSolution = true;
@@ -169,13 +164,13 @@ export default function Show(props: any) {
             }
         }
         );
-        updateCards(updatedCards);
+         setGame({ ...game, cards: [...updatedCards] });
     }
 
     function clearSuggestions() {
-        let updatedCards = [...cards];
+        let updatedCards = [...game.cards];
         updatedCards.forEach((item: ClueCard) => item.isSuggestion = false);
-        updateCards(updatedCards);
+         setGame({ ...game, cards: [...updatedCards] });
     }
 
     return (
@@ -184,7 +179,7 @@ export default function Show(props: any) {
             <FormControl component="fieldset">
                 <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&
-                        cards?.filter((card: ClueCard) => card.isSuggestion
+                        game.cards?.filter((card: ClueCard) => card.isSuggestion
                             && (showingPlayerId === game.mainPlayerId ? (card.HeldBy === game.mainPlayerId) : (card.HeldBy !== game.mainPlayerId)))
                             .map((card: ClueCard) =>
                                 <FormControlLabel key={card.Name} value={card.Name} control={<Radio />} label={card.Name} />

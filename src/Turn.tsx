@@ -9,18 +9,17 @@ import { Game } from "./Model/Game";
 export default function Turn(props: any) {
     const history = useHistory();
     const classes = useStyles();
-    const [game] = useState<Game>(props.game);
-    const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
-    const [disabled, setDisabled] = useState<boolean>(cards.filter(card => card.isSuggestion).length !== 3);
+    const [game, setGame] = useState<Game>(props.game);
+    const [disabled, setDisabled] = useState<boolean>(game.cards.filter(card => card.isSuggestion).length !== 3);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        if (!cards.map(card => card.Name).includes(event?.target?.value)) {
+        if (!game.cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
         }
-        
+
         if (card === undefined) {
-            const selectedCard = cards.find(card => card.Name === event?.target?.value);
+            const selectedCard = game.cards.find(card => card.Name === event?.target?.value);
             if (selectedCard !== undefined) {
                 card = selectedCard;
             }
@@ -28,11 +27,11 @@ export default function Turn(props: any) {
 
         // limit choices to one per category
 
-        let updatedCards = [...cards];
+        let updatedCards = [...game.cards];
         updatedCards.filter(otherCard => otherCard.Category === card.Category)
             .forEach(item => item.isSuggestion = card.Name === item.Name);
-        
-        setCards(updatedCards);
+
+        setGame({ ...game, cards: [...updatedCards] });
         setDisabled(updatedCards.filter(card => card.isSuggestion).length !== 3)
     }
 

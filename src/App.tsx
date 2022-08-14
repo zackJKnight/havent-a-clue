@@ -25,6 +25,8 @@ function App() {
   defaultGame.players.push(new Player(0));
   defaultGame.players.push(new Player(1));
 
+  defaultGame.cards = createCards();
+
   const [game, setGame] = useState<Game>(defaultGame);
   const classes = useStyles();
   return (
@@ -44,19 +46,19 @@ function App() {
             <WhichPlayer {...matchProps} game={game} />
           } />
           <Route path='/hand:playerId' render={(matchProps) =>
-            <PickHand matchProps={matchProps} cards={cards} game={game} />
+            <PickHand matchProps={matchProps} game={game} />
           } />
           <Route path='/turn:playerId' render={(matchProps) =>
-            <Turn matchProps={matchProps} cards={cards} game={game} />
+            <Turn matchProps={matchProps} game={game} />
           } />
           <Route path='/show:playerId' render={(matchProps) =>
-            <Show matchProps={matchProps} cards={cards} game={game}></Show>
+            <Show matchProps={matchProps} game={game}></Show>
           } />
           <Route path='/accuse:playerId' render={(matchProps) =>
-            <Accuse matchProps={matchProps} cards={cards} game={game}></Accuse>
+            <Accuse matchProps={matchProps} game={game}></Accuse>
           } />
           <Route path='/win:playerId' render={(matchProps) =>
-            <Win matchProps={matchProps} cards={cards} game={game}></Win>
+            <Win matchProps={matchProps} game={game}></Win>
           } />
 
         </Switch>
@@ -65,20 +67,23 @@ function App() {
   );
 }
 
-const cardData = CardData;
-
-let cards: ClueCard[] = [];
-for (let suspect of [...cardData.suspects]) {
-  let card: ClueCard = new ClueCard(suspect, 'suspect');
-  cards.push(card);
-}
-for (let weapon of [...cardData.weapons]) {
-  let card: ClueCard = new ClueCard(weapon, 'weapon');
-  cards.push(card);
-}
-for (let scene of [...cardData.scenes]) {
-  let card: ClueCard = new ClueCard(scene, 'scene');
-  cards.push(card);
-}
-
 export default App;
+function createCards(): ClueCard[] {
+  const cardData = CardData;
+
+  let cards: ClueCard[] = [];
+  for (let suspect of [...cardData.suspects]) {
+    let card: ClueCard = new ClueCard(suspect, 'suspect');
+    cards.push(card);
+  }
+  for (let weapon of [...cardData.weapons]) {
+    let card: ClueCard = new ClueCard(weapon, 'weapon');
+    cards.push(card);
+  }
+  for (let scene of [...cardData.scenes]) {
+    let card: ClueCard = new ClueCard(scene, 'scene');
+    cards.push(card);
+  }
+  return cards;
+}
+

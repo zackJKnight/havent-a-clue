@@ -4,6 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";
 import { useStyles } from "./Utils/Styles";
 import ClueCardView from "./ClueCardView";
+import { Game } from "./Model/Game";
 
 let suspectElements;
 let weaponElements;
@@ -13,16 +14,16 @@ export default function PickHand(props: any) {
     const classes = useStyles();
     const history = useHistory();
 
-    const [cards, setCards] = useState<Array<ClueCard>>(props.cards);
+    const [game, setGame] = useState<Game>(props.game);
     let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
     function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
 
-        if (!cards.map(card => card.Name).includes(event?.target?.value)) {
+        if (!game.cards.map(card => card.Name).includes(event?.target?.value)) {
             return;
         }
         if (card === undefined || !(card instanceof ClueCard)) {
-            const selectedCard = cards.find(card => card.Name === event?.target?.value);
+            const selectedCard = game.cards.find(card => card.Name === event?.target?.value);
             if (selectedCard !== undefined) {
                 card = selectedCard;
             }
@@ -30,24 +31,24 @@ export default function PickHand(props: any) {
         if (!event.target.checked) {
             heldBy = NaN;
         }
-        let updatedCards = [...cards].filter((item: ClueCard) => item.Name !== card.Name);
+        let updatedCards = [...game.cards].filter((item: ClueCard) => item.Name !== card.Name);
         card.HeldBy = heldBy;
         updatedCards.push(card);
-        setCards([...updatedCards]);
+        setGame({ ...game, cards: [...updatedCards] });
     }
 
     function onOK() {
         // add the player to the NotHeldby array of all unselected cards.
-        const tempCards = [...cards];
+        const tempCards = [...game.cards];
         tempCards.forEach(card => {
             if (card.HeldBy !== heldBy) {
                 card.NotHeldBy.push(heldBy);
             }
         });
-        setCards([...tempCards]);
+        setGame({ ...game, cards: [...tempCards] });
         history.push(`/turn:${0}`);
     }
-    suspectElements = props.cards?.filter((card: ClueCard) => card.Category === 'suspect')
+    suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}
@@ -56,7 +57,7 @@ export default function PickHand(props: any) {
                 card={card}
                 control={<Checkbox />} />
         );
-    weaponElements = props.cards?.filter((card: ClueCard) => card.Category === 'weapon')
+    weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}
@@ -65,7 +66,7 @@ export default function PickHand(props: any) {
                 card={card}
                 control={<Checkbox />} />
         );
-    locationElements = props.cards?.filter((card: ClueCard) => card.Category === 'scene')
+    locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <ClueCardView
                 key={card.Name}

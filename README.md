@@ -26,6 +26,21 @@ Modeling the domain with goals:
 ## Bugs
 
 - play until you know someone holds all but one of a category. The remaining card's background color does not change to indicate the card is a solution.
+- change "you win" to `$playerName wins!`
+- Sets known when none shown but suggestor holds at least one card of the suggestion. Might only happen with locaitons..
+- radios are too small; create custom component to touch select the whole card
+- show 1 card; all were marked possibly shown by.
+
+## Potential Features
+
+- a location suggestion UI; Maybe just order the locations, or add a badge with a rank or priority.
+- table talk UI; if clues are given away verbally, indicate shown card on previous turn.
+- a hide button that flips cards so I set the phone down without revealing my clues.
+- allow player to accuse after suggesting
+- and condition elimination: if you have a known card and someone else shows another player one of two unkowns, send this to the eliminate api (passing two unknown items).
+- add indication of player owned card with color
+- consider back button on shown by for mistakes
+- hide 'none' if you have a card to show
 
 ## Tests
 
