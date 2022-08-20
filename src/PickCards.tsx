@@ -1,4 +1,4 @@
-import { Card, Grid, Typography, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Card, Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { ClueCard } from "./Model/ClueCard";
 import ClueCardView from "./ClueCardView";
 import { useStyles } from "./Utils/Styles";
@@ -49,22 +49,28 @@ export default function PickCards(props: any) {
 
     const onCardSelected = (event: React.MouseEvent<HTMLElement>,
         newSelection: string,) => {
-        console.log(newSelection);
         if (newSelection === undefined) {
             return;
         }
-
+        let selectedCards;
         switch (newSelection) {
             case CardData.suspects.find(s => s.displayName === newSelection)?.displayName:
                 setSuspect(newSelection);
+                selectedCards = [newSelection, selectedWeapon, selectedLocation];
+                selectedCards = selectedCards.filter(s => s !== '');
                 break;
             case CardData.weapons.find(s => s.displayName === newSelection)?.displayName:
                 setWeapon(newSelection);
+                selectedCards = [selectedSuspect, newSelection, selectedLocation];
+                selectedCards = selectedCards.filter(s => s !== '');
                 break;
             case CardData.scenes.find(s => s.displayName === newSelection)?.displayName:
                 setLocation(newSelection);
+                selectedCards = [selectedSuspect, selectedWeapon, newSelection];
+                selectedCards = selectedCards.filter(s => s !== '');
                 break;
         }
+        props.onChange(selectedCards);
     }
 
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
@@ -101,7 +107,6 @@ export default function PickCards(props: any) {
     return (
         <div className={classes.root}>
             <Card className={classes.section}>
-                <Typography>Suspects</Typography>
                 <Grid container={true} spacing={1} className={classes.gridContainer} >
                     <ToggleButtonGroup value={multiSelect ? selectedSuspects : selectedSuspect} onChange={multiSelect ? onSelectSuspects : onCardSelected} exclusive={!multiSelect}>
                         {suspectElements}
@@ -109,7 +114,6 @@ export default function PickCards(props: any) {
                 </Grid>
             </Card>
             <Card className={classes.section}>
-                <Typography>Weapons</Typography>
                 <Grid container={true} spacing={1} className={classes.gridContainer} >
                     <ToggleButtonGroup value={multiSelect ? selectedWeapons : selectedWeapon} onChange={multiSelect ? onSelectWeapons : onCardSelected} exclusive={!multiSelect}>
                         {weaponElements}
@@ -117,7 +121,6 @@ export default function PickCards(props: any) {
                 </Grid>
             </Card>
             <Card className={classes.section}>
-                <Typography>Locations</Typography>
                 <Grid container={true} spacing={1} className={classes.gridContainer} >
                     <ToggleButtonGroup value={multiSelect ? selectedLocations : selectedLocation} onChange={multiSelect ? onSelectLocations : onCardSelected} exclusive={!multiSelect}>
                         {locationElements}

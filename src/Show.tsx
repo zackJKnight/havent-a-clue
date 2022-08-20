@@ -6,6 +6,7 @@ import { Game } from "./Model/Game";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useStyles } from "./Utils/Styles";
 import { ChangeEvent } from "react";
+import { getClueCardHints } from "./hooks/use-clue-card-hints";
 
 export default function Show(props: any) {
     const history = useHistory();
@@ -164,6 +165,7 @@ export default function Show(props: any) {
             }
         }
         );
+        updatedCards = getClueCardHints(updatedCards, game.players);
          setGame({ ...game, cards: [...updatedCards] });
     }
 

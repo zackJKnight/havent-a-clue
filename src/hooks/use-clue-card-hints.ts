@@ -1,16 +1,16 @@
 import { ClueCard } from "../Model/ClueCard";
+import { Player } from "../Model/Player";
 
-export const getClueCardHints = (cards: ClueCard[]) => {
+export const getClueCardHints = (cards: ClueCard[], players: Player[]) => {
 
     const updatedCards = [...cards];
     updatedCards.forEach(card => {
-        
-    card.BackgroundColor = getClueCardBackgroundColor(card);
+    card.BackgroundColor = getClueCardBackgroundColor(card, players);
     });
     return updatedCards;
 }
 
-const getClueCardBackgroundColor = (card: ClueCard): string => {
+const getClueCardBackgroundColor = (card: ClueCard, players: Player[]): string => {
 
     if (card === undefined) {
         return '';
@@ -22,7 +22,7 @@ const getClueCardBackgroundColor = (card: ClueCard): string => {
 
     if (!isNaN(card.HeldBy)) {
         // TODO color heldby per player
-        return 'gray';
+        return players.find(p => p.id === card.HeldBy)?.color ?? 'gray';
     }
 
     if (card.PossShownBy?.length === 0) {

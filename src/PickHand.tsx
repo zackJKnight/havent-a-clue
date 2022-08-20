@@ -17,7 +17,7 @@ export default function PickHand(props: any) {
     function updateSelectedCards(
         newSelection: string[],) {
         if (newSelection) {
-            console.log(`updateSelectedCards ${newSelection}`);
+            // console.log(`updateSelectedCards ${newSelection}`);
             setSelectedCards(newSelection);
         }
     }
@@ -35,7 +35,7 @@ export default function PickHand(props: any) {
                 card.NotHeldBy.push(heldBy);
             }
         });
-        tempCards = getClueCardHints(tempCards);
+        tempCards = getClueCardHints(tempCards, game.players);
         setGame({ ...game, cards: [...tempCards] });
         history.push(`/turn:${0}`);
     }

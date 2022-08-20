@@ -1,7 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import { ChangeEvent, useState } from "react";
-import { ClueCard } from "./Model/ClueCard";
+import { useState } from "react";
 import PickCards from "./PickCards";
 import { useStyles } from "./Utils/Styles";
 import { Game } from "./Model/Game";
@@ -13,23 +12,15 @@ export default function Turn(props: any) {
     const [disabled, setDisabled] = useState<boolean>(game.cards.filter(card => card.isSuggestion).length !== 3);
     const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
 
-    function toggleCardSelection(event: ChangeEvent<HTMLInputElement>, card: ClueCard) {
-        if (!game.cards.map(card => card.Name).includes(event?.target?.value)) {
-            return;
-        }
-
-        if (card === undefined) {
-            const selectedCard = game.cards.find(card => card.Name === event?.target?.value);
-            if (selectedCard !== undefined) {
-                card = selectedCard;
-            }
-        }
-
+    function toggleCardSelection(cardNames: string[]) {
+if(!cardNames) {
+    return;
+}
         // limit choices to one per category
 
         let updatedCards = [...game.cards];
-        updatedCards.filter(otherCard => otherCard.Category === card.Category)
-            .forEach(item => item.isSuggestion = card.Name === item.Name);
+
+        updatedCards.forEach(item => item.isSuggestion = cardNames.includes(item.Name));
 
         setGame({ ...game, cards: [...updatedCards] });
         setDisabled(updatedCards.filter(card => card.isSuggestion).length !== 3)

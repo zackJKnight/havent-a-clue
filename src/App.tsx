@@ -24,8 +24,6 @@ function App() {
   let defaultGame = new Game();
   defaultGame.players.push(new Player(0, 'red'));
   defaultGame.players.push(new Player(1, 'yellow'));
-  // defaultGame.possibilities = usePossibilities()[0];
-  // console.log(defaultGame.possibilities);
   defaultGame.cards = createCards();
 
   const [game, setGame] = useState<Game>(defaultGame);
