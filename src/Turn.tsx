@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { ClueCard } from "./Model/ClueCard";

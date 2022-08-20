@@ -1,4 +1,4 @@
-import { Button, Paper, Typography } from "@material-ui/core";
+import { Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import { useStyles } from "./Utils/Styles";

@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, TextField, Typography } from "@material-ui/core";
+import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Game } from "./Model/Game";
@@ -10,13 +10,13 @@ export default function Home(props: { playerCount: number, maxPlayers: number, s
     const history = useHistory();
     const classes = useStyles();
     const [count, setCount] = useState(props.playerCount);
-
+const playerColors = ["red", "blue", "green", "yellow", "orange", "purple"];
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const playerCount = parseInt(e.target.value);
         let tempGame: Game = new Game();
         for (let i = 0; i < playerCount; i++) {
-            tempGame.players.push(new Player(i));
+            tempGame.players.push(new Player(i, playerColors[i]));
         }
 
         props.setGame(() => {

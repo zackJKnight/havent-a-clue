@@ -15,16 +15,17 @@ import Turn from './Turn';
 import { CardData } from './Utils/CardData';
 import WhichPlayer from './WhichPlayer';
 import { useStyles } from './Utils/Styles';
-import { AppBar, Typography } from '@material-ui/core';
+import { AppBar, Typography } from '@mui/material';
 import Accuse from './Accuse';
 import Win from './Win';
 
 function App() {
   const MAX_PLAYERS = 6;
   let defaultGame = new Game();
-  defaultGame.players.push(new Player(0));
-  defaultGame.players.push(new Player(1));
-
+  defaultGame.players.push(new Player(0, 'red'));
+  defaultGame.players.push(new Player(1, 'yellow'));
+  // defaultGame.possibilities = usePossibilities()[0];
+  // console.log(defaultGame.possibilities);
   defaultGame.cards = createCards();
 
   const [game, setGame] = useState<Game>(defaultGame);
@@ -73,15 +74,15 @@ function createCards(): ClueCard[] {
 
   let cards: ClueCard[] = [];
   for (let suspect of [...cardData.suspects]) {
-    let card: ClueCard = new ClueCard(suspect, 'suspect');
+    let card: ClueCard = new ClueCard(suspect.displayName, 'suspect', suspect.id);
     cards.push(card);
   }
   for (let weapon of [...cardData.weapons]) {
-    let card: ClueCard = new ClueCard(weapon, 'weapon');
+    let card: ClueCard = new ClueCard(weapon.displayName, 'weapon', weapon.id);
     cards.push(card);
   }
   for (let scene of [...cardData.scenes]) {
-    let card: ClueCard = new ClueCard(scene, 'scene');
+    let card: ClueCard = new ClueCard(scene.displayName, 'scene', scene.id);
     cards.push(card);
   }
   return cards;

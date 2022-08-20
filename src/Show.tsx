@@ -1,9 +1,9 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard";
 import { Game } from "./Model/Game";
-import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useStyles } from "./Utils/Styles";
 import { ChangeEvent } from "react";
 

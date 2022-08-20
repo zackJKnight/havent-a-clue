@@ -1,45 +1,23 @@
-import { FormControlLabel, Paper } from "@material-ui/core";
-import { ReactElement } from "react";
+import { Chip, Grid, Typography } from "@mui/material";
 import { ClueCard } from "./Model/ClueCard";
 
 type Props = {
     class: string,
-    card: ClueCard,
-    control: ReactElement,
-    onChange: any
+    card: ClueCard
 
 }
 export default function ClueCardView(props: Props) {
-   
-        return (
-        <Paper className={props.class} style={{ background: `${getClueCardBackgroundColor(props.card)}`, opacity: 0.8 }}>
-            <img style={{borderRadius: `50%`, width: `75%`, height: `75%`}} src={require(`./Images/${props.card.Name}.png`).default} alt={props.card.Name}></img>
-            <FormControlLabel key={props.card.Name} value={props.card.Name} control={props.control} label={''} onChange={props.onChange} />
-        </Paper>
+
+    return (
+        <Grid>
+            <Grid item width={`100%`}>
+            <img style={{ borderRadius: `50%`, width: `99%`, height: `99%`}} src={require(`./Images/${props.card.Name}.png`).default} alt={props.card.Name}></img>
+            </Grid>
+            <Grid item>
+            <Chip label={props.card.Name}></Chip>
+            </Grid>
+        </Grid>
     );
 }
 
-const getClueCardBackgroundColor = (card: ClueCard): string => {
 
-    if (card === undefined) {
-        return '';
-    }
-
-    if (card.isSolution) {
-        return 'green';
-    }
-
-    if (!isNaN(card.HeldBy)) {
-        // TODO color heldby per player
-        return 'gray';
-    }
-
-    if (card.PossShownBy?.length === 0) {
-        return '';
-    }
-
-    let gradientPercent = ((card.PossShownBy?.length || 0) / .1);
-    const startGradientColor = '#fcf0c0';
-    const endGradientColor = '#ffd321';
-    return `linear-gradient(45deg, ${startGradientColor} ${100 - gradientPercent}%, ${endGradientColor} ${gradientPercent}%)`;
-}

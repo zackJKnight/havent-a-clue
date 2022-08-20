@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 import { useStyles } from "./Utils/Styles";
 
 export default function Win(props: any) {

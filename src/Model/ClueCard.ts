@@ -10,8 +10,9 @@ export class ClueCard {
     PossShownBy: number[];
     BackgroundColor: string;
     isSolution: boolean;
+    id: string;
 
-    constructor(name: string, category: Category) {
+    constructor(name: string, category: Category, id: string) {
         this.Category = category;
         this.Name = name;
         this.HeldBy = NaN;
@@ -21,5 +22,6 @@ export class ClueCard {
         this.PossShownBy = [];
         this.BackgroundColor = '';
         this.isSolution = false;
+        this.id = id;
     }
 }

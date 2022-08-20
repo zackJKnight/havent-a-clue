@@ -1,18 +1,25 @@
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createTheme, ThemeProvider} from "@material-ui/core/styles";
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from "@mui/material/styles";
 
-const theme = createTheme({
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme { }
+}
+
+
+const theme = createTheme(adaptV4Theme({
   palette: {
-     primary: {
-        light: '#fff',
-        main: '#388e3c',
-        dark: '#000'
-     },
-     secondary: {
-       main: '#fbe92d',
-     },
+    primary: {
+      light: '#fff',
+      main: '#388e3c',
+      dark: '#000'
+    },
+    secondary: {
+      main: '#fbe92d',
+    },
   },
   typography: {
     fontFamily: [
@@ -33,14 +40,19 @@ const theme = createTheme({
       '@media (min-width:600px)': {
         fontSize: '2.0rem',
       }
-    }
+    },
+    caption: {
+      fontSize: 8,
+    },
   }
-});
+}));
 
 ReactDOM.render(
+  <StyledEngineProvider injectFirst>
     <ThemeProvider theme={theme}>
-    <App />
-    </ThemeProvider>,
+      <App />
+    </ThemeProvider>
+  </StyledEngineProvider>,
   document.getElementById('root')
 );
 

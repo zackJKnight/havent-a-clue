@@ -37,7 +37,7 @@ Modeling the domain with goals:
 - table talk UI; if clues are given away verbally, indicate shown card on previous turn.
 - a hide button that flips cards so I set the phone down without revealing my clues.
 - allow player to accuse after suggesting
-- and condition elimination: if you have a known card and someone else shows another player one of two unkowns, send this to the eliminate api (passing two unknown items).
+- and condition elimination: if you have a known card and someone else shows another player one of two unkowns, send this to the eliminate api (passing two unknown items). you can eliminate all three card sets that have the two unknowns.
 - add indication of player owned card with color
 - consider back button on shown by for mistakes
 - hide 'none' if you have a card to show
@@ -47,4 +47,8 @@ Modeling the domain with goals:
 - Be player 1. for first turn suggestion, suggest a suspect not held by you, a weapon held by you, and a location not held by you. indicate that player two showed you the suspect. Expect: the suspect is marked as 'known to be held by' (curently by setting background to gray)
 - Be player 1 with 3 players. for player 3 suggestion: suggest a suspect you hold. a location and a weapon you dont hold. it asks if player 1 showed player 3 the suggested cards you hold. Should not say 'A Card'
 - Be player 1 with 3 players. On player 3's turn, suggest cards that player one does not hold. When asked which card Player 1 showed to player 3, the only radio is None. Click OK to select None. Expected: player 2 can show 'A Card' or 'None' to player 3.
+
+## eliminating possibilities
+
+
   
