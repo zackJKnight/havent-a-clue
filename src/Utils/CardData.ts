@@ -4,12 +4,12 @@ import { Weapon } from "../api/weapon";
 
 export const CardData = {
     "suspects": [
-      {displayName: "homer", id: Character.green },
-      {displayName: "bart", id: Character.plum },
-      {displayName: "lisa", id: Character.scarlet },
-      {displayName: "marge", id: Character.peacock},
-      {displayName: "krusty", id: Character.mustard},
-      {displayName: "smithers", id: Character.white},
+      {displayName: "homer", id: Character.green, color: '#27632A' },
+      {displayName: "bart", id: Character.plum, color: '#8E44AD' },
+      {displayName: "lisa", id: Character.scarlet, color: '#FF4136' },
+      {displayName: "marge", id: Character.peacock, color: '#2ECC71' },
+      {displayName: "krusty", id: Character.mustard, color: '#F39C12' },
+      {displayName: "smithers", id: Character.white, color: '#FFFFFF' },
     ],
     "weapons": [
       {displayName: "glove", id: Weapon.candlestick },

@@ -21,7 +21,6 @@ const getClueCardBackgroundColor = (card: ClueCard, players: Player[]): string =
     }
 
     if (!isNaN(card.HeldBy)) {
-        // TODO color heldby per player
         return players.find(p => p.id === card.HeldBy)?.color ?? 'gray';
     }
 

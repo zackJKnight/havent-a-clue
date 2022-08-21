@@ -39,7 +39,7 @@ function App() {
         <ScrollToTop />
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} maxPlayers={MAX_PLAYERS} setGame={setGame} />
+            <Home playerCount={2} maxPlayers={MAX_PLAYERS} game={game} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
             <WhichPlayer {...matchProps} game={game} />

@@ -6,11 +6,12 @@ import { Player } from "./Model/Player";
 import NumberSelectList from "./Utils/NumberSelection";
 import { useStyles } from "./Utils/Styles";
 
-export default function Home(props: { playerCount: number, maxPlayers: number, setGame: any }) {
+export default function Home(props: { playerCount: number, maxPlayers: number, game: Game }) {
     const history = useHistory();
     const classes = useStyles();
+    const [game, setGame] = useState<Game>(props.game);
     const [count, setCount] = useState(props.playerCount);
-const playerColors = ["red", "blue", "green", "yellow", "orange", "purple"];
+const playerColors = ["#FF4136", "#F39C12", "#FFFFFF", "#27632A", "#2ECC71", "#8E44AD" ];
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const playerCount = parseInt(e.target.value);
@@ -18,10 +19,8 @@ const playerColors = ["red", "blue", "green", "yellow", "orange", "purple"];
         for (let i = 0; i < playerCount; i++) {
             tempGame.players.push(new Player(i, playerColors[i]));
         }
-
-        props.setGame(() => {
-            return { ...tempGame };
-        });
+console.log(tempGame.players);
+        setGame({...tempGame});
         setCount(playerCount)
     }
 
