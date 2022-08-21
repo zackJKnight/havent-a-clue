@@ -1,4 +1,4 @@
-import { Card, Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { ClueCard } from "./Model/ClueCard";
 import ClueCardView from "./ClueCardView";
 import { useStyles } from "./Utils/Styles";
@@ -75,13 +75,13 @@ export default function PickCards(props: any) {
 
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
-            <ToggleButton key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
-                <ClueCardView
-                    key={card.Name}
-                    class={classes.cardItem}
-                    card={card}
-                />
-            </ToggleButton>
+                <ToggleButton key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
+                    <ClueCardView
+                        key={card.Name}
+                        class={classes.cardItem}
+                        card={card}
+                    />
+                </ToggleButton>
         );
     weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
@@ -95,38 +95,32 @@ export default function PickCards(props: any) {
         );
     locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
-            <ToggleButton key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
-                <ClueCardView
-                    key={card.Name}
-                    class={classes.cardItem}
-                    card={card}
-                />
-            </ToggleButton >
+                <ToggleButton key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
+                    <ClueCardView
+                        key={card.Name}
+                        class={classes.cardItem}
+                        card={card}
+                    />
+                </ToggleButton >
         );
 
     return (
-        <div className={classes.root}>
-            <Card className={classes.section}>
-                <Grid container={true} spacing={1} className={classes.gridContainer} >
-                    <ToggleButtonGroup value={multiSelect ? selectedSuspects : selectedSuspect} onChange={multiSelect ? onSelectSuspects : onCardSelected} exclusive={!multiSelect}>
-                        {suspectElements}
-                    </ToggleButtonGroup>
-                </Grid>
-            </Card>
-            <Card className={classes.section}>
-                <Grid container={true} spacing={1} className={classes.gridContainer} >
-                    <ToggleButtonGroup value={multiSelect ? selectedWeapons : selectedWeapon} onChange={multiSelect ? onSelectWeapons : onCardSelected} exclusive={!multiSelect}>
-                        {weaponElements}
-                    </ToggleButtonGroup>
-                </Grid>
-            </Card>
-            <Card className={classes.section}>
-                <Grid container={true} spacing={1} className={classes.gridContainer} >
-                    <ToggleButtonGroup value={multiSelect ? selectedLocations : selectedLocation} onChange={multiSelect ? onSelectLocations : onCardSelected} exclusive={!multiSelect}>
-                        {locationElements}
-                    </ToggleButtonGroup>
-                </Grid>
-            </Card>
-        </div>
+        <>
+            <Grid container spacing={.8} className={classes.gridContainer}>
+
+                <ToggleButtonGroup color="secondary" style={ { display: `block` } } value={multiSelect ? selectedSuspects : selectedSuspect} onChange={multiSelect ? onSelectSuspects : onCardSelected} exclusive={!multiSelect}>
+                {suspectElements}
+                </ToggleButtonGroup>
+
+                <ToggleButtonGroup color="secondary" style={ { display: `block` } } value={multiSelect ? selectedWeapons : selectedWeapon} onChange={multiSelect ? onSelectWeapons : onCardSelected} exclusive={!multiSelect}>
+                    {weaponElements}
+                </ToggleButtonGroup>
+
+                <ToggleButtonGroup color="secondary" style={ { display: `block` } } value={multiSelect ? selectedLocations : selectedLocation} onChange={multiSelect ? onSelectLocations : onCardSelected} exclusive={!multiSelect}>
+                    {locationElements}
+                </ToggleButtonGroup>
+
+            </Grid>
+        </>
     );
 }

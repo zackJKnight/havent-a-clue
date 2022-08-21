@@ -5,11 +5,13 @@ import makeStyles from '@mui/styles/makeStyles';
 export const useStyles = makeStyles<Theme>((theme) => ({
     app: {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        minWidth: '99%',
     },
     root: {
-        minWidth: '100%',
-        minHeight: '100vh',
+        maxWidth: '99%',
+        minWidth: '90%',
+        minHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
@@ -25,16 +27,9 @@ export const useStyles = makeStyles<Theme>((theme) => ({
             main: '#fbe92d',
         },
     },
-    section: {
-        maxWidth: '90%',
-        marginLeft: '2%',
-        marginRight: '2%',
-        textAlign: 'left',
-        padding: theme.spacing(1.5),
-        justifyContent: 'center'
-    },
     gridContainer: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width: `calc(58% + 187.4px)`
     },
     buttonInput: {
         verticalAlign: 'bottom',
@@ -46,7 +41,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     bottomButtonContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minWidth: '100%',
+        minWidth: '90%',
         marginTop: '3%',
         position: "sticky",
         bottom: theme.spacing(2)

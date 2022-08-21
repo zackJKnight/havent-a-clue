@@ -26,7 +26,7 @@ function App() {
   defaultGame.players.push(new Player(1, 'yellow'));
   defaultGame.cards = createCards();
 
-  const [game, setGame] = useState<Game>(defaultGame);
+  const [game] = useState<Game>(defaultGame);
   const classes = useStyles();
   return (
     <div className={classes.root}>
