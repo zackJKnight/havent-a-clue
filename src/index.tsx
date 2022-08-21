@@ -36,9 +36,9 @@ const theme = createTheme(adaptV4Theme({
     ].join(','),
     h3: {
       marginTop: '5rem',
-      fontSize: '2.0rem',
+      fontSize: 20,
       '@media (min-width:600px)': {
-        fontSize: '2.0rem',
+        fontSize: 20,
       }
     },
     caption: {

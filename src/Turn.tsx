@@ -46,7 +46,7 @@ if(!cardNames) {
 
     return (
         <div className={classes.root}>
-            <Typography variant='h3'>{`Player ${suggestedBy + 1}'s Suggestion`}</Typography>
+            <Typography variant='h3'>{`${game.players[suggestedBy].name}'s Suggestion`}</Typography>
             <div>
                 <PickCards {...props} onChange={toggleCardSelection} />
             </div>

@@ -22,11 +22,11 @@ import Win from './Win';
 function App() {
   const MAX_PLAYERS = 6;
   let defaultGame = new Game();
-  defaultGame.players.push(new Player(0, 'red'));
-  defaultGame.players.push(new Player(1, 'yellow'));
+  defaultGame.players.push(new Player(0, 'red', 'Miss Scarlet'));
+  defaultGame.players.push(new Player(1, 'mustard', 'Col Mustard'));
   defaultGame.cards = createCards();
 
-  const [game] = useState<Game>(defaultGame);
+  const [game, setGame] = useState<Game>(defaultGame);
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -39,7 +39,7 @@ function App() {
         <ScrollToTop />
         <Switch>
           <Route exact path="/">
-            <Home playerCount={2} maxPlayers={MAX_PLAYERS} game={game} />
+            <Home playerCount={2} maxPlayers={MAX_PLAYERS} game={game} setPlayers={setGame} />
           </Route>
           <Route path='/which:playerCount' render={(matchProps) =>
             <WhichPlayer {...matchProps} game={game} />

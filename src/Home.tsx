@@ -3,24 +3,27 @@ import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Game } from "./Model/Game";
 import { Player } from "./Model/Player";
+import { CardData } from "./Utils/CardData";
 import NumberSelectList from "./Utils/NumberSelection";
 import { useStyles } from "./Utils/Styles";
 
-export default function Home(props: { playerCount: number, maxPlayers: number, game: Game }) {
+export default function Home(props: { playerCount: number, maxPlayers: number, game: Game, setPlayers: any }) {
     const history = useHistory();
     const classes = useStyles();
     const [game, setGame] = useState<Game>(props.game);
     const [count, setCount] = useState(props.playerCount);
-const playerColors = ["#FF4136", "#F39C12", "#FFFFFF", "#27632A", "#2ECC71", "#8E44AD" ];
+    const players = CardData.suspects.sort((a, b) => a.turn - b.turn);
     const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         const playerCount = parseInt(e.target.value);
-        let tempGame: Game = new Game();
+        let tempGame: Game = { ...game };
+        tempGame.players = [];
         for (let i = 0; i < playerCount; i++) {
-            tempGame.players.push(new Player(i, playerColors[i]));
+            tempGame.players.push(new Player(i, players[i]?.color, players[i]?.labelName));
         }
-console.log(tempGame.players);
-        setGame({...tempGame});
+        console.log(tempGame.players);
+        setGame({ ...tempGame });
+        props.setPlayers({ ...tempGame });
         setCount(playerCount)
     }
 
@@ -35,7 +38,7 @@ console.log(tempGame.players);
             <Typography variant={'h3'}>Mr. Burns Found Dead!</Typography>
             <img src={require('./Images/220px-WhoShotMrBurnsclue.png').default}
                 alt={'mr burns found dead'}
-                style={{borderRadius: `20%`}}></img>
+                style={{ borderRadius: `20%` }}></img>
             <Typography variant={'h3'}>How Many Clue Players?</Typography>
             <Paper className={classes.root}>
                 <TextField

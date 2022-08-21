@@ -177,7 +177,7 @@ export default function Show(props: any) {
 
     return (
         <>
-            <Typography variant='h3'>{`Shown by player ${showingPlayerId + 1} to player ${playerId + 1}`}</Typography>
+            <Typography variant='h3'>{`Shown by ${game.players[showingPlayerId].name} to ${game.players[playerId].name}`}</Typography>
             <FormControl component="fieldset">
                 <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&
