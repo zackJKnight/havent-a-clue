@@ -158,7 +158,7 @@ export default function Show(props: any) {
             categoryArrays.push(updatedCards.filter(card => card.Category === categories[i]));
         }
 
-        categoryArrays.map((categoryArray: Array<ClueCard>) => {
+        categoryArrays.forEach((categoryArray: Array<ClueCard>) => {
             if (categoryArray.filter(item => isNaN(item.HeldBy)).length === 1) {
                 const solutionCardName = categoryArray.filter(item => isNaN(item.HeldBy))[0].Name;
                 updatedCards.filter(card => card.Name === solutionCardName)[0].isSolution = true;
@@ -175,9 +175,12 @@ export default function Show(props: any) {
          setGame({ ...game, cards: [...updatedCards] });
     }
 
+    const shownBy = game.mainPlayerId === showingPlayerId ? 'You' : game.players[showingPlayerId].name;
+    const whom = game.mainPlayerId === playerId ? 'You' : game.players[playerId].name;
+
     return (
         <>
-            <Typography variant='h3'>{`Shown by ${game.players[showingPlayerId].name} to ${game.players[playerId].name}`}</Typography>
+            <Typography variant='h3'>{`Shown by ${shownBy} to ${whom}`}</Typography>
             <FormControl component="fieldset">
                 <RadioGroup className={classes.radioGroup} value={value} onChange={toggleCardSelection} >
                     {(showingPlayerId === game.mainPlayerId || playerId === game.mainPlayerId) &&

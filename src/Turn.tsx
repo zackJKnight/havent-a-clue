@@ -43,13 +43,13 @@ if(!cardNames) {
 
     // TODO make player have a color (like clue characters) style instead of heading
     // <playerWColor> suggests:
+    const suffix = game.mainPlayerId !== suggestedBy ? "'s" : '';
+    const whose = game.mainPlayerId === suggestedBy ? 'Your' : game.players[suggestedBy].name;
 
     return (
         <div className={classes.root}>
-            <Typography variant='h3'>{`${game.players[suggestedBy].name}'s Suggestion`}</Typography>
-            <div>
-                <PickCards {...props} onChange={toggleCardSelection} />
-            </div>
+            <Typography variant='h3' >{`${whose}${suffix} Suggestion`}</Typography>
+            <PickCards {...props} onChange={toggleCardSelection} />
             <div className={classes.bottomButtonContainer}>
                 <Button disabled={disabled} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
                 <Button disabled={disabled} color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>

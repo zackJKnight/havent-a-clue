@@ -10,16 +10,15 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     root: {
         maxWidth: '99%',
-        minWidth: '90%',
+        minWidth: '95%',
         minHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
-        //backgroundColor: '#ffd321'
+        alignItems: 'center',
     },
     palette: {
         primary: {
-            light   : '#fff',
+            light: '#fff',
             main: '#388e3c',
             dark: '#000'
         },
@@ -29,7 +28,18 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     gridContainer: {
         justifyContent: 'center',
-        width: `calc(58% + 187.4px)`
+    },
+    toggleButton: {
+                '& :Mui-selected': {
+                backgroundColor: 'rgba(181, 166, 53, .5)',
+            }
+    },
+    toggleButtonGroup: {
+        borderColor: 'primary',
+        borderWidth: '.5px',
+        borderStyle: 'solid',
+        display: 'block',
+        padding: `${.3}rem`,
     },
     buttonInput: {
         verticalAlign: 'bottom',

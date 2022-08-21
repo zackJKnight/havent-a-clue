@@ -21,7 +21,14 @@ const getClueCardBackgroundColor = (card: ClueCard, players: Player[]): string =
     }
 
     if (!isNaN(card.HeldBy)) {
-        return players.find(p => p.id === card.HeldBy)?.color ?? 'gray';
+        const playerColor = players.find(p => p.id === card.HeldBy)?.color ?? 'gray';
+        if (playerColor === '#FFFFFF') {
+            const startGradientColor = '#FFFFFF';
+    const endGradientColor = '#000000';
+    const gradientPercent = 10;
+            return `linear-gradient(270deg, ${startGradientColor} ${100 - gradientPercent}%, ${endGradientColor} ${gradientPercent}%)`;
+        }
+        return playerColor;
     }
 
     if (card.PossShownBy?.length === 0) {
@@ -31,5 +38,6 @@ const getClueCardBackgroundColor = (card: ClueCard, players: Player[]): string =
     let gradientPercent = ((card.PossShownBy?.length || 0) / .1);
     const startGradientColor = '#fcf0c0';
     const endGradientColor = '#ffd321';
-    return `linear-gradient(45deg, ${startGradientColor} ${100 - gradientPercent}%, ${endGradientColor} ${gradientPercent}%)`;
+    let degree = '45';
+    return `linear-gradient(${degree}deg, ${startGradientColor} ${100 - gradientPercent}%, ${endGradientColor} ${gradientPercent}%)`;
 }
