@@ -20,7 +20,7 @@ export default function PickCards(props: any) {
     const [selectedLocations, setLocations] = useState(Array<string>);
     const [game] = useState(props.game);
 
-    function onSelectSuspects(event: React.MouseEvent<HTMLElement>,
+    function onSelectSuspects(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
             console.log(`onSelectSuspects ${newSelection}`);
@@ -29,7 +29,7 @@ export default function PickCards(props: any) {
         }
     }
 
-    function onSelectWeapons(event: React.MouseEvent<HTMLElement>,
+    function onSelectWeapons(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
             console.log(`onSelectWeapons ${newSelection}`);
@@ -38,7 +38,7 @@ export default function PickCards(props: any) {
         }
     }
 
-    function onSelectLocations(event: React.MouseEvent<HTMLElement>,
+    function onSelectLocations(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
             console.log(`onSelectLocations ${newSelection}`);
@@ -47,7 +47,7 @@ export default function PickCards(props: any) {
         }
     }
 
-    const onCardSelected = (event: React.MouseEvent<HTMLElement>,
+    const onCardSelected = (_event: React.MouseEvent<HTMLElement>,
         newSelection: string,) => {
         if (newSelection === undefined) {
             return;

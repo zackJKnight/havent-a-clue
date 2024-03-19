@@ -4,20 +4,20 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import Home from './Home';
-import { ClueCard } from './Model/ClueCard';
-import { Game } from './Model/Game';
-import { Player } from './Model/Player';
-import PickHand from './PickHand';
-import ScrollToTop from './Utils/ScrollToTop';
-import Show from './Show';
-import Turn from './Turn';
-import { CardData } from './Utils/CardData';
-import WhichPlayer from './WhichPlayer';
-import { useStyles } from './Utils/Styles';
+import Home from './Home.tsx';
+import { ClueCard } from './Model/ClueCard.ts';
+import { Game } from './Model/Game.ts';
+import { Player } from './Model/Player.ts';
+import PickHand from './PickHand.tsx';
+import ScrollToTop from './Utils/ScrollToTop.tsx';
+import Show from './Show.tsx';
+import Turn from './Turn.tsx';
+import { CardData } from './Utils/CardData.ts';
+import WhichPlayer from './WhichPlayer.tsx';
+import { useStyles } from './Utils/Styles.ts';
 import { AppBar, Typography } from '@mui/material';
-import Accuse from './Accuse';
-import Win from './Win';
+import Accuse from './Accuse.tsx';
+import Win from './Win.tsx';
 
 function App() {
   const MAX_PLAYERS = 6;

@@ -1,11 +1,12 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Game } from "./Model/Game";
-import { Player } from "./Model/Player";
-import { CardData } from "./Utils/CardData";
-import NumberSelectList from "./Utils/NumberSelection";
-import { useStyles } from "./Utils/Styles";
+import { Game } from "./Model/Game.ts";
+import { Player } from "./Model/Player.ts";
+import { CardData } from "./Utils/CardData.ts";
+import NumberSelectList from "./Utils/NumberSelection.ts";
+import { useStyles } from "./Utils/Styles.ts";
+import homeImgUrl from './Images/220px-WhoShotMrBurnsclue.png';
 
 export default function Home(props: { playerCount: number, maxPlayers: number, game: Game, setPlayers: any }) {
     const history = useHistory();
@@ -36,7 +37,7 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
     return (
         <div className={classes.root}>
             <Typography variant={'h3'}>Mr. Burns Found Dead!</Typography>
-            <img src={require('./Images/220px-WhoShotMrBurnsclue.png').default}
+            <img src={homeImgUrl}
                 alt={'mr burns found dead'}
                 style={{ borderRadius: `20%` }}></img>
             <Typography variant={'h3'}>How Many Clue Players?</Typography>
