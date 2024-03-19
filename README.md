@@ -48,7 +48,16 @@ Modeling the domain with goals:
 - Be player 1 with 3 players. for player 3 suggestion: suggest a suspect you hold. a location and a weapon you dont hold. it asks if player 1 showed player 3 the suggested cards you hold. Should not say 'A Card'
 - Be player 1 with 3 players. On player 3's turn, suggest cards that player one does not hold. When asked which card Player 1 showed to player 3, the only radio is None. Click OK to select None. Expected: player 2 can show 'A Card' or 'None' to player 3.
 
-## eliminating possibilities
+## Decision Help
 
+When it's your turn, how do you decide which cards to suggest?
 
-  
+Early - you guess randomly. Or you have some personal strategy that can't be known to the app. What's shown becomes known. the cards that are unknown may end up with repeat guesses. So how can the number of times a card has been guessed and potentially shown help us decide what to guess next? Should visual decision help guide you to suggest cards that have the least likelihood of being known? If all players maximize their guessing potention, but some players may suggest cards that throw this off...
+
+Middle - is there a middle?
+
+End - hunting. you guess known cards to skip to a player that may reveal an unknown card.
+
+Advanced - you listen to the suggestions made by others. What does this teach you? it could mean that they don't have a card. But it could also mean that they do have a card. What data can you use to define the likelihood that a suggestion confirms that a player does or does not have a card?
+
+Tells - in reality, sometimes people slip up and reveal the known state of a card. In life, keen players mark this on their notes, so the app should support it.
