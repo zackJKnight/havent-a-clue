@@ -28,7 +28,7 @@ type Props = {
 
 
 export default function ClueCardView(props: Props) {
-    const imgUrl = (name) => {
+    const imgUrl = (name: any) => {
         switch(name) {
             case 'bart' : return bartImgUrl;
             case 'bowl-a-rama' : return bowlImgUrl;

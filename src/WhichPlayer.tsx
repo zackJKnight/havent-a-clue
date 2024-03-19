@@ -1,9 +1,9 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { Game } from "./Model/Game";
-import NumberSelectList from "./Utils/NumberSelection";
+import { Game } from "./Model/Game.ts";
+import NumberSelectList from "./Utils/NumberSelection.ts";
 import { useHistory } from "react-router-dom";
-import { useStyles } from "./Utils/Styles";
+import { useStyles } from "./Utils/Styles.ts";
 
 export default function WhichPlayer(props: any) {
     const history = useHistory();

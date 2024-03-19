@@ -1,6 +1,6 @@
-import { Character } from "../api/character";
-import { Scene } from "../api/scene";
-import { Weapon } from "../api/weapon";
+import { Character } from "../api/character.ts";
+import { Scene } from "../api/scene.ts";
+import { Weapon } from "../api/weapon.ts";
 
 export const CardData = {
     "suspects": [

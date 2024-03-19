@@ -1,4 +1,4 @@
-import { Possibility } from "./possibility";
+import { Possibility } from "./possibility.ts";
 
 export interface EliminateRequest {
     predicate: string[];

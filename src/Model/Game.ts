@@ -1,6 +1,6 @@
-import { Possibility } from "../api/possibility";
-import { ClueCard } from "./ClueCard";
-import { Player } from "./Player";
+import { Possibility } from "../api/possibility.ts";
+import { ClueCard } from "./ClueCard.ts";
+import { Player } from "./Player.ts";
 
 export class Game {
     round: number;

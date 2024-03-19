@@ -1,5 +1,5 @@
-import { ClueCard } from "../Model/ClueCard";
-import { Player } from "../Model/Player";
+import { ClueCard } from "../Model/ClueCard.ts";
+import { Player } from "../Model/Player.ts";
 
 export const getClueCardHints = (cards: ClueCard[], players: Player[]) => {
 

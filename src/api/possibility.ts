@@ -1,6 +1,6 @@
-import { Character } from "./character";
-import { Scene } from "./scene";
-import { Weapon } from "./weapon";
+import { Character } from "./character.ts";
+import { Scene } from "./scene.ts";
+import { Weapon } from "./weapon.ts";
 
 export interface Possibility {
     location: Scene;

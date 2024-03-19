@@ -1,4 +1,4 @@
-import { ClueCard } from "../Model/ClueCard";
+import { ClueCard } from "../Model/ClueCard.ts";
 
 export default class GameRules {
     // when showing player isn't you
