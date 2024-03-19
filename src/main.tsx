@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider, adaptV4Theme } from "@mui/material/styles";
+import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 
 import './index.css'
 declare module '@mui/styles/defaultTheme' {
@@ -9,7 +9,7 @@ declare module '@mui/styles/defaultTheme' {
 }
 
 
-const theme = createTheme(adaptV4Theme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#fff',
@@ -44,7 +44,7 @@ const theme = createTheme(adaptV4Theme({
       fontSize: 8,
     },
   }
-}));
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 <StyledEngineProvider injectFirst>

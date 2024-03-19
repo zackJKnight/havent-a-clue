@@ -4,11 +4,11 @@ set -e
 
 yarn build
 
-cd build
+cd dist
 
 rm -rf ./.git
 
-echo 'haventaclue.co' > CNAME
+echo 'clue.zackknight.dev' > CNAME
 
 git init
 git add .
