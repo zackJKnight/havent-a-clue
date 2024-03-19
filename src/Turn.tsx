@@ -1,9 +1,9 @@
 import { Button, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import PickCards from "./PickCards";
-import { useStyles } from "./Utils/Styles";
-import { Game } from "./Model/Game";
+import PickCards from "./PickCards.tsx";
+import { useStyles } from "./Utils/Styles.ts";
+import { Game } from "./Model/Game.ts";
 
 export default function Turn(props: any) {
     const history = useHistory();

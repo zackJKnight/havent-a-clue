@@ -1,12 +1,12 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ClueCard } from "./Model/ClueCard";
-import { Game } from "./Model/Game";
+import { ClueCard } from "./Model/ClueCard.ts";
+import { Game } from "./Model/Game.ts";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useStyles } from "./Utils/Styles";
+import { useStyles } from "./Utils/Styles.ts";
 import { ChangeEvent } from "react";
-import { getClueCardHints } from "./hooks/use-clue-card-hints";
+import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
 
 export default function Show(props: any) {
     const history = useHistory();

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useStyles } from "./Utils/Styles";
+import { useStyles } from "./Utils/Styles.ts";
 
 export default function Win(props: any) {
 const player = props.matchProps.match.params.playerId + 1;

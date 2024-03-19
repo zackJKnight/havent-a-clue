@@ -1,10 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import { useHistory } from 'react-router-dom';
 import { useState } from "react";
-import { useStyles } from "./Utils/Styles";
-import { Game } from "./Model/Game";
-import PickCards from "./PickCards";
-import { getClueCardHints } from "./hooks/use-clue-card-hints";
+import { useStyles } from "./Utils/Styles.ts";
+import { Game } from "./Model/Game.ts";
+import PickCards from "./PickCards.tsx";
+import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
 
 export default function PickHand(props: any) {
     const classes = useStyles();

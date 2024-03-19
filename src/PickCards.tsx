@@ -1,9 +1,9 @@
 import {  Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { ClueCard } from "./Model/ClueCard";
-import ClueCardView from "./ClueCardView";
-import { useStyles } from "./Utils/Styles";
+import { ClueCard } from "./Model/ClueCard.ts";
+import ClueCardView from "./ClueCardView.tsx";
+import { useStyles } from "./Utils/Styles.ts";
 import { useState } from "react";
-import { CardData } from "./Utils/CardData";
+import { CardData } from "./Utils/CardData.ts";
 
 let suspectElements;
 let weaponElements;
