@@ -6,6 +6,7 @@ import { Player } from "./Model/Player.ts";
 import { CardData } from "./Utils/CardData.ts";
 import NumberSelectList from "./Utils/NumberSelection.ts";
 import { useStyles } from "./Utils/Styles.ts";
+import BottomBar from "./components/BottomBar.tsx";
 import homeImgUrl from './Images/220px-WhoShotMrBurnsclue.png';
 
 export default function Home(props: { playerCount: number, maxPlayers: number, game: Game, setPlayers: any }) {
@@ -54,13 +55,13 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
                     ))}
                 </TextField>
             </Paper>
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button
                     color="primary"
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick} >OK</Button>
-            </div>
+            </BottomBar>
         </div>
     )
 }

@@ -87,11 +87,13 @@ export default function PickCards(props: any) {
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
                             const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            if (count <= 0) return null;
+                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                            if (p.id === game.mainPlayerId) return null;
+                            if (!isNotHeld && count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (
                                 <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {count}
+                                    {isNotHeld ? '✕' : count}
                                 </Box>
                             )
                         })}
@@ -114,11 +116,13 @@ export default function PickCards(props: any) {
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
                             const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            if (count <= 0) return null;
+                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                            if (p.id === game.mainPlayerId) return null;
+                            if (!isNotHeld && count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (
                                 <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {count}
+                                    {isNotHeld ? '✕' : count}
                                 </Box>
                             )
                         })}
@@ -141,11 +145,13 @@ export default function PickCards(props: any) {
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
                             const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            if (count <= 0) return null;
+                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                            if (p.id === game.mainPlayerId) return null;
+                            if (!isNotHeld && count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (
                                 <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {count}
+                                    {isNotHeld ? '✕' : count}
                                 </Box>
                             )
                         })}
