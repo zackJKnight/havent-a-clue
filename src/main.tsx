@@ -1,12 +1,10 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import { createTheme, ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider as MuiThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { ThemeProvider as StylesThemeProvider } from '@mui/styles';
 
 import './index.css'
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme { }
-}
+
 
 
 const theme = createTheme({
@@ -47,9 +45,11 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-<StyledEngineProvider injectFirst>
-    <ThemeProvider theme={theme}>
-    <App />
-    </ThemeProvider>
+  <StyledEngineProvider injectFirst>
+    <MuiThemeProvider theme={theme}>
+      <StylesThemeProvider theme={theme}>
+        <App />
+      </StylesThemeProvider>
+    </MuiThemeProvider>
   </StyledEngineProvider>,
 )

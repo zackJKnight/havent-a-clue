@@ -1,14 +1,19 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
 import { ChangeEvent, useState } from "react";
+import { useParams } from 'react-router-dom';
 import { Game } from "./Model/Game.ts";
 import NumberSelectList from "./Utils/NumberSelection.ts";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useStyles } from "./Utils/Styles.ts";
 
 export default function WhichPlayer(props: any) {
-    const history = useHistory();
+    const history = useNavigate();
     const classes = useStyles();
-    const playerCount = parseInt(props.match.params.playerCount.replace(':', ''));
+    const params = useParams();
+    let playerCount = parseInt((params.playerCount as string) || '0');
+    // normalize count to sensible defaults for Clue (2-6)
+    if (Number.isNaN(playerCount) || playerCount < 2) playerCount = 2;
+    if (playerCount > 6) playerCount = 6;
     const [mainPlayerId, setPlayerId] = useState(0);
     const [game, setGame] = useState<Game>(props.game);
 
@@ -20,10 +25,10 @@ export default function WhichPlayer(props: any) {
         setGame({ ...game, ...tempGame });
     }
     function onClick() {
-        history.push(`/hand:${mainPlayerId}`);
+        history(`/hand/${mainPlayerId}`);
     }
 
-    const numbers = NumberSelectList(playerCount);
+    const numbers = NumberSelectList(playerCount, 1);
 
     return (
         <div className={classes.root}>

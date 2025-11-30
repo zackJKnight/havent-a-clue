@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route
 } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Home from './Home.tsx';
 import { ClueCard } from './Model/ClueCard.ts';
 import { Game } from './Model/Game.ts';
@@ -18,6 +19,7 @@ import { useStyles } from './Utils/Styles.ts';
 import { AppBar, Typography } from '@mui/material';
 import Accuse from './Accuse.tsx';
 import Win from './Win.tsx';
+import PlayersRail from './PlayersRail.tsx';
 
 function App() {
   const MAX_PLAYERS = 6;
@@ -28,6 +30,29 @@ function App() {
 
   const [game, setGame] = useState<Game>(defaultGame);
   const classes = useStyles();
+
+  function AppContent() {
+    const location = useLocation();
+    return (
+      <>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<Home playerCount={game.players.length} maxPlayers={MAX_PLAYERS} game={game} setPlayers={setGame} />} />
+          <Route path="/which/:playerCount" element={<WhichPlayer game={game} />} />
+          <Route path="/hand/:playerId" element={<PickHand game={game} />} />
+          <Route path="/turn/:playerId" element={<Turn game={game} />} />
+          <Route path="/show/:playerId" element={<Show game={game} />} />
+          <Route path="/accuse/:playerId" element={<Accuse game={game} />} />
+          <Route path="/win/:playerId" element={<Win />} />
+        </Routes>
+        {/* show players rail on all routes except home */}
+        {location.pathname !== '/' && (
+          <PlayersRail players={game.players} mainPlayerId={game.mainPlayerId} onSize={() => { }} />
+        )}
+      </>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.app}>
@@ -36,31 +61,7 @@ function App() {
         </Typography>
       </AppBar>
       <Router>
-        <ScrollToTop />
-        <Switch>
-          <Route exact path="/">
-            <Home playerCount={2} maxPlayers={MAX_PLAYERS} game={game} setPlayers={setGame} />
-          </Route>
-          <Route path='/which:playerCount' render={(matchProps) =>
-            <WhichPlayer {...matchProps} game={game} />
-          } />
-          <Route path='/hand:playerId' render={(matchProps) =>
-            <PickHand matchProps={matchProps} game={game} />
-          } />
-          <Route path='/turn:playerId' render={(matchProps) =>
-            <Turn matchProps={matchProps} game={game} />
-          } />
-          <Route path='/show:playerId' render={(matchProps) =>
-            <Show matchProps={matchProps} game={game}></Show>
-          } />
-          <Route path='/accuse:playerId' render={(matchProps) =>
-            <Accuse matchProps={matchProps} game={game}></Accuse>
-          } />
-          <Route path='/win:playerId' render={(matchProps) =>
-            <Win matchProps={matchProps} game={game}></Win>
-          } />
-
-        </Switch>
+        <AppContent />
       </Router>
     </div>
   );

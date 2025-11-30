@@ -7,7 +7,7 @@ export const CardData = {
       {displayName: 'homer', labelName: "Mr. Green", id: Character.green, color: '#27632A', turn: 4 },
       {displayName: 'bart', labelName: "Prof. Plum", id: Character.plum, color: '#8E44AD', turn: 6 },
       {displayName: 'lisa', labelName: "Miss Scarlett", id: Character.scarlet, color: '#FF4136', turn: 1 },
-      {displayName: 'marge', labelName: "Mrs. Peacock", id: Character.peacock, color: '#2ECC71', turn: 5 },
+      {displayName: 'marge', labelName: "Mrs. Peacock", id: Character.peacock, color: '#177fc4d2', turn: 5 },
       {displayName: 'krusty', labelName: "Col Mustard", id: Character.mustard, color: '#ffd321', turn: 2 },
       {displayName: 'smithers', labelName: "Mrs. White", id: Character.white, color: '#FFFFFF', turn: 3 },
     ],

@@ -1,16 +1,17 @@
 import { Button, Typography } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import PickCards from "./PickCards.tsx";
 import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
 
 export default function Turn(props: any) {
-    const history = useHistory();
+    const history = useNavigate();
     const classes = useStyles();
     const [game, setGame] = useState<Game>(props.game);
     const [disabled, setDisabled] = useState<boolean>(game.cards.filter(card => card.isSuggestion).length !== 3);
-    const suggestedBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
+    const params = useParams();
+    const suggestedBy = parseInt(params.playerId || String(location.pathname.split('/').pop()));
 
     function toggleCardSelection(cardNames: string[]) {
 if(!cardNames) {
@@ -30,15 +31,15 @@ if(!cardNames) {
 
         // TODO if showing player is you, set card shown as shown to another player
 
-        history.push(`/show:${suggestedBy}`);
+        history(`/show/${suggestedBy}`);
     }
 
     const onSkip = () => {
-        history.push(`/turn:${(suggestedBy + 1) % game.players.length}`);
+        history(`/turn/${(suggestedBy + 1) % game.players.length}`);
     }
 
     const onAccuse = () => {
-        history.push(`/accuse:${suggestedBy}`);
+        history(`/accuse/${suggestedBy}`);
     }
 
     // TODO make player have a color (like clue characters) style instead of heading

@@ -1,5 +1,5 @@
 import { Button, Typography } from "@mui/material";
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from "react";
 import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
@@ -8,16 +8,17 @@ import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
 
 export default function PickHand(props: any) {
     const classes = useStyles();
-    const history = useHistory();
+    const history = useNavigate();
 
     const [game, setGame] = useState<Game>(props.game);
     const [selectedCards, setSelectedCards] = useState<string[]>([]);
-    let heldBy = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
+    const params = useParams();
+    let heldBy = parseInt(params.playerId || String(location.pathname.split('/').pop()));
 
     function updateSelectedCards(
         newSelection: string[],) {
         if (newSelection) {
-            // console.log(`updateSelectedCards ${newSelection}`);
+            
             setSelectedCards(newSelection);
         }
     }
@@ -37,7 +38,7 @@ export default function PickHand(props: any) {
         });
         tempCards = getClueCardHints(tempCards, game.players);
         setGame({ ...game, cards: [...tempCards] });
-        history.push(`/turn:${0}`);
+        history(`/turn/0`);
     }
 
     return (

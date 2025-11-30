@@ -22,7 +22,7 @@ import smithersImgUrl from './Images/smithers.png';
 import studioImgUrl from './Images/studio.png';
 
 type Props = {
-    class: string,
+    className?: string,
     card: ClueCard
 }
 
@@ -54,9 +54,15 @@ export default function ClueCardView(props: Props) {
         }
 
     }
+
+    const src = imgUrl(props.card.Name);
     return (
         <>
-            <img style={{ borderRadius: `50%`, width: `90%`, height: `90%`}} src={imgUrl(props.card.Name)} alt={props.card.Name}></img>
+            {src ? (
+                <img className={props.className} src={src} alt={props.card.Name} />
+            ) : (
+                <div className={props.className}>{props.card.Name}</div>
+            )}
         </>
     );
 }

@@ -1,4 +1,6 @@
 import {  Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import BookmarkIcon from './BookmarkIcon.tsx';
+import { getAccentColor } from './Utils/playerAccent.ts';
 import { ClueCard } from "./Model/ClueCard.ts";
 import ClueCardView from "./ClueCardView.tsx";
 import { useStyles } from "./Utils/Styles.ts";
@@ -23,7 +25,6 @@ export default function PickCards(props: any) {
     function onSelectSuspects(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
-            console.log(`onSelectSuspects ${newSelection}`);
             setSuspects(newSelection);
             props.onChange([...newSelection, ...selectedWeapons, ...selectedLocations]);
         }
@@ -32,7 +33,6 @@ export default function PickCards(props: any) {
     function onSelectWeapons(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
-            console.log(`onSelectWeapons ${newSelection}`);
             setWeapons(newSelection);
             props.onChange([...selectedSuspects, ...newSelection, ...selectedLocations]);
         }
@@ -41,7 +41,6 @@ export default function PickCards(props: any) {
     function onSelectLocations(_event: React.MouseEvent<HTMLElement>,
         newSelection: string[],) {
         if (newSelection) {
-            console.log(`onSelectLocations ${newSelection}`);
             setLocations(newSelection);
             props.onChange([...selectedSuspects, ...selectedWeapons, ...newSelection]);
         }
@@ -75,32 +74,39 @@ export default function PickCards(props: any) {
 
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
-            <ToggleButton sx={{ '& .MUI-selected': {
-                backgroundColor: 'rgba(181, 166, 53, .5)',
-            }}} key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
+            <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
+                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                )}
                 <ClueCardView
                     key={card.Name}
-                    class={classes.cardItem}
+                    className={`${classes.cardItem} ${classes.cardImage}`}
                     card={card}
                 />
             </ToggleButton>
         );
     weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
-            <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
+            <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
+                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                )}
                 <ClueCardView
                     key={card.Name}
-                    class={classes.cardItem}
+                    className={`${classes.cardItem} ${classes.cardImage}`}
                     card={card}
                 />
             </ToggleButton>
         );
     locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
-            <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name} style={{ background: `${card.BackgroundColor}` }}>
+            <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
+                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                )}
                 <ClueCardView
                     key={card.Name}
-                    class={classes.cardItem}
+                    className={`${classes.cardItem} ${classes.cardImage}`}
                     card={card}
                 />
             </ToggleButton >

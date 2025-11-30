@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ClueCard } from "./Model/ClueCard.ts";
 import { Game } from "./Model/Game.ts";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
@@ -9,9 +9,9 @@ import { ChangeEvent } from "react";
 import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
 
 export default function Show(props: any) {
-    const history = useHistory();
-    //const playerId = parseInt(useParams());
-    const [playerId] = useState(parseInt(props.matchProps.match.params.playerId.replace(':', '')));
+    const history = useNavigate();
+    const params = useParams();
+    const [playerId] = useState(parseInt(params.playerId || String(location.pathname.split('/').pop())));
     const playersAfter = props.game.players.slice(playerId);
     const playersBefore = props.game.players.slice(0, playerId);
     const playerTurnOrder = [...playersAfter, ...playersBefore];
@@ -24,7 +24,7 @@ export default function Show(props: any) {
 
     const [value, setRadioValue] = useState(radioValue);
     const nextShowingPlayerIndex = showingPlayerIndex + 1;
-    const [answeredNoLink] = useState(`/show:${playerId}`);
+    const [answeredNoLink] = useState(`/show/${playerId}`);
 
     function onOK() {
         if (value === 'None') {
@@ -61,9 +61,9 @@ export default function Show(props: any) {
         if (nextShowingPlayerIndex > game.players.length - 1) {
             noteKnownSolutionCards();
             clearSuggestions();
-            history.push(`/turn:${nextPlayerId}`);
+            history(`/turn/${nextPlayerId}`);
         } else {
-            history.push(answeredNoLink);
+            history(answeredNoLink);
         }
 
     }
@@ -100,9 +100,9 @@ export default function Show(props: any) {
         // bug - radioValue will be a card name when showing player is you
         if (suggestions.filter(card => !(isNaN(card.HeldBy))).length === 1 &&
             radioValue.toLocaleLowerCase() !== 'a card') {
-            noteKnownSolutionCards();
+                noteKnownSolutionCards();
             clearSuggestions();
-            history.push(`/turn:${nextPlayerId}`);
+            history(`/turn/${nextPlayerId}`);
             return;
         }
 
@@ -134,10 +134,10 @@ export default function Show(props: any) {
         }
 
         setGame({ ...game, cards: [...tempCards] });
-        noteKnownSolutionCards();
-        clearSuggestions();
+            noteKnownSolutionCards();
+            clearSuggestions();
 
-        history.push(`/turn:${nextPlayerId}`);
+            history(`/turn/${nextPlayerId}`);
     }
 
     function noteKnownSolutionCards() {

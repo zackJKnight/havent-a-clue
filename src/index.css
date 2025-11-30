@@ -24,10 +24,17 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  /* allow app to control layout and stretch full width */
+  display: block;
   min-width: 320px;
   min-height: 100vh;
+}
+
+/* keep app content from touching the edge of the viewport */
+#root, .root {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
 h1 {

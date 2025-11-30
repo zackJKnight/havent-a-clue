@@ -1,6 +1,6 @@
 import { Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
-import { useHistory } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStyles } from "./Utils/Styles.ts";
 
 // was accusation correct?
@@ -10,8 +10,9 @@ import { useStyles } from "./Utils/Styles.ts";
 export default function Accuse(props: any): any {
 
     const classes = useStyles();
-    const history = useHistory();
-    const playerId = parseInt(props.matchProps.match.params.playerId.replace(':', ''));
+    const navigate = useNavigate();
+    const params = useParams();
+    const playerId = parseInt(params.playerId || String(location.pathname.split('/').pop()));
 
     const playersAfter = props.game.players.slice(playerId);
     const playersBefore = props.game.players.slice(0, playerId);
@@ -20,7 +21,7 @@ export default function Accuse(props: any): any {
     const [nextPlayerId] = useState({ ...playerTurnOrder[1] }.id);
     const onCorrect = () => {
         //win
-        history.push(`/win:${playerId}`);
+        navigate(`/win/${playerId}`);
     }
 
     const onWrong = () => {
@@ -30,7 +31,7 @@ export default function Accuse(props: any): any {
         // const tempGame = game;
         // tempGame.players.splice(game.players.indexOf(currentPlayer), 1);
         // setGame(tempGame);
-        history.push(`/turn:${nextPlayerId}`);
+        navigate(`/turn/${nextPlayerId}`);
     }
 
     return (

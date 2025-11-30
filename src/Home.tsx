@@ -1,6 +1,6 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
-import { ChangeEvent, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Game } from "./Model/Game.ts";
 import { Player } from "./Model/Player.ts";
 import { CardData } from "./Utils/CardData.ts";
@@ -9,29 +9,28 @@ import { useStyles } from "./Utils/Styles.ts";
 import homeImgUrl from './Images/220px-WhoShotMrBurnsclue.png';
 
 export default function Home(props: { playerCount: number, maxPlayers: number, game: Game, setPlayers: any }) {
-    const history = useHistory();
+    const history = useNavigate();
     const classes = useStyles();
     const [game, setGame] = useState<Game>(props.game);
     const [count, setCount] = useState(props.playerCount);
     const players = CardData.suspects.sort((a, b) => a.turn - b.turn);
-    const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        const playerCount = parseInt(e.target.value);
+    const handleNumberChange = (e: any) => {
+        const playerCount = Number(e.target.value);
         let tempGame: Game = { ...game };
         tempGame.players = [];
         for (let i = 0; i < playerCount; i++) {
             tempGame.players.push(new Player(i, players[i]?.color, players[i]?.labelName));
         }
-        console.log(tempGame.players);
+        
         setGame({ ...tempGame });
         props.setPlayers({ ...tempGame });
-        setCount(playerCount)
+        setCount(e?.target?.value);
     }
 
     const numbers = NumberSelectList(props.maxPlayers);
 
     function onClick() {
-        history.push(`/which:${count}`)
+        history(`/which/${count}`)
     }
 
     return (
@@ -39,22 +38,17 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
             <Typography variant={'h3'}>Mr. Burns Found Dead!</Typography>
             <img src={homeImgUrl}
                 alt={'mr burns found dead'}
-                style={{ borderRadius: `20%` }}></img>
+                className={classes.homeImage}></img>
             <Typography variant={'h3'}>How Many Clue Players?</Typography>
             <Paper className={classes.root}>
                 <TextField
                     className={classes.numberSelect}
-                    type="number"
                     select
-                    value={count}
+                    value={String(count)}
                     onChange={handleNumberChange}
-                    InputProps={{
-                        inputProps: {
-                            defaultValue: 2, min: 2, max: 6
-                        }
-                    }} >
+                    >
                     {numbers.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <MenuItem key={option.value} value={String(option.value)}>
                             {option.label}
                         </MenuItem>
                     ))}
