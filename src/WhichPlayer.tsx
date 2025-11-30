@@ -1,8 +1,8 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Game } from "./Model/Game.ts";
-import NumberSelectList from "./Utils/NumberSelection.ts";
+import { getAccentColor } from './Utils/playerAccent.ts';
 import { useNavigate } from "react-router-dom";
 import { useStyles } from "./Utils/Styles.ts";
 
@@ -17,18 +17,12 @@ export default function WhichPlayer(props: any) {
     const [mainPlayerId, setPlayerId] = useState(0);
     const [game, setGame] = useState<Game>(props.game);
 
-    const handleNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        setPlayerId(parseInt(e.target.value) - 1)
-        let tempGame: Game = game;
-        tempGame.mainPlayerId = parseInt(e.target.value) - 1;
-        setGame({ ...game, ...tempGame });
-    }
     function onClick() {
         history(`/hand/${mainPlayerId}`);
     }
 
-    const numbers = NumberSelectList(playerCount, 1);
+    // derive players to show (slice to playerCount in case game.players longer)
+    const playersToShow = (game.players || []).slice(0, playerCount);
 
     return (
         <div className={classes.root}>
@@ -37,19 +31,24 @@ export default function WhichPlayer(props: any) {
             <Paper className={classes.root}>
             <TextField
                 className={classes.numberSelect}
-                type="number"
                 select
-                value={mainPlayerId + 1}
-                onChange={handleNumberChange}
-
-                InputProps={{
-                    inputProps: {
-                        defaultValue: 1, min: 1, max: playerCount
-                    }
-                }} >
-                {numbers.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                value={mainPlayerId}
+                onChange={(e) => {
+                    const id = Number(e.target.value);
+                    setPlayerId(id);
+                    let tempGame: Game = game;
+                    tempGame.mainPlayerId = id;
+                    setGame({ ...game, ...tempGame });
+                }}>
+                {playersToShow.map((p: any, idx: number) => (
+                    <MenuItem
+                        key={idx}
+                        value={idx}
+                        sx={{
+                            bgcolor: p.color || 'transparent',
+                            color: getAccentColor(p.color),
+                        }}>
+                        {p.name}
                     </MenuItem>
                 ))}
             </TextField>

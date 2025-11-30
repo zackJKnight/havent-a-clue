@@ -85,6 +85,29 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         height: '90%',
         objectFit: 'cover'
     },
+    playerBadgeContainer: {
+        position: 'absolute',
+        bottom: 4,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        gap: theme.spacing(0.5),
+        alignItems: 'center',
+        pointerEvents: 'none'
+    },
+    playerBadge: {
+        minWidth: 18,
+        height: 18,
+        borderRadius: 9,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 11,
+        padding: '0 6px',
+        boxSizing: 'border-box'
+        ,
+        border: `2px solid currentColor`
+    },
     bookmark: {
         position: 'absolute',
         left: 6,

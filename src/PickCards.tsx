@@ -1,4 +1,4 @@
-import {  Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {  Grid, ToggleButton, ToggleButtonGroup, Box } from "@mui/material";
 import BookmarkIcon from './BookmarkIcon.tsx';
 import { getAccentColor } from './Utils/playerAccent.ts';
 import { ClueCard } from "./Model/ClueCard.ts";
@@ -75,8 +75,22 @@ export default function PickCards(props: any) {
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
                     <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                ) : (
+                    // render per-player badges showing counts from card.PossShownBy
+                    <div className={classes.playerBadgeContainer}>
+                        {game.players.map((p: any) => {
+                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            if (count <= 0) return null;
+                            const accent = getAccentColor(p.color);
+                            return (
+                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                    {count}
+                                </Box>
+                            )
+                        })}
+                    </div>
                 )}
                 <ClueCardView
                     key={card.Name}
@@ -88,8 +102,21 @@ export default function PickCards(props: any) {
     weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
                     <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                ) : (
+                    <div className={classes.playerBadgeContainer}>
+                        {game.players.map((p: any) => {
+                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            if (count <= 0) return null;
+                            const accent = getAccentColor(p.color);
+                            return (
+                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                    {count}
+                                </Box>
+                            )
+                        })}
+                    </div>
                 )}
                 <ClueCardView
                     key={card.Name}
@@ -101,8 +128,21 @@ export default function PickCards(props: any) {
     locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                    {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] && (
+                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
                     <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
+                ) : (
+                    <div className={classes.playerBadgeContainer}>
+                        {game.players.map((p: any) => {
+                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            if (count <= 0) return null;
+                            const accent = getAccentColor(p.color);
+                            return (
+                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                    {count}
+                                </Box>
+                            )
+                        })}
+                    </div>
                 )}
                 <ClueCardView
                     key={card.Name}

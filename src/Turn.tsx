@@ -4,6 +4,7 @@ import { useState } from "react";
 import PickCards from "./PickCards.tsx";
 import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
+import { getAccentColor } from './Utils/playerAccent.ts';
 
 export default function Turn(props: any) {
     const history = useNavigate();
@@ -46,10 +47,12 @@ if(!cardNames) {
     // <playerWColor> suggests:
     const suffix = game.mainPlayerId !== suggestedBy ? "'s" : '';
     const whose = game.mainPlayerId === suggestedBy ? 'Your' : game.players[suggestedBy].name;
+    const activeColor = game.players?.[suggestedBy]?.color;
+    const activeAccent = getAccentColor(activeColor);
 
     return (
         <div className={classes.root}>
-            <Typography variant='h3' >{`${whose}${suffix} Suggestion`}</Typography>
+            <Typography variant='h3' sx={{ backgroundColor: activeColor || 'transparent', color: activeAccent || undefined, px: 2, py: 1, borderRadius: 1 }}>{`${whose}${suffix} Suggestion`}</Typography>
             <PickCards {...props} onChange={toggleCardSelection} />
             <div className={classes.bottomButtonContainer}>
                 <Button disabled={disabled} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>

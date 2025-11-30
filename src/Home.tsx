@@ -35,9 +35,9 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
 
     return (
         <div className={classes.root}>
-            <Typography variant={'h3'}>Mr. Burns Found Dead!</Typography>
+            <Typography variant={'h3'}>A body has been found!</Typography>
             <img src={homeImgUrl}
-                alt={'mr burns found dead'}
+                alt={'A body has been found'}
                 className={classes.homeImage}></img>
             <Typography variant={'h3'}>How Many Clue Players?</Typography>
             <Paper className={classes.root}>

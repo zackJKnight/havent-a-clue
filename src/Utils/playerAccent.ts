@@ -11,23 +11,42 @@ export function getAccentColor(bgColor?: string): string {
     };
     if (overrides[normalized]) return overrides[normalized];
 
-    // if hex color provided, compute luminance
-    const hex = normalized.replace('#', '');
-    if (hex.length === 3) {
-        const r = parseInt(hex[0] + hex[0], 16);
-        const g = parseInt(hex[1] + hex[1], 16);
-        const b = parseInt(hex[2] + hex[2], 16);
-        const lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
-        return lum > 0.6 ? '#000000' : '#ffffff';
-    }
-    if (hex.length === 6) {
-        const r = parseInt(hex.substring(0,2), 16);
-        const g = parseInt(hex.substring(2,4), 16);
-        const b = parseInt(hex.substring(4,6), 16);
-        const lum = (0.2126*r + 0.7152*g + 0.0722*b) / 255;
-        return lum > 0.6 ? '#000000' : '#ffffff';
+    // Helper: parse hex color into r,g,b (0-255). Accepts #rgb or #rrggbb
+    function hexToRgb(hexStr: string): [number,number,number] | null {
+        const h = hexStr.replace('#','');
+        if (h.length === 3) {
+            const r = parseInt(h[0]+h[0], 16);
+            const g = parseInt(h[1]+h[1], 16);
+            const b = parseInt(h[2]+h[2], 16);
+            return [r,g,b];
+        }
+        if (h.length === 6) {
+            const r = parseInt(h.substring(0,2), 16);
+            const g = parseInt(h.substring(2,4), 16);
+            const b = parseInt(h.substring(4,6), 16);
+            return [r,g,b];
+        }
+        return null;
     }
 
-    // fallback: white
-    return '#ffffff';
+    const rgb = hexToRgb(normalized);
+    if (!rgb) {
+        // fallback: prefer black for unknown strings
+        return '#000000';
+    }
+
+    // convert sRGB to linearized value
+    function lin(c: number) {
+        const s = c / 255;
+        return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+    }
+    const [r,g,b] = rgb;
+    const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+
+    // relative luminance for white is 1, for black is 0
+    const contrastWithWhite = (1.0 + 0.05) / (L + 0.05);
+    const contrastWithBlack = (L + 0.05) / (0.0 + 0.05);
+
+    // choose the color (black or white) with better contrast ratio
+    return contrastWithBlack >= contrastWithWhite ? '#000000' : '#ffffff';
 }
