@@ -81,7 +81,7 @@ export default function PickCards(props: any) {
                     // render per-player badges showing counts from card.PossShownBy
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
-                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
                             if (count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (
@@ -107,7 +107,7 @@ export default function PickCards(props: any) {
                 ) : (
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
-                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
                             if (count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (
@@ -133,7 +133,7 @@ export default function PickCards(props: any) {
                 ) : (
                     <div className={classes.playerBadgeContainer}>
                         {game.players.map((p: any) => {
-                            const count = (card.PossShownBy || []).filter((id: number) => id === p.id).length;
+                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
                             if (count <= 0) return null;
                             const accent = getAccentColor(p.color);
                             return (

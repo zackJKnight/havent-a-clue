@@ -31,11 +31,16 @@ const getClueCardBackgroundColor = (card: ClueCard, players: Player[]): string =
         return playerColor;
     }
 
-    if (card.PossShownBy?.length === 0) {
+    if (!card.PossShownBy || Object.keys(card.PossShownBy).length === 0) {
         return '';
     }
 
-    let gradientPercent = ((card.PossShownBy?.length || 0) / .1);
+    let total = 0;
+    for (const k in card.PossShownBy) {
+        total += card.PossShownBy[k as any] || 0;
+    }
+
+    let gradientPercent = ((total || 0) / .1);
     const startGradientColor = '#fcf0c0';
     const endGradientColor = '#ffd321';
     let degree = '45';

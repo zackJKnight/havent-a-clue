@@ -129,7 +129,9 @@ export default function Show(props: any) {
             tempCards.filter(card => card.Name === remainingSuggestions[0].Name)[0].HeldBy = showingPlayerId;
         } else if (remainingSuggestions.length > 1) {
             tempCards.filter(card => suggestions.includes(card)).forEach(tempCard => {
-                tempCard.PossShownBy.push(parseInt(showingPlayerId));
+                const id = parseInt(showingPlayerId);
+                if (!tempCard.PossShownBy) tempCard.PossShownBy = {} as Record<number, number>;
+                tempCard.PossShownBy[id] = (tempCard.PossShownBy[id] || 0) + 1;
             });
         }
 

@@ -1,4 +1,4 @@
-import { getAccentColor } from '../Utils/playerAccent';
+import { getAccentColor } from '../Utils/playerAccent.js';
 
 describe('getAccentColor', () => {
   it('returns black for white and light mustard', () => {

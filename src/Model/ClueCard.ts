@@ -7,7 +7,7 @@ export class ClueCard {
     NotHeldBy: number[];
     isSuggestion: boolean;
     SuggestedBy: [];
-    PossShownBy: number[];
+    PossShownBy: Record<number, number>;
     BackgroundColor: string;
     isSolution: boolean;
     id: string;
@@ -19,7 +19,7 @@ export class ClueCard {
         this.NotHeldBy = [];
         this.isSuggestion = false;
         this.SuggestedBy = [];
-        this.PossShownBy = [];
+        this.PossShownBy = {} as Record<number, number>;
         this.BackgroundColor = '';
         this.isSolution = false;
         this.id = id;

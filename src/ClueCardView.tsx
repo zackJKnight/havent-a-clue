@@ -28,7 +28,9 @@ type Props = {
 
 
 export default function ClueCardView(props: Props) {
-    const imgUrl = (name: any) => {
+    const imgUrl = (rawName: any) => {
+        if (!rawName) return undefined;
+        const name = String(rawName).toLowerCase().trim();
         switch(name) {
             case 'bart' : return bartImgUrl;
             case 'bowl-a-rama' : return bowlImgUrl;
@@ -51,11 +53,39 @@ export default function ClueCardView(props: Props) {
             case 'slingshot' : return slingshotImgUrl;
             case 'smithers' : return smithersImgUrl;
             case 'studio' : return studioImgUrl;
+            case 'bowl a rama': return bowlImgUrl;
+            case 'nuke plant': return nukeplantImgUrl;
         }
 
+        // fallback: try normalized simple lookup by replacing spaces with '-' and removing punctuation
+        const normalized = name.replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+        switch(normalized) {
+            case 'bart': return bartImgUrl;
+            case 'bowl-a-rama': return bowlImgUrl;
+            case 'donut': return donutImgUrl;
+            case 'dungeon': return dungeonImgUrl;
+            case 'dutchman': return dutchmanImgUrl;
+            case 'glove': return gloveImgUrl;
+            case 'homer': return homerImgUrl;
+            case 'house': return houseImgUrl;
+            case 'krusty': return krustyImgUrl;
+            case 'kwiki': return kwikiImgUrl;
+            case 'lisa': return lisaImgUrl;
+            case 'manor': return manorImgUrl;
+            case 'marge': return margeImgUrl;
+            case 'necklace': return necklaceImgUrl;
+            case 'nuke-plant': return nukeplantImgUrl;
+            case 'plutonium': return plutoniumImgUrl;
+            case 'retirement': return retirementImgUrl;
+            case 'sax': return saxImgUrl;
+            case 'slingshot': return slingshotImgUrl;
+            case 'smithers': return smithersImgUrl;
+            case 'studio': return studioImgUrl;
+        }
+        return undefined;
     }
 
-    const src = imgUrl(props.card.Name);
+    const src = imgUrl(props.card.Name || props.card.Name);
     return (
         <>
             {src ? (

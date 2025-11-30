@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import Home from './Home.tsx';
 import { ClueCard } from './Model/ClueCard.ts';
 import { Game } from './Model/Game.ts';
+import { migratePossShownBy } from './Utils/migrations.js';
 import { Player } from './Model/Player.ts';
 import PickHand from './PickHand.tsx';
 import ScrollToTop from './Utils/ScrollToTop.tsx';
@@ -24,9 +25,14 @@ import PlayersRail from './PlayersRail.tsx';
 function App() {
   const MAX_PLAYERS = 6;
   let defaultGame = new Game();
-  defaultGame.players.push(new Player(0, 'red', 'Miss Scarlet'));
-  defaultGame.players.push(new Player(1, 'mustard', 'Col Mustard'));
+  // initialize default players using CardData colors to keep accents consistent
+  const scarlet = CardData.suspects.find(s => s.labelName?.toLowerCase().includes('scarlet'));
+  const mustard = CardData.suspects.find(s => s.labelName?.toLowerCase().includes('mustard'));
+  defaultGame.players.push(new Player(0, scarlet?.color || '#ff4136', scarlet?.labelName || 'Miss Scarlet'));
+  defaultGame.players.push(new Player(1, mustard?.color || '#ffd321', mustard?.labelName || 'Col Mustard'));
   defaultGame.cards = createCards();
+  // ensure any legacy PossShownBy arrays are migrated to maps
+  migratePossShownBy(defaultGame);
 
   const [game, setGame] = useState<Game>(defaultGame);
   const classes = useStyles();

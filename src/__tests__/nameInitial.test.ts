@@ -1,4 +1,4 @@
-import { getNameInitial } from '../Utils/nameInitial';
+import { getNameInitial } from '../Utils/nameInitial.js';
 
 describe('getNameInitial', () => {
   it('returns initial of last token', () => {
