@@ -26,7 +26,9 @@ export function computeSolutionLikelihood(game: Game): Record<string, number> {
             scores[c.Name] = 1;
             continue;
         }
-        if (!isNaN(c.HeldBy)) {
+        // treat a card as held if HeldBy references a valid player id (coerce strings)
+        const heldBy = Number((c as any).HeldBy);
+        if (Number.isFinite(heldBy) && !isNaN(heldBy) && game.players[heldBy]) {
             scores[c.Name] = 0;
             continue;
         }

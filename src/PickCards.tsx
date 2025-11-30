@@ -77,28 +77,39 @@ export default function PickCards(props: any) {
     const likelihoods = computeSolutionLikelihood(game);
 
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
-        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
+        .sort((a: ClueCard, b: ClueCard) => {
+            const ha = Number((a as any).HeldBy);
+            const hb = Number((b as any).HeldBy);
+            const heldA = Number.isFinite(ha) && game.players[ha];
+            const heldB = Number.isFinite(hb) && game.players[hb];
+            if (heldA && !heldB) return 1;
+            if (!heldA && heldB) return -1;
+            return (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0);
+        })
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
-                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
-                ) : (
-                    // render per-player badges showing counts from card.PossShownBy
-                    <div className={classes.playerBadgeContainer}>
-                        {game.players.map((p: any) => {
-                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
-                            if (p.id === game.mainPlayerId) return null;
-                            if (!isNotHeld && count <= 0) return null;
-                            const accent = getAccentColor(p.color);
-                            return (
-                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {isNotHeld ? '✕' : count}
-                                </Box>
-                            )
-                        })}
-                    </div>
-                )}
+                {(() => {
+                    const hb = Number((card as any).HeldBy);
+                    if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                    }
+                    return (
+                        <div className={classes.playerBadgeContainer}>
+                            {game.players.map((p: any) => {
+                                const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
+                                const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                                if (p.id === game.mainPlayerId) return null;
+                                if (!isNotHeld && count <= 0) return null;
+                                const accent = getAccentColor(p.color);
+                                return (
+                                    <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                        {isNotHeld ? '✕' : count}
+                                    </Box>
+                                )
+                            })}
+                        </div>
+                    )
+                })()}
                 <ClueCardView
                     key={card.Name}
                     className={`${classes.cardItem} ${classes.cardImage}`}
@@ -107,27 +118,39 @@ export default function PickCards(props: any) {
             </ToggleButton>
         );
     weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
-        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
+        .sort((a: ClueCard, b: ClueCard) => {
+            const ha = Number((a as any).HeldBy);
+            const hb = Number((b as any).HeldBy);
+            const heldA = Number.isFinite(ha) && game.players[ha];
+            const heldB = Number.isFinite(hb) && game.players[hb];
+            if (heldA && !heldB) return 1;
+            if (!heldA && heldB) return -1;
+            return (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0);
+        })
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
-                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
-                ) : (
-                    <div className={classes.playerBadgeContainer}>
-                        {game.players.map((p: any) => {
-                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
-                            if (p.id === game.mainPlayerId) return null;
-                            if (!isNotHeld && count <= 0) return null;
-                            const accent = getAccentColor(p.color);
-                            return (
-                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {isNotHeld ? '✕' : count}
-                                </Box>
-                            )
-                        })}
-                    </div>
-                )}
+                {(() => {
+                    const hb = Number((card as any).HeldBy);
+                    if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                    }
+                    return (
+                        <div className={classes.playerBadgeContainer}>
+                            {game.players.map((p: any) => {
+                                const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
+                                const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                                if (p.id === game.mainPlayerId) return null;
+                                if (!isNotHeld && count <= 0) return null;
+                                const accent = getAccentColor(p.color);
+                                return (
+                                    <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                        {isNotHeld ? '✕' : count}
+                                    </Box>
+                                )
+                            })}
+                        </div>
+                    )
+                })()}
                 <ClueCardView
                     key={card.Name}
                     className={`${classes.cardItem} ${classes.cardImage}`}
@@ -136,27 +159,39 @@ export default function PickCards(props: any) {
             </ToggleButton>
         );
     locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
-        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
+        .sort((a: ClueCard, b: ClueCard) => {
+            const ha = Number((a as any).HeldBy);
+            const hb = Number((b as any).HeldBy);
+            const heldA = Number.isFinite(ha) && game.players[ha];
+            const heldB = Number.isFinite(hb) && game.players[hb];
+            if (heldA && !heldB) return 1;
+            if (!heldA && heldB) return -1;
+            return (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0);
+        })
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
-                {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
-                    <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[card.HeldBy].color, fontSize: 18 }} accent={getAccentColor(game.players[card.HeldBy].color)} />
-                ) : (
-                    <div className={classes.playerBadgeContainer}>
-                        {game.players.map((p: any) => {
-                            const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
-                            const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
-                            if (p.id === game.mainPlayerId) return null;
-                            if (!isNotHeld && count <= 0) return null;
-                            const accent = getAccentColor(p.color);
-                            return (
-                                <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
-                                    {isNotHeld ? '✕' : count}
-                                </Box>
-                            )
-                        })}
-                    </div>
-                )}
+                {(() => {
+                    const hb = Number((card as any).HeldBy);
+                    if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                    }
+                    return (
+                        <div className={classes.playerBadgeContainer}>
+                            {game.players.map((p: any) => {
+                                const count = (card.PossShownBy && card.PossShownBy[p.id]) || 0;
+                                const isNotHeld = Array.isArray(card.NotHeldBy) && card.NotHeldBy.includes(p.id);
+                                if (p.id === game.mainPlayerId) return null;
+                                if (!isNotHeld && count <= 0) return null;
+                                const accent = getAccentColor(p.color);
+                                return (
+                                    <Box key={p.id} className={classes.playerBadge} sx={{ background: p.color || '#777', color: accent }}>
+                                        {isNotHeld ? '✕' : count}
+                                    </Box>
+                                )
+                            })}
+                        </div>
+                    )
+                })()}
                 <ClueCardView
                     key={card.Name}
                     className={`${classes.cardItem} ${classes.cardImage}`}
