@@ -17,6 +17,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         alignItems: 'center',
         backgroundColor: theme.palette?.background?.default,
         color: theme.palette?.text?.primary,
+        paddingBottom: `calc(${theme.spacing(2)} + 72px)`
     },
     palette: {
         primary: {
@@ -56,14 +57,35 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         marginRight: '1em',
         color: theme.palette.getContrastText(theme.palette.primary.main),
         backgroundColor: theme.palette.primary.main
+        ,
+        '&.Mui-disabled': {
+            opacity: 0.7,
+            border: `1px solid ${theme.palette?.divider || 'rgba(255,255,255,0.12)'}`
+        }
     },
     bottomButtonContainer: {
         display: 'flex',
         justifyContent: 'center',
-        minWidth: '90%',
-        marginTop: '3%',
-        position: "sticky",
-        bottom: theme.spacing(2)
+        position: 'fixed',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 1400,
+        padding: 0
+    },
+    bottomButtonBar: {
+        display: 'flex',
+        gap: theme.spacing(1),
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
+        borderRadius: 0,
+        background: '#424242',
+        color: theme.palette?.getContrastText ? theme.palette.getContrastText('#424242') : '#ffffff',
+        boxShadow: `0 -6px 18px rgba(0,0,0,0.12)`,
+        borderTop: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.12)'}`,
+        width: '100%',
+        boxSizing: 'border-box'
     },
     cardGrid: {
         padding: theme.spacing(1),
@@ -158,6 +180,25 @@ export const useStyles = makeStyles<Theme>((theme) => ({
 ,
     homeImage: {
         borderRadius: '20%'
+    },
+    gridWrapper: {
+        position: 'relative'
+    },
+    suspiciousSectionLabel: {
+        width: '100%',
+        marginBottom: theme.spacing(0.5),
+        paddingLeft: theme.spacing(0.5),
+        fontSize: '0.9rem',
+        color: theme.palette.text.secondary,
+        textAlign: 'left'
+    },
+    suspiciousBottomRight: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        padding: theme.spacing(0.5),
+        fontSize: '0.8rem',
+        color: theme.palette.text.secondary
     },
     playersRailChevron: {
         fontSize: 18

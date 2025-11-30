@@ -2,6 +2,7 @@ import { Button, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import PickCards from "./PickCards.tsx";
+import BottomBar from "./components/BottomBar.tsx";
 import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
 import { getAccentColor } from './Utils/playerAccent.ts';
@@ -54,11 +55,11 @@ if(!cardNames) {
         <div className={classes.root}>
             <Typography variant='h3' sx={{ backgroundColor: activeColor || 'transparent', color: activeAccent || undefined, px: 2, py: 1, borderRadius: 1 }}>{`${whose}${suffix} Suggestion`}</Typography>
             <PickCards {...props} onChange={toggleCardSelection} />
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button disabled={disabled} color="primary" className={classes.buttonInput} variant='contained' onClick={onSuggest}>Suggest</Button>
                 <Button disabled={disabled} color="secondary" className={classes.buttonInput} variant='contained' onClick={onAccuse}>Accuse</Button>
                 <Button className={classes.buttonInput} variant='contained' onClick={onSkip}>Skip</Button>
-            </div>
+            </BottomBar>
         </div>
     )
 }

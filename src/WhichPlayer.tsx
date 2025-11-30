@@ -5,6 +5,7 @@ import { Game } from "./Model/Game.ts";
 import { getAccentColor } from './Utils/playerAccent.ts';
 import { useNavigate } from "react-router-dom";
 import { useStyles } from "./Utils/Styles.ts";
+import BottomBar from "./components/BottomBar.tsx";
 
 export default function WhichPlayer(props: any) {
     const history = useNavigate();
@@ -53,13 +54,13 @@ export default function WhichPlayer(props: any) {
                 ))}
             </TextField>
             </Paper>
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button
                     color="primary"
                     className={classes.buttonInput}
                     variant='contained'
                     onClick={onClick}>OK</Button>
-            </div>
+            </BottomBar>
         </div>
     )
 }

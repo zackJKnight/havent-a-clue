@@ -5,6 +5,7 @@ import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
 import PickCards from "./PickCards.tsx";
 import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
+import BottomBar from "./components/BottomBar.tsx";
 
 export default function PickHand(props: any) {
     const classes = useStyles();
@@ -45,9 +46,9 @@ export default function PickHand(props: any) {
         <div className={classes.root}>
             <Typography variant='h3'>Pick cards in your hand</Typography>
             <PickCards game={game} selectedCards={selectedCards} multiSelect={true} onChange={updateSelectedCards} />
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button color="primary" className={classes.buttonInput} variant='contained' onClick={onOK}>OK</Button>
-            </div>
+            </BottomBar>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import { Button, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useStyles } from "./Utils/Styles.ts";
+import BottomBar from "./components/BottomBar.tsx";
 
 // was accusation correct?
 // yes => win
@@ -39,10 +40,10 @@ export default function Accuse(props: any): any {
             <Paper className={classes.root}>
                 <Typography variant='h3'>Did they get it right?</Typography>
             </Paper>
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onCorrect}>Correct</Button>
                 <Button color='secondary' variant='contained' className={classes.buttonInput} onClick={onWrong}>Wrong!</Button>
-            </div>
+            </BottomBar>
         </div >
     )
 }

@@ -7,6 +7,7 @@ import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/m
 import { useStyles } from "./Utils/Styles.ts";
 import { ChangeEvent } from "react";
 import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
+import BottomBar from "./components/BottomBar.tsx";
 
 export default function Show(props: any) {
     const history = useNavigate();
@@ -198,9 +199,9 @@ export default function Show(props: any) {
                     <FormControlLabel key={'none'} value={'None'} control={<Radio />} label={'None'} />
                 </RadioGroup>
             </FormControl>
-            <div className={classes.bottomButtonContainer}>
+            <BottomBar>
                 <Button color='primary' variant='contained' className={classes.buttonInput} onClick={onOK}>OK</Button>
-            </div>
+            </BottomBar>
         </>
     )
 }

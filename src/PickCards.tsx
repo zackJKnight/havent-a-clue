@@ -1,4 +1,4 @@
-import {  Grid, ToggleButton, ToggleButtonGroup, Box } from "@mui/material";
+import {  Grid, ToggleButton, ToggleButtonGroup, Box, Typography } from "@mui/material";
 import BookmarkIcon from './BookmarkIcon.tsx';
 import { getAccentColor } from './Utils/playerAccent.ts';
 import { ClueCard } from "./Model/ClueCard.ts";
@@ -6,6 +6,7 @@ import ClueCardView from "./ClueCardView.tsx";
 import { useStyles } from "./Utils/Styles.ts";
 import { useState } from "react";
 import { CardData } from "./Utils/CardData.ts";
+import computeSolutionLikelihood from './Utils/analysis.js';
 
 let suspectElements;
 let weaponElements;
@@ -72,7 +73,11 @@ export default function PickCards(props: any) {
         props.onChange(selectedCards);
     }
 
+    // compute likelihoods once per render
+    const likelihoods = computeSolutionLikelihood(game);
+
     suspectElements = game.cards?.filter((card: ClueCard) => card.Category === 'suspect')
+        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
                 {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
@@ -100,6 +105,7 @@ export default function PickCards(props: any) {
             </ToggleButton>
         );
     weaponElements = game.cards?.filter((card: ClueCard) => card.Category === 'weapon')
+        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
                 {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
@@ -126,6 +132,7 @@ export default function PickCards(props: any) {
             </ToggleButton>
         );
     locationElements = game.cards?.filter((card: ClueCard) => card.Category === 'scene')
+        .sort((a: ClueCard, b: ClueCard) => (likelihoods[b.Name] || 0) - (likelihoods[a.Name] || 0))
         .map((card: ClueCard) =>
             <ToggleButton className={classes.toggleButton} key={card.Name} value={card.Name}>
                 {typeof card.HeldBy === 'number' && !isNaN(card.HeldBy) && game.players[card.HeldBy] ? (
@@ -154,7 +161,10 @@ export default function PickCards(props: any) {
 
     return (
         <>
-            <Grid container spacing={1} className={classes.gridContainer}>
+            <div className={classes.gridWrapper}>
+                <div className={classes.suspiciousBottomRight}><Typography>Less suspicious</Typography></div>
+                <div className={classes.suspiciousSectionLabel}><Typography>More suspicious</Typography></div>
+                <Grid container spacing={1} className={classes.gridContainer}>
                 <ToggleButtonGroup  className={classes.toggleButtonGroup} size="small" value={multiSelect ? selectedSuspects : selectedSuspect} onChange={multiSelect ? onSelectSuspects : onCardSelected} exclusive={!multiSelect}>
                     {suspectElements}
                 </ToggleButtonGroup>
@@ -167,6 +177,7 @@ export default function PickCards(props: any) {
                 </ToggleButtonGroup>
 
             </Grid>
+            </div>
         </>
     );
 }
