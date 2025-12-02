@@ -58,6 +58,8 @@ export const deriveHints = (card: ClueCard, game: Game, opts: HintOptions = {}):
   // Shown info
   if (!isNaN(card.HeldBy) && players[card.HeldBy]) {
     hints.push(`Held by ${nameFor(players, card.HeldBy, youId, includeYou)}`);
+    // once held is known, possible shows are no longer meaningful
+    return hints;
   }
 
   // PossShownBy counts
