@@ -8,9 +8,11 @@ export class ClueCard {
     isSuggestion: boolean;
     SuggestedBy: [];
     PossShownBy: Record<number, number>;
+    SeenBy: number[];
     BackgroundColor: string;
     isSolution: boolean;
     id: string;
+    hints?: string[];
 
     constructor(name: string, category: Category, id: string) {
         this.Category = category;
@@ -20,8 +22,10 @@ export class ClueCard {
         this.isSuggestion = false;
         this.SuggestedBy = [];
         this.PossShownBy = {} as Record<number, number>;
+        this.SeenBy = [];
         this.BackgroundColor = '';
         this.isSolution = false;
         this.id = id;
+        this.hints = [];
     }
 }

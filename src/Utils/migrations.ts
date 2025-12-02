@@ -18,6 +18,10 @@ export function migratePossShownBy(game: Game) {
         if (!card.PossShownBy) {
             card.PossShownBy = {} as Record<number, number>;
         }
+        // ensure SeenBy exists
+        if (!Array.isArray((card as any).SeenBy)) {
+            (card as any).SeenBy = [] as number[];
+        }
     }
     return game;
 }

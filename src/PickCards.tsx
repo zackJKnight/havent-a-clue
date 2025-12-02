@@ -7,6 +7,7 @@ import { useStyles } from "./Utils/Styles.ts";
 import { useState } from "react";
 import { useVariantContext } from "./context/VariantContext.tsx";
 import computeSolutionLikelihood from './Utils/analysis.js';
+import { FlipProvider } from "./context/FlipContext.tsx";
 
 let suspectElements;
 let weaponElements;
@@ -92,7 +93,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -113,7 +114,8 @@ export default function PickCards(props: any) {
                 })()}
                 <ClueCardView
                     key={card.Name}
-                    className={`${classes.cardItem} ${classes.cardImage}`}
+                    className={classes.cardItem}
+                    imageClassName={classes.cardImage}
                     card={card}
                 />
             </ToggleButton>
@@ -133,7 +135,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -154,7 +156,8 @@ export default function PickCards(props: any) {
                 })()}
                 <ClueCardView
                     key={card.Name}
-                    className={`${classes.cardItem} ${classes.cardImage}`}
+                    className={classes.cardItem}
+                    imageClassName={classes.cardImage}
                     card={card}
                 />
             </ToggleButton>
@@ -174,7 +177,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -195,17 +198,22 @@ export default function PickCards(props: any) {
                 })()}
                 <ClueCardView
                     key={card.Name}
-                    className={`${classes.cardItem} ${classes.cardImage}`}
+                    className={classes.cardItem}
+                    imageClassName={classes.cardImage}
                     card={card}
                 />
             </ToggleButton >
         );
 
     return (
-        <>
+        <FlipProvider>
             <div className={classes.gridWrapper}>
-                <div className={classes.suspiciousBottomRight}><Typography>Less suspicious</Typography></div>
-                <div className={classes.suspiciousSectionLabel}><Typography>More suspicious</Typography></div>
+                {!props.multiSelect && (
+                    <>
+                        <div className={classes.suspiciousBottomRight}><Typography>Less suspicious</Typography></div>
+                        <div className={classes.suspiciousSectionLabel}><Typography>More suspicious</Typography></div>
+                    </>
+                )}
                 <Grid container spacing={1} className={classes.gridContainer}>
                 <ToggleButtonGroup  className={classes.toggleButtonGroup} size="small" value={multiSelect ? selectedSuspects : selectedSuspect} onChange={multiSelect ? onSelectSuspects : onCardSelected} exclusive={!multiSelect}>
                     {suspectElements}
@@ -220,6 +228,6 @@ export default function PickCards(props: any) {
 
             </Grid>
             </div>
-        </>
+        </FlipProvider>
     );
 }

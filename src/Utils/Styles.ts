@@ -39,6 +39,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     toggleButton: {
         position: 'relative',
+        overflow: 'visible',
         '&.Mui-selected': {
             backgroundColor: 'rgba(181, 166, 53, .5)',
         },
@@ -113,6 +114,96 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         objectFit: 'cover',
         display: 'block',
         margin: '0 auto'
+    },
+    cardFlipContainer: {
+        position: 'relative',
+        width: '100%',
+        maxWidth: 180,
+        minHeight: 190,
+        overflow: 'visible',
+        perspective: 1000,
+        transition: 'transform 220ms ease, box-shadow 220ms ease',
+        aspectRatio: '7 / 9',
+    },
+    cardOverlay: {
+        position: 'fixed',
+        inset: 0,
+        background: 'rgba(0,0,0,0.15)',
+        zIndex: 1500
+    },
+    cardFace: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 12,
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 1
+    },
+    cardBack: {
+        width: '100%',
+        minHeight: 190,
+        padding: theme.spacing(1.25),
+        borderRadius: 12,
+        background: theme.palette?.background?.paper,
+        border: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.1)'}`,
+        boxShadow: `0 4px 12px rgba(0,0,0,0.18)`,
+        boxSizing: 'border-box',
+        color: theme.palette?.text?.primary,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: theme.spacing(0.75),
+        zIndex: 5,
+        position: 'relative'
+    },
+    cardHintsTitle: {
+        fontSize: 12,
+        fontWeight: 600,
+        margin: 0
+    },
+    cardHintsList: {
+        margin: 0,
+        paddingLeft: theme.spacing(2),
+        fontSize: 13,
+    },
+    cardHintEmpty: {
+        fontSize: 13,
+        color: theme.palette?.text?.secondary
+    },
+    cardFlipButton: {
+        position: 'absolute',
+        left: 4,
+        bottom: 4,
+        zIndex: 1200,
+        background: theme.palette?.background?.paper,
+        boxShadow: `0 2px 6px rgba(0,0,0,0.2)`,
+        '&:hover': {
+            background: theme.palette?.background?.paper,
+        }
+    },
+    cardCorner: {
+        position: 'absolute',
+        width: 32,
+        height: 32,
+        borderRadius: 6,
+        background: 'rgba(0,0,0,0.05)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        border: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.15)'}`
+    },
+    cardCornerImg: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover'
+    },
+    cardCornerText: {
+        fontSize: 12,
+        fontWeight: 600,
+        color: theme.palette?.text?.secondary
     },
     playerBadgeContainer: {
         position: 'absolute',

@@ -55,13 +55,16 @@ function AppWithVariant() {
     return cards;
   };
 
-  const buildDefaultGame = (data: { suspects: VariantCard[]; weapons: VariantCard[]; scenes: VariantCard[] }) => {
+  const buildDefaultGame = (data: { suspects: VariantCard[]; weapons: VariantCard[]; scenes: VariantCard[] }, playerCount = 2) => {
     const g = new Game();
     const sortedSuspects = [...data.suspects].sort((a, b) => (a.turn || 0) - (b.turn || 0));
-    const primary = sortedSuspects[0];
-    const secondary = sortedSuspects[1];
-    g.players.push(new Player(0, primary?.color || '#ff4136', primary?.labelName || primary?.displayName || 'Investigator 1'));
-    g.players.push(new Player(1, secondary?.color || '#ffd321', secondary?.labelName || secondary?.displayName || 'Investigator 2'));
+    const count = Math.max(2, Math.min(playerCount, sortedSuspects.length || 6));
+    for (let i = 0; i < count; i++) {
+      const s = sortedSuspects[i];
+      const fallbackName = s?.labelName || s?.displayName || `Investigator ${i + 1}`;
+      const fallbackColor = s?.color || '#777';
+      g.players.push(new Player(i, fallbackColor, fallbackName));
+    }
     g.cards = createCards(data);
     migratePossShownBy(g);
     return g;
@@ -70,7 +73,8 @@ function AppWithVariant() {
   const [game, setGame] = useState<Game>(() => buildDefaultGame(cardData));
 
   useEffect(() => {
-    setGame(buildDefaultGame(cardData));
+    const currentCount = game.players?.length || 2;
+    setGame(buildDefaultGame(cardData, currentCount));
   }, [variantKey, cardData]);
 
   return (

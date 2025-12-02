@@ -28,6 +28,9 @@ export function applyHistoryEntry(game: Game, entry: HistoryEntry): Game {
         tempCards.filter(c => c.Name === entry.cardName).forEach(card => {
             card.HeldBy = entry.showingPlayerId as number;
             card.isSuggestion = false;
+            // mark that the showing player has definitively seen this card
+            if (!Array.isArray(card.SeenBy)) card.SeenBy = [] as number[];
+            if (!card.SeenBy.includes(entry.showingPlayerId as number)) card.SeenBy.push(entry.showingPlayerId as number);
         });
         // other suggestion cards should be cleared
         tempCards.forEach(card => { if (card.isSuggestion && card.Name !== entry.cardName) card.isSuggestion = false; });
