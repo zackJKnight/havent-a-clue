@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useStyles } from "./Utils/Styles.ts";
 import { Game } from "./Model/Game.ts";
 import PickCards from "./PickCards.tsx";
-import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
+import { getCardBackgroundHints } from "./hooks/use-card-background.ts";
 import BottomBar from "./components/BottomBar.tsx";
 
 export default function PickHand(props: any) {
@@ -37,7 +37,7 @@ export default function PickHand(props: any) {
                 card.NotHeldBy.push(heldBy);
             }
         });
-        tempCards = getClueCardHints(tempCards, game.players);
+        tempCards = getCardBackgroundHints(tempCards, game.players);
         setGame({ ...game, cards: [...tempCards] });
         history(`/turn/0`);
     }

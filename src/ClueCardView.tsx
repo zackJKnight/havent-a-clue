@@ -147,15 +147,21 @@ export default function ClueCardView(props: Props) {
                 onTouchStart={revealIcon}
             >
                 {showBack ? back : front}
-                <IconButton
-                    size="small"
-                    className={classes.cardFlipButton}
-                    onClick={toggleFlip}
-                    aria-label={showBack ? "Show card front" : "Show card back"}
-                    sx={{ opacity: showBack ? 1 : (showHintIcon ? 1 : 0), transition: 'opacity 180ms ease' }}
-                >
-                    <FlipIcon fontSize="inherit" />
-                </IconButton>
+            <IconButton
+                size="small"
+                className={classes.cardFlipButton}
+                onClick={toggleFlip}
+                aria-label={showBack ? "Show card front" : "Show card back"}
+                sx={{
+                    opacity: showBack ? 1 : (showHintIcon ? 1 : 0),
+                    transition: 'opacity 180ms ease',
+                    width: 28,
+                    height: 28,
+                    pointerEvents: showBack || showHintIcon ? 'auto' : 'none'
+                }}
+            >
+                <FlipIcon fontSize="inherit" />
+            </IconButton>
             </div>
         </>
     );

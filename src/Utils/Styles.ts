@@ -249,7 +249,9 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         padding: '0 6px',
         boxSizing: 'border-box'
         ,
-        border: `2px solid #000`
+        border: `2px solid #000`,
+        zIndex: 1200,
+        position: 'relative'
     },
     bookmark: {
         position: 'absolute',

@@ -1,5 +1,5 @@
 import { Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Game } from "./Model/Game.ts";
 import { Player } from "./Model/Player.ts";
@@ -15,6 +15,12 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
     const [count, setCount] = useState(props.playerCount);
     const { cardData, copy, variant } = useVariantContext();
     const players = [...cardData.suspects].sort((a, b) => (a.turn || 0) - (b.turn || 0));
+
+    // keep local state in sync when variant or upstream game changes
+    useEffect(() => {
+        setGame(props.game);
+        setCount(props.playerCount);
+    }, [props.game, props.playerCount]);
     const handleNumberChange = (e: any) => {
         const playerCount = Number(e.target.value);
         let tempGame: Game = { ...game };

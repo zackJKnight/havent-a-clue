@@ -93,7 +93,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1250 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -136,7 +136,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1250 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -179,7 +179,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1200 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27, zIndex: 1250 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>

@@ -6,7 +6,7 @@ import { Game } from "./Model/Game.ts";
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useStyles } from "./Utils/Styles.ts";
 import { ChangeEvent } from "react";
-import { getClueCardHints } from "./hooks/use-clue-card-hints.ts";
+import { getCardBackgroundHints } from "./hooks/use-card-background.ts";
 import BottomBar from "./components/BottomBar.tsx";
 
 export default function Show(props: any) {
@@ -168,7 +168,7 @@ export default function Show(props: any) {
             }
         }
         );
-        updatedCards = getClueCardHints(updatedCards, game.players);
+        updatedCards = getCardBackgroundHints(updatedCards, game.players);
          setGame({ ...game, cards: [...updatedCards] });
     }
 
