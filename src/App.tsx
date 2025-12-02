@@ -4,7 +4,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Home from './Home.tsx';
 import { ClueCard } from './Model/ClueCard.ts';
 import { Game } from './Model/Game.ts';
@@ -36,7 +36,6 @@ function AppWithVariant() {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
   const { mode, effectiveMode, cycleMode } = useThemeMode();
   const location = useLocation();
-  const navigate = useNavigate();
   const canSwitchVariant = location.pathname === '/';
 
   const createCards = (data: { suspects: VariantCard[]; weapons: VariantCard[]; scenes: VariantCard[] }): ClueCard[] => {

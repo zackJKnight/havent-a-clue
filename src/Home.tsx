@@ -20,7 +20,8 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
         let tempGame: Game = { ...game };
         tempGame.players = [];
         for (let i = 0; i < playerCount; i++) {
-            tempGame.players.push(new Player(i, players[i]?.color, players[i]?.labelName));
+            const fallbackName = players[i]?.labelName || players[i]?.displayName || `Player ${i + 1}`;
+            tempGame.players.push(new Player(i, players[i]?.color || '#777', fallbackName));
         }
         
         setGame({ ...tempGame });
