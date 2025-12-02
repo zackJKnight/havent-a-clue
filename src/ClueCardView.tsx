@@ -2,15 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { IconButton, Typography } from "@mui/material";
 import FlipIcon from '@mui/icons-material/FlipCameraAndroid';
 import { ClueCard } from "./Model/ClueCard.ts";
+import { Game } from "./Model/Game.ts";
 import { useVariantContext } from "./context/VariantContext.tsx";
 import { useStyles } from "./Utils/Styles.ts";
-import useCardHints from "./hooks/use-card-hints.ts";
 import { useFlipContext } from "./context/FlipContext.tsx";
+import useCardHints from "./hooks/use-card-hints.ts";
 
 type Props = {
     className?: string,
     imageClassName?: string,
-    card: ClueCard
+    card: ClueCard,
+    game?: Game
 }
 
 
@@ -21,7 +23,7 @@ export default function ClueCardView(props: Props) {
     const [showHintIcon, setShowHintIcon] = useState(true);
     const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const hints = useCardHints(props.card);
+    const hints = useCardHints(props.card, props.game);
     const lookup = getCardMeta(props.card);
     const src = getCardImage(props.card);
     const alt = lookup?.labelName || props.card.Name;
@@ -112,16 +114,18 @@ export default function ClueCardView(props: Props) {
                     </div>
                 </>
             )}
-            <Typography component="p" className={classes.cardHintsTitle}>Hints</Typography>
-            {hints.length > 0 ? (
-                <ul className={classes.cardHintsList}>
-                    {hints.map((hint, idx) => (
-                        <li key={`${props.card.id}-hint-${idx}`}>{hint}</li>
-                    ))}
-                </ul>
-            ) : (
-                <Typography component="p" className={classes.cardHintEmpty}>No hints yet.</Typography>
-            )}
+            <div className={classes.cardBackContent}>
+                <Typography component="p" className={classes.cardHintsTitle}>Hints</Typography>
+                {hints.length > 0 ? (
+                    <ul className={classes.cardHintsList}>
+                        {hints.map((hint, idx) => (
+                            <li key={`${props.card.id}-hint-${idx}`}>{hint}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <Typography component="p" className={classes.cardHintEmpty}>No hints yet.</Typography>
+                )}
+            </div>
         </div>
     );
 

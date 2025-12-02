@@ -158,18 +158,40 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         zIndex: 5,
         position: 'relative'
     },
+    cardBackContent: {
+        position: 'relative',
+        zIndex: 6,
+        width: '100%',
+        padding: theme.spacing(1, 0.25),
+        borderRadius: 8,
+        background: theme.palette.mode === 'dark'
+            ? 'rgba(0,0,0,0.35)'
+            : 'rgba(255,255,255,0.8)',
+        boxShadow: `0 4px 10px rgba(0,0,0,0.08)`,
+        border: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.1)'}`
+    },
     cardHintsTitle: {
-        fontSize: 12,
+        fontSize: '0.7rem',
         fontWeight: 600,
         margin: 0
     },
     cardHintsList: {
         margin: 0,
-        paddingLeft: theme.spacing(2),
-        fontSize: 13,
+        paddingLeft: 0,
+        fontSize: '0.5rem',
+        lineHeight: 1.05,
+        textAlign: 'left',
+        '& li': {
+            fontSize: '0.5rem',
+            lineHeight: 1.05,
+            textAlign: 'left',
+            listStyle: 'none',
+            paddingLeft: 0
+        }
     },
     cardHintEmpty: {
-        fontSize: 13,
+        fontSize: '0.7rem',
+        lineHeight: 1.2,
         color: theme.palette?.text?.secondary
     },
     cardFlipButton: {
@@ -185,15 +207,16 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     },
     cardCorner: {
         position: 'absolute',
-        width: 32,
-        height: 32,
-        borderRadius: 6,
+        width: 16,
+        height: 16,
+        borderRadius: 4,
         background: 'rgba(0,0,0,0.05)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        border: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.15)'}`
+        border: `1px solid ${theme.palette?.divider || 'rgba(0,0,0,0.15)'}`,
+        zIndex: 4
     },
     cardCornerImg: {
         width: '100%',

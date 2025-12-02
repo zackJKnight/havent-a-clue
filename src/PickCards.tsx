@@ -117,6 +117,7 @@ export default function PickCards(props: any) {
                     className={classes.cardItem}
                     imageClassName={classes.cardImage}
                     card={card}
+                    game={game}
                 />
             </ToggleButton>
         );
@@ -159,6 +160,7 @@ export default function PickCards(props: any) {
                     className={classes.cardItem}
                     imageClassName={classes.cardImage}
                     card={card}
+                    game={game}
                 />
             </ToggleButton>
         );
@@ -201,6 +203,7 @@ export default function PickCards(props: any) {
                     className={classes.cardItem}
                     imageClassName={classes.cardImage}
                     card={card}
+                    game={game}
                 />
             </ToggleButton >
         );

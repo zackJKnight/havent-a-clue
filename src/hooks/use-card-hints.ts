@@ -1,12 +1,13 @@
+import { useMemo } from "react";
 import { ClueCard } from "../Model/ClueCard.ts";
+import { Game } from "../Model/Game.ts";
+import { deriveHints } from "../Utils/hints.ts";
 
-// Placeholder for future hint derivation. For now, rely on card.hints if present.
-export const useCardHints = (card: ClueCard): string[] => {
-  if (!card) return [];
-  if (Array.isArray(card.hints) && card.hints.length > 0) {
-    return card.hints;
-  }
-  return [];
+export const useCardHints = (card: ClueCard, game?: Game): string[] => {
+    return useMemo(() => {
+        if (!card || !game) return card?.hints || [];
+        return deriveHints(card, game);
+    }, [card, game]);
 };
 
 export default useCardHints;
