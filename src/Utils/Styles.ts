@@ -5,19 +5,24 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     app: {
         display: "flex",
         alignItems: "center",
-        minWidth: '99%',
+        width: '100%',
     },
     root: {
         width: '100%',
         maxWidth: '100%',
         minWidth: '100%',
-        minHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: theme.palette?.background?.default,
         color: theme.palette?.text?.primary,
-        paddingBottom: `calc(${theme.spacing(2)} + 72px)`
+        paddingBottom: `calc(${theme.spacing(6)} + 120px)`
+    },
+    content: {
+        width: '100%',
+        boxSizing: 'border-box',
+        paddingLeft: theme.spacing(1.5),
+        paddingRight: theme.spacing(1.5),
     },
     palette: {
         primary: {
@@ -102,10 +107,12 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         color: theme.palette.text.secondary
     },
     cardImage: {
-        borderRadius: '50%',
-        width: '90%',
-        height: '90%',
-        objectFit: 'cover'
+        borderRadius: '12px',
+        width: 140,
+        height: 180,
+        objectFit: 'cover',
+        display: 'block',
+        margin: '0 auto'
     },
     playerBadgeContainer: {
         position: 'absolute',
@@ -128,7 +135,7 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         padding: '0 6px',
         boxSizing: 'border-box'
         ,
-        border: `2px solid currentColor`
+        border: `2px solid #000`
     },
     bookmark: {
         position: 'absolute',
@@ -179,7 +186,20 @@ export const useStyles = makeStyles<Theme>((theme) => ({
     }
 ,
     homeImage: {
-        borderRadius: '20%'
+        borderRadius: '20%',
+        width: 'min(480px, 90vw)',
+        maxHeight: '32vh',
+        objectFit: 'contain',
+        margin: `${theme.spacing(2)} 0`,
+        display: 'block'
+    },
+    homeCard: {
+        width: '100%',
+        maxWidth: 480,
+        padding: theme.spacing(2),
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(6),
+        boxSizing: 'border-box'
     },
     gridWrapper: {
         position: 'relative'
@@ -208,4 +228,3 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         boxSizing: 'border-box'
     }
 }));
-

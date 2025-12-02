@@ -5,7 +5,7 @@ import { ClueCard } from "./Model/ClueCard.ts";
 import ClueCardView from "./ClueCardView.tsx";
 import { useStyles } from "./Utils/Styles.ts";
 import { useState } from "react";
-import { CardData } from "./Utils/CardData.ts";
+import { useVariantContext } from "./context/VariantContext.tsx";
 import computeSolutionLikelihood from './Utils/analysis.js';
 
 let suspectElements;
@@ -15,6 +15,7 @@ let locationElements;
 export default function PickCards(props: any) {
     const multiSelect = props.multiSelect;
     const classes = useStyles();
+    const { cardData } = useVariantContext();
     const [selectedSuspect, setSuspect] = useState('');
     const [selectedWeapon, setWeapon] = useState('');
     const [selectedLocation, setLocation] = useState('');
@@ -54,17 +55,17 @@ export default function PickCards(props: any) {
         }
         let selectedCards;
         switch (newSelection) {
-            case CardData.suspects.find(s => s.displayName === newSelection)?.displayName:
+            case cardData.suspects.find(s => s.displayName === newSelection)?.displayName:
                 setSuspect(newSelection);
                 selectedCards = [newSelection, selectedWeapon, selectedLocation];
                 selectedCards = selectedCards.filter(s => s !== '');
                 break;
-            case CardData.weapons.find(s => s.displayName === newSelection)?.displayName:
+            case cardData.weapons.find(s => s.displayName === newSelection)?.displayName:
                 setWeapon(newSelection);
                 selectedCards = [selectedSuspect, newSelection, selectedLocation];
                 selectedCards = selectedCards.filter(s => s !== '');
                 break;
-            case CardData.scenes.find(s => s.displayName === newSelection)?.displayName:
+            case cardData.scenes.find(s => s.displayName === newSelection)?.displayName:
                 setLocation(newSelection);
                 selectedCards = [selectedSuspect, selectedWeapon, newSelection];
                 selectedCards = selectedCards.filter(s => s !== '');
@@ -91,7 +92,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -132,7 +133,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>
@@ -173,7 +174,7 @@ export default function PickCards(props: any) {
                 {(() => {
                     const hb = Number((card as any).HeldBy);
                     if (Number.isFinite(hb) && !isNaN(hb) && game.players[hb]) {
-                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 18 }} accent={getAccentColor(game.players[hb].color)} />;
+                        return <BookmarkIcon sx={{ position: 'absolute', left: 6, top: 6, color: game.players[hb].color, fontSize: 27 }} accent={getAccentColor(game.players[hb].color)} />;
                     }
                     return (
                         <div className={classes.playerBadgeContainer}>

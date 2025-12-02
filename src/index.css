@@ -3,10 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,17 +20,9 @@ a:hover {
 
 body {
   margin: 0;
-  /* allow app to control layout and stretch full width */
   display: block;
   min-width: 320px;
   min-height: 100vh;
-}
-
-/* keep app content from touching the edge of the viewport */
-#root, .root {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  box-sizing: border-box;
 }
 
 h1 {

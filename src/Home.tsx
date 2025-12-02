@@ -3,18 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Game } from "./Model/Game.ts";
 import { Player } from "./Model/Player.ts";
-import { CardData } from "./Utils/CardData.ts";
 import NumberSelectList from "./Utils/NumberSelection.ts";
 import { useStyles } from "./Utils/Styles.ts";
 import BottomBar from "./components/BottomBar.tsx";
-import homeImgUrl from './Images/220px-WhoShotMrBurnsclue.png';
+import { useVariantContext } from "./context/VariantContext.tsx";
 
 export default function Home(props: { playerCount: number, maxPlayers: number, game: Game, setPlayers: any }) {
     const history = useNavigate();
     const classes = useStyles();
     const [game, setGame] = useState<Game>(props.game);
     const [count, setCount] = useState(props.playerCount);
-    const players = CardData.suspects.sort((a, b) => a.turn - b.turn);
+    const { cardData, copy, variant } = useVariantContext();
+    const players = [...cardData.suspects].sort((a, b) => (a.turn || 0) - (b.turn || 0));
     const handleNumberChange = (e: any) => {
         const playerCount = Number(e.target.value);
         let tempGame: Game = { ...game };
@@ -36,12 +36,12 @@ export default function Home(props: { playerCount: number, maxPlayers: number, g
 
     return (
         <div className={classes.root}>
-            <Typography variant={'h3'}>A body has been found!</Typography>
-            <img src={homeImgUrl}
-                alt={'A body has been found'}
+            <Typography variant={'h3'}>{copy.homeHeadline}</Typography>
+            <img src={variant.homeImage}
+                alt={copy.homeImageAlt}
                 className={classes.homeImage}></img>
-            <Typography variant={'h3'}>How Many Clue Players?</Typography>
-            <Paper className={classes.root}>
+            <Typography variant={'h3'}>{copy.playerCountPrompt}</Typography>
+            <Paper className={classes.homeCard}>
                 <TextField
                     className={classes.numberSelect}
                     select

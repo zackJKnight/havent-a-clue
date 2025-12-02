@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#162b45"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="grid" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+  <rect width="1440" height="900" fill="url(#bg)"/>
+  <rect width="1440" height="900" fill="url(#glow)"/>
+  <g opacity="0.45">
+    <path d="M120 160h420v220H120z" fill="#1f2937" stroke="#6b7280" stroke-width="6" stroke-dasharray="16 10"/>
+    <path d="M540 240h380v280H540z" fill="#111827" stroke="#4b5563" stroke-width="5" stroke-dasharray="10 10"/>
+    <path d="M960 120h320v320H960z" fill="#1f2937" stroke="#6b7280" stroke-width="6" stroke-dasharray="16 10"/>
+    <path d="M220 460h360v200H220z" fill="#0b1220" stroke="#334155" stroke-width="5" stroke-dasharray="12 10"/>
+    <path d="M740 520h420v240H740z" fill="#0b1220" stroke="#334155" stroke-width="5" stroke-dasharray="12 10"/>
+  </g>
+  <g opacity="0.14">
+    <rect x="80" y="140" width="1280" height="620" fill="url(#grid)"/>
+  </g>
+  <g transform="translate(920 440)">
+    <circle cx="0" cy="0" r="150" fill="#111827" stroke="#38bdf8" stroke-width="8"/>
+    <circle cx="0" cy="0" r="110" fill="none" stroke="#a5f3fc" stroke-width="12" stroke-dasharray="14 10"/>
+    <line x1="90" y1="90" x2="210" y2="210" stroke="#38bdf8" stroke-width="18" stroke-linecap="round"/>
+    <circle cx="210" cy="210" r="32" fill="#0ea5e9" opacity="0.85"/>
+    <circle cx="0" cy="0" r="60" fill="#38bdf8" opacity="0.35"/>
+  </g>
+  <g transform="translate(220 260)" opacity="0.86">
+    <rect x="0" y="0" width="320" height="200" rx="18" fill="#0f172a" stroke="#22d3ee" stroke-width="5"/>
+    <path d="M28 36h264v128H28z" fill="#111827" stroke="#22d3ee" stroke-width="3" stroke-dasharray="8 8"/>
+    <text x="160" y="118" font-family="Arial, sans-serif" font-size="46" fill="#e0f2fe" text-anchor="middle">Case Files</text>
+  </g>
+  <g transform="translate(600 150)" opacity="0.72">
+    <rect x="0" y="0" width="220" height="140" rx="12" fill="#0b1220" stroke="#a78bfa" stroke-width="4"/>
+    <text x="110" y="82" font-family="Arial, sans-serif" font-size="38" fill="#ede9fe" text-anchor="middle">Clues</text>
+  </g>
+  <g transform="translate(1160 200)" opacity="0.72">
+    <rect x="0" y="0" width="180" height="120" rx="12" fill="#0b1220" stroke="#34d399" stroke-width="4"/>
+    <text x="90" y="74" font-family="Arial, sans-serif" font-size="32" fill="#d1fae5" text-anchor="middle">Alibis</text>
+  </g>
+  <g transform="translate(380 520)" opacity="0.85">
+    <rect x="0" y="0" width="260" height="160" rx="16" fill="#0f172a" stroke="#f97316" stroke-width="5"/>
+    <text x="130" y="70" font-family="Arial, sans-serif" font-size="34" fill="#ffe6c7" text-anchor="middle">Suspects</text>
+    <text x="130" y="110" font-family="Arial, sans-serif" font-size="22" fill="#ffd8a8" text-anchor="middle">scenes • weapons</text>
+  </g>
+  <g transform="translate(820 650)" opacity="0.45">
+    <rect x="0" y="0" width="320" height="120" rx="16" fill="#111827" stroke="#67e8f9" stroke-width="4" stroke-dasharray="10 8"/>
+    <text x="160" y="74" font-family="Arial, sans-serif" font-size="30" fill="#bae6fd" text-anchor="middle">Track every lead</text>
+  </g>
+</svg>
