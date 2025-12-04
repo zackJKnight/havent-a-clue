@@ -12,23 +12,25 @@ type Props = {
     className?: string,
     imageClassName?: string,
     card: ClueCard,
-    game?: Game
+    game?: Game,
+    enableFlip?: boolean
 }
 
 
 export default function ClueCardView(props: Props) {
+    const enableFlip = props.enableFlip !== false;
     const classes = useStyles();
     const { getCardMeta, getCardImage } = useVariantContext();
     const [showBack, setShowBack] = useState(false);
     const [showHintIcon, setShowHintIcon] = useState(true);
     const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const hints = useCardHints(props.card, props.game);
+    const hints = enableFlip ? useCardHints(props.card, props.game) : [];
     const lookup = getCardMeta(props.card);
     const src = getCardImage(props.card);
     const alt = lookup?.labelName || props.card.Name;
     const { flippedId, setFlippedId } = useFlipContext();
-    const isFlipped = showBack;
+    const isFlipped = showBack && enableFlip;
     const scheduleHide = () => {
         if (hideTimer.current) {
             clearTimeout(hideTimer.current);
@@ -47,15 +49,15 @@ export default function ClueCardView(props: Props) {
 
     // Close if another card flips
     useEffect(() => {
-        if (flippedId && flippedId !== props.card.id && showBack) {
+        if (enableFlip && flippedId && flippedId !== props.card.id && showBack) {
             setShowBack(false);
         }
-    }, [flippedId, props.card.id, showBack]);
+    }, [enableFlip, flippedId, props.card.id, showBack]);
 
     // Close on outside click
     useEffect(() => {
         const onClickOutside = (e: MouseEvent | TouchEvent) => {
-            if (!showBack) return;
+            if (!enableFlip || !showBack) return;
             const target = e.target as Node;
             if (containerRef.current && !containerRef.current.contains(target)) {
                 setShowBack(false);
@@ -68,7 +70,7 @@ export default function ClueCardView(props: Props) {
             document.removeEventListener('mousedown', onClickOutside, true);
             document.removeEventListener('touchstart', onClickOutside, true);
         };
-    }, [showBack, setFlippedId]);
+    }, [enableFlip, showBack, setFlippedId]);
 
     const revealIcon = () => {
         setShowHintIcon(true);
@@ -128,6 +130,10 @@ export default function ClueCardView(props: Props) {
             </div>
         </div>
     );
+
+    if (!enableFlip) {
+        return front;
+    }
 
     return (
         <>

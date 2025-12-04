@@ -113,7 +113,9 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         height: 180,
         objectFit: 'cover',
         display: 'block',
-        margin: '0 auto'
+        margin: '0 auto',
+        position: 'relative',
+        zIndex: 1
     },
     cardFlipContainer: {
         position: 'relative',
@@ -236,7 +238,8 @@ export const useStyles = makeStyles<Theme>((theme) => ({
         display: 'flex',
         gap: theme.spacing(0.5),
         alignItems: 'center',
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        zIndex: 1300
     },
     playerBadge: {
         minWidth: 18,

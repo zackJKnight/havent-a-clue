@@ -118,6 +118,7 @@ export default function PickCards(props: any) {
                     imageClassName={classes.cardImage}
                     card={card}
                     game={game}
+                    enableFlip={!multiSelect}
                 />
             </ToggleButton>
         );
